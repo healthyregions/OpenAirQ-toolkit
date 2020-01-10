@@ -1,0 +1,23 @@
+---
+title: "Welcome to the Documentation!"
+author: "Authors Names Here"
+date: "12/19/2019"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+description: "I love documentation! Don't you? :)"
+---
+
+# Preface {-}
+
+## Hello World! {-}
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```

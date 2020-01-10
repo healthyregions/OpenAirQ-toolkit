@@ -1,0 +1,25 @@
+library(boxr)
+box_auth()
+km.grid = box_read(546990633845, read_fun = rgdal::readOGR)
+save(km.grid, file = "km_grid.RData")
+
+sample.counties = box_read(543244636825, read_fun = rgdal::readOGR)
+save(sample.counties, file = "study_counties.RData")
+
+library(epadata)
+sample.data = EPA.daily.summary(email = 'lmenendez@uchicago.edu',
+                              key = 'tealmouse67',
+                              year.range = 2017:2018,
+                              state.FIPS.list = list(17, 18, 55), 
+                              pollutant.code = 88502)
+
+
+save(sample.data, file = 'sample_data.RData')
+
+devtools::install_url('https://uchicago.box.com/shared/static/zxyxu4mzx8wt1bm7s6jg5lft7ntyr2e0.zip')
+
+library(sensor2raster)
+
+usethis::use_data(sample.data)
+
+get(sample.data)
