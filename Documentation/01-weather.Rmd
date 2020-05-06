@@ -1,8 +1,13 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Weather Data Preparation and Wrangling
 
-This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can determine how accurate the models are at predicting air quality. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining air quality models.
+This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.
 
-## Querying EPA Data in R
+## Querying EPA Data from R
 
 EPA data was seamlessly imported into R using a custom package, named **epadata**. The package takes advanatge of the [EPA AQS DataMart API](https://aqs.epa.gov/aqsweb/documents/data_mart_welcome.html) to load data in R as data.frame objects with only a couple lines of code. It allows users to query for sensor data across multiple years, states, and air quality variables. Let's get started by downloading the package, then we'll do a walkthrough of the **epadata** package.
 
@@ -24,7 +29,7 @@ API.signup('YourEmailHere@uchicago.edu')
 
 Save your API key from the email confirmation for future reference. In case you don't recieve an email, verify that your email address was typed correctly, and check your spam folder.
 
-```{r API.details, echo = FALSE}
+```{r API.details, include=FALSE}
 email = 'lmenendez@uchicago.edu'
 key = 'tealmouse67'
 ```
@@ -39,8 +44,8 @@ PM25.data = EPA.daily.summary(email = email,
                                   state.FIPS.list = list(18, 55), 
                                   pollutant.code = 88502)
 
-head(PM25.data)
 ```
+
 Notice how for each each data request, you must specify which **timeframe** (year.range = 2017:2018), **states** (state.FIPS.list = list(18, 55)), and which **pollutant/weather variable** (pollutant.code = 88502) to query for. Inputting this data might not be strightforward at first, but the package has some other built-in functions to help you. 
 
 ### Selecting timeframes, states, and pollutant/weather variables
@@ -58,7 +63,7 @@ state.FIPS.list = list(18, 55) # Query for data in Indiana (18) and Wisconsin (5
 state.FIPS.list = list(17) # Query for data in Illinois (17) only.
 ```
 
-If you don't know the FIPS code associated with the State you're querying for, use the following function to find it. This function will return a data table containing the FIPS code for each State. 
+If you don't know the FIPS code associated with the State you're querying for, use the following function to find it. This function will return a data table containing the FIPS code for each State. Alternatively, a Google Search will yield the same results.
 
 ```{r FIPS}
 FIPS.codes = state.list(email, key)
@@ -86,7 +91,7 @@ variable.codes.2 = variable.list(email, key, class = 'ALL') # Returns all availa
 ```
 
 #### Advanced Querying {-}
-- **Fetching Daily Summaries for Multiple Variables** in a single query is not recommended. This is due to long processing times regardless of internet bandwidth/speed and large output data tables. However, you may choose to do this usign the **apply** family of functions, as shown below.
+- **Fetching Daily Summaries for Multiple Variables** in a single query is not recommended. This is due to long processing times regardless of internet bandwidth/speed and large output data tables. However, you may choose to do this using the **apply** family of functions, as shown below.
 
 ```{r advanced.multi, eval = FALSE}
 pollutant.codes = list(88502, 81102) # Two pollutant codes, one for each pollutant variable
