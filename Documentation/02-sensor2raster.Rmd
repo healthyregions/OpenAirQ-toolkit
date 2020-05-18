@@ -1,0 +1,30 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+# Merging Satellite and Point Sensor Data
+There's a fundamental challenge in our project to merge AOD data and predictor variables because the data capture techniques are very different. The satelite-based AOD data is measured continously across the surface of the earth on a 1km by 1km grid system. Meanwhile, sensor data is only captured locally at the sensor location. Therefore, a method to interpolate local sensor data to generate a continuous surface of data is required. 
+
+An 'Optimized' IDW interpolation was used to estimate sensor values across a 1km by 1km grid system. This method takes into account the sensor locations and value for each variable to estimate values in grid cells without a sensor based on a linear interpolation of nearby sensor values. The specific number of sensors to take into account and the distance decay power function were optimized by minimizing the RMSE (Error). This method was adapted from an [RSpatial Tutorial](https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data) on IDW interpolation with pollution and weather data.
+
+To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named **sensor2raster**. The next sections demonstrate how to apply this package to sensor data.
+
+```{r eval = FALSE}
+devtools::install_url('https://uchicago.box.com/shared/static/rtt6ofsm2j9dgob2qykck5yda0c89ayl.tar.gz')
+library(sensor2raster)
+```
+
+```{r include=FALSE}
+weather.data = readr::read_csv('https://uchicago.box.com/shared/static/ifp8fycz82yth25ydlhzm1w2790624ly.gz')
+```
+
+
+## Generate Rasters
+
+## Export to CSV
+
+
+
