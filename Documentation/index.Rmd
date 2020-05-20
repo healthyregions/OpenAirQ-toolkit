@@ -4,6 +4,7 @@ author: "Authors Names Here"
 date: "12/19/2019"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
+output_dir: "docs"
 documentclass: book
 biblio-style: apalike
 link-citations: yes

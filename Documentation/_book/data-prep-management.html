@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="merging-satellite-and-point-sensor.html"/>
+<link rel="next" href="merging-satellite-and-point-sensor-data.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -147,10 +147,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#weather-data-query"><i class="fa fa-check"></i><b>1.2.3</b> Weather Data Query</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="merging-satellite-and-point-sensor.html"><a href="merging-satellite-and-point-sensor.html"><i class="fa fa-check"></i><b>2</b> Merging Satellite and Point Sensor</a>
+<li class="chapter" data-level="2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html"><i class="fa fa-check"></i><b>2</b> Merging Satellite and Point Sensor Data</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="merging-satellite-and-point-sensor.html"><a href="merging-satellite-and-point-sensor.html#generate-rasters"><i class="fa fa-check"></i><b>2.1</b> Generate Rasters</a></li>
-<li class="chapter" data-level="2.2" data-path="merging-satellite-and-point-sensor.html"><a href="merging-satellite-and-point-sensor.html#export-to-csv"><i class="fa fa-check"></i><b>2.2</b> Export to CSV</a></li>
+<li class="chapter" data-level="2.1" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#generate-rasters"><i class="fa fa-check"></i><b>2.1</b> Generate Rasters</a></li>
+<li class="chapter" data-level="2.2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#export-to-csv"><i class="fa fa-check"></i><b>2.2</b> Export to CSV</a></li>
 </ul></li>
 </ul>
 
@@ -203,20 +203,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-6"><a href="data-prep-management.html#cb6-6"></a></span>
 <span id="cb6-7"><a href="data-prep-management.html#cb6-7"></a></span>
 <span id="cb6-8"><a href="data-prep-management.html#cb6-8"></a>IL.data[<span class="dv">1</span>,]</span></code></pre></div>
-<pre><code>##   state_code county_code site_number parameter_code poc latitude longitude
-## 2         17         115        0013          88101   3 39.86683 -88.92559
-##   datum                parameter sample_duration pollutant_standard date_local
-## 2 WGS84 PM2.5 - Local Conditions          1 HOUR               &lt;NA&gt; 2018-01-01
-##              units_of_measure event_type observation_count observation_percent
-## 2 Micrograms/cubic meter (LC)       None                24                 100
-##   validity_indicator arithmetic_mean first_max_value first_max_hour aqi
-## 2                  Y          9.5625            20.6              1  NA
-##   method_code                                                           method
-## 2         183 Thermo Scientific 5014i or FH62C14-DHS w/VSCC - Beta Attenuation
-##   local_site_name site_address    state county    city cbsa_code        cbsa
-## 2    IEPA TRAILER 2200 N. 22ND Illinois  Macon Decatur     19500 Decatur, IL
-##   date_of_last_change
-## 2          2019-01-24</code></pre>
+<pre><code>##   state_code county_code site_number parameter_code poc latitude longitude datum                parameter sample_duration
+## 2         17         115        0013          88101   3 39.86683 -88.92559 WGS84 PM2.5 - Local Conditions          1 HOUR
+##   pollutant_standard date_local            units_of_measure event_type observation_count observation_percent
+## 2               &lt;NA&gt; 2018-01-01 Micrograms/cubic meter (LC)       None                24                 100
+##   validity_indicator arithmetic_mean first_max_value first_max_hour aqi method_code
+## 2                  Y          9.5625            20.6              1  NA         183
+##                                                             method local_site_name site_address    state county    city
+## 2 Thermo Scientific 5014i or FH62C14-DHS w/VSCC - Beta Attenuation    IEPA TRAILER 2200 N. 22ND Illinois  Macon Decatur
+##   cbsa_code        cbsa date_of_last_change
+## 2     19500 Decatur, IL          2019-01-24</code></pre>
 <p>The outputted data frame includes many fields regarding the PM2.5 observation, including spatial data for the sensor’s location. We will focus on these details later on in our data wrangling process. The next code chunk describes how to query for PM2.5 data across our three states and four years.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-prep-management.html#cb8-1"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb8-2"><a href="data-prep-management.html#cb8-2"></a></span>
@@ -256,20 +252,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-prep-management.html#cb12-1"></a>SFO.weather =<span class="st"> </span><span class="kw">riem_measures</span>(<span class="dt">station =</span> <span class="st">&#39;KSFO&#39;</span>, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&#39;2014-01-02&#39;</span>)</span>
 <span id="cb12-2"><a href="data-prep-management.html#cb12-2"></a><span class="kw">head</span>(SFO.weather)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 31
-##   station valid                 lon   lat  tmpf  dwpf  relh  drct  sknt  p01i
-##   &lt;chr&gt;   &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 SFO     2014-01-01 00:56:00 -122.  37.6  54.0  43.0  66.3   290     8     0
-## 2 SFO     2014-01-01 01:56:00 -122.  37.6  52.0  43.0  71.3   280     9     0
-## 3 SFO     2014-01-01 02:56:00 -122.  37.6  51.1  44.1  76.8   290     8     0
-## 4 SFO     2014-01-01 03:56:00 -122.  37.6  48.9  37.9  65.7     0     0     0
-## 5 SFO     2014-01-01 04:56:00 -122.  37.6  50    39.9  68.2     0     0     0
-## 6 SFO     2014-01-01 05:56:00 -122.  37.6  48.9  37.0  63.4     0     0     0
-## # … with 21 more variables: alti &lt;dbl&gt;, mslp &lt;dbl&gt;, vsby &lt;dbl&gt;, gust &lt;lgl&gt;,
-## #   skyc1 &lt;chr&gt;, skyc2 &lt;chr&gt;, skyc3 &lt;chr&gt;, skyc4 &lt;lgl&gt;, skyl1 &lt;dbl&gt;,
-## #   skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;, skyl4 &lt;lgl&gt;, wxcodes &lt;lgl&gt;,
-## #   ice_accretion_1hr &lt;lgl&gt;, ice_accretion_3hr &lt;lgl&gt;, ice_accretion_6hr &lt;lgl&gt;,
-## #   peak_wind_gust &lt;lgl&gt;, peak_wind_drct &lt;lgl&gt;, peak_wind_time &lt;lgl&gt;,
-## #   feel &lt;dbl&gt;, metar &lt;chr&gt;</code></pre>
+##   station valid                 lon   lat  tmpf  dwpf  relh  drct  sknt  p01i  alti  mslp  vsby gust  skyc1 skyc2 skyc3
+##   &lt;chr&gt;   &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 SFO     2014-01-01 00:56:00 -122.  37.6  54.0  43.0  66.3   290     8     0  30.2 1021.    10 NA    SCT   &lt;NA&gt;  &lt;NA&gt; 
+## 2 SFO     2014-01-01 01:56:00 -122.  37.6  52.0  43.0  71.3   280     9     0  30.2 1022.    10 NA    FEW   &lt;NA&gt;  &lt;NA&gt; 
+## 3 SFO     2014-01-01 02:56:00 -122.  37.6  51.1  44.1  76.8   290     8     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
+## 4 SFO     2014-01-01 03:56:00 -122.  37.6  48.9  37.9  65.7     0     0     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
+## 5 SFO     2014-01-01 04:56:00 -122.  37.6  50    39.9  68.2     0     0     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
+## 6 SFO     2014-01-01 05:56:00 -122.  37.6  48.9  37.0  63.4     0     0     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
+## # … with 14 more variables: skyc4 &lt;lgl&gt;, skyl1 &lt;dbl&gt;, skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;, skyl4 &lt;lgl&gt;, wxcodes &lt;lgl&gt;,
+## #   ice_accretion_1hr &lt;lgl&gt;, ice_accretion_3hr &lt;lgl&gt;, ice_accretion_6hr &lt;lgl&gt;, peak_wind_gust &lt;lgl&gt;, peak_wind_drct &lt;lgl&gt;,
+## #   peak_wind_time &lt;lgl&gt;, feel &lt;dbl&gt;, metar &lt;chr&gt;</code></pre>
 <p>The outputted table shows weather data for a 24-hour period on January 1st, 2014 at the San Francisco International Airport. The <em>valid</em> column species when each weather report was generated, typically at 1-hour intervals. The <em>tmpf</em> and <em>dwpf</em> columns give the ambient air temperature and dew point in Fahrenheit (ºF). Other important variables in our project include air pressure (<em>alti</em>), measured in inches of mercury (in.Hg), and visibility (<em>vsby</em>) in miles. For more information on all available varibles, see Iowa State’s <a href="https://mesonet.agron.iastate.edu/request/download.phtml">Documentation</a>.</p>
 <p>Next, we will apply this function at a large scare across multiple sensors and timescales.</p>
 </div>
@@ -335,17 +328,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Warning: No results for this query.</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-prep-management.html#cb21-1"></a>weather.data[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 31
-##   station valid                 lon   lat  tmpf  dwpf  relh  drct  sknt   p01i
-##   &lt;chr&gt;   &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-## 1 MDW     2014-01-01 00:49:00 -87.8  41.8  12.2  8.6   85.2   230     3 0.01  
-## 2 MDW     2014-01-01 00:51:00 -87.8  41.8  12.9  8.96  83.8   230     3 0.01  
-## 3 MDW     2014-01-01 01:51:00 -87.8  41.8  12.9  8.96  83.8   280     3 0.0001
-## # … with 21 more variables: alti &lt;dbl&gt;, mslp &lt;dbl&gt;, vsby &lt;dbl&gt;, gust &lt;dbl&gt;,
-## #   skyc1 &lt;chr&gt;, skyc2 &lt;chr&gt;, skyc3 &lt;chr&gt;, skyc4 &lt;lgl&gt;, skyl1 &lt;dbl&gt;,
-## #   skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;, skyl4 &lt;lgl&gt;, wxcodes &lt;chr&gt;,
-## #   ice_accretion_1hr &lt;dbl&gt;, ice_accretion_3hr &lt;lgl&gt;, ice_accretion_6hr &lt;dbl&gt;,
-## #   peak_wind_gust &lt;lgl&gt;, peak_wind_drct &lt;lgl&gt;, peak_wind_time &lt;lgl&gt;,
-## #   feel &lt;dbl&gt;, metar &lt;chr&gt;</code></pre>
+##   station valid                 lon   lat  tmpf  dwpf  relh  drct  sknt   p01i  alti  mslp  vsby  gust skyc1 skyc2 skyc3
+##   &lt;chr&gt;   &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 MDW     2014-01-01 00:49:00 -87.8  41.8  12.2  8.6   85.2   230     3 0.01    30.3   NA      2    NA FEW   BKN   OVC  
+## 2 MDW     2014-01-01 00:51:00 -87.8  41.8  12.9  8.96  83.8   230     3 0.01    30.3 1029.     2    NA FEW   BKN   OVC  
+## 3 MDW     2014-01-01 01:51:00 -87.8  41.8  12.9  8.96  83.8   280     3 0.0001  30.3 1030.     2    NA FEW   OVC   &lt;NA&gt; 
+## # … with 14 more variables: skyc4 &lt;lgl&gt;, skyl1 &lt;dbl&gt;, skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;, skyl4 &lt;lgl&gt;, wxcodes &lt;chr&gt;,
+## #   ice_accretion_1hr &lt;dbl&gt;, ice_accretion_3hr &lt;lgl&gt;, ice_accretion_6hr &lt;dbl&gt;, peak_wind_gust &lt;lgl&gt;, peak_wind_drct &lt;lgl&gt;,
+## #   peak_wind_time &lt;lgl&gt;, feel &lt;dbl&gt;, metar &lt;chr&gt;</code></pre>
 <div id="querying-full-weather-dataset" class="section level4 unnumbered" number="">
 <h4>Querying Full Weather Dataset</h4>
 <p>Use caution when querying for a large amount of data. Data tables can easily become unwieldy after querying for a large number of weather stations across a wide time scale. The code snippet below downloads all ASOS weather data for sensors in our study area from January 1st 2014 to December 31st 2018, which is our study time period. It has approximately 4.8 Million records and takes 6-10 minutes to download.</p>
@@ -362,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="merging-satellite-and-point-sensor.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="merging-satellite-and-point-sensor-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

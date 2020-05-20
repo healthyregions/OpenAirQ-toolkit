@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Welcome to the Documentation!</title>
+  <title>2 Merging Satellite and Point Sensor Data | Welcome to the Documentation!</title>
   <meta name="description" content="I love documentation! Don’t you? :)" />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Welcome to the Documentation!" />
+  <meta property="og:title" content="2 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Welcome to the Documentation!" />
+  <meta name="twitter:title" content="2 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
   
   <meta name="twitter:description" content="I love documentation! Don’t you? :)" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="data-prep-management.html"/>
 
-<link rel="next" href="data-prep-management.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,25 +169,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Welcome to the Documentation!</h1>
-<p class="author"><em>Authors Names Here</em></p>
-<p class="date"><em>12/19/2019</em></p>
+<div id="merging-satellite-and-point-sensor-data" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Merging Satellite and Point Sensor Data</h1>
+<p>There’s a fundamental challenge in our project to merge AOD data and predictor variables because the data capture techniques are very different. The satelite-based AOD data is measured continously across the surface of the earth on a 1km by 1km grid system. Meanwhile, sensor data is only captured locally at the sensor location. Therefore, a method to interpolate local sensor data to generate a continuous surface of data is required.</p>
+<p>An ‘Optimized’ IDW interpolation was used to estimate sensor values across a 1km by 1km grid system. This method takes into account the sensor locations and value for each variable to estimate values in grid cells without a sensor based on a linear interpolation of nearby sensor values. The specific number of sensors to take into account and the distance decay power function were optimized by minimizing the RMSE (Error). This method was adapted from an <a href="https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data">RSpatial Tutorial</a> on IDW interpolation with pollution and weather data.</p>
+<p>To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named <strong>sensor2raster</strong>. The next sections demonstrate how to apply this package to sensor data.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="merging-satellite-and-point-sensor-data.html#cb24-1"></a>devtools<span class="op">::</span><span class="kw">install_url</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/rtt6ofsm2j9dgob2qykck5yda0c89ayl.tar.gz&#39;</span>)</span>
+<span id="cb24-2"><a href="merging-satellite-and-point-sensor-data.html#cb24-2"></a><span class="kw">library</span>(sensor2raster)</span></code></pre></div>
+<div id="generate-rasters" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Generate Rasters</h2>
 </div>
-<div id="preface" class="section level1 unnumbered" number="">
-<h1>Preface</h1>
-<div id="hello-world" class="section level2 unnumbered" number="">
-<h2>Hello World!</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="kw">summary</span>(cars)</span></code></pre></div>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="export-to-csv" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Export to CSV</h2>
 
 </div>
 </div>
@@ -196,8 +189,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
+<a href="data-prep-management.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="data-prep-management.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
