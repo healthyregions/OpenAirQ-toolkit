@@ -174,45 +174,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.</p>
 <div id="epa-pollution-data" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> EPA Pollution Data</h2>
+<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<img src="https://archive.epa.gov/pesticides/region4/sesd/pm25/web/jpg/air-monitoring-site.jpg" alt="EPA Pollution Monitoring Site (EPA.gov)"  />
+<p class="caption">
+Figure 1.1: EPA Pollution Monitoring Site (EPA.gov)
+</p>
+</div>
 <p>EPA data was seamlessly imported into R using the <strong>aqsr</strong> package by <a href="https://github.com/jpkeller">Joshua P. Keller</a> at Colorado State University. The package takes advanatge of the <a href="https://aqs.epa.gov/aqsweb/documents/data_mart_welcome.html">EPA AQS DataMart API</a> to load data in R as data.frame objects with only a couple lines of code. It allows users to query for sensor data across multiple air quality variables, geographies, and timeframes. Let’s get started by downloading the package.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-prep-management.html#cb3-1"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;jpkeller/aqsr&quot;</span>)</span>
-<span id="cb3-2"><a href="data-prep-management.html#cb3-2"></a><span class="kw">library</span>(aqsr)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-prep-management.html#cb4-1"></a><span class="co"># devtools::install_github(&quot;jpkeller/aqsr&quot;)</span></span>
+<span id="cb4-2"><a href="data-prep-management.html#cb4-2"></a><span class="kw">library</span>(aqsr)</span></code></pre></div>
 <div id="getting-started" class="section level3" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span> Getting Started</h3>
 <p>This section describes the process for querying EPA sensor data using the <strong>aqsr</strong> package. For more information on how each function works, please reference the package documentation.</p>
 <div id="obtaining-an-api-key" class="section level4 unnumbered" number="">
 <h4>Obtaining an API Key</h4>
-<p>For first time users of the AQS DataMart API, you must first register your email to recieve an API key. (Users who already have a DataMart API key, please skep to the next step). The API key is a required input for all querying functions in the <strong>aqsr</strong> package. Obtaining a key is made simple by calling the <em>aqs_signup()</em> function and inputting your own email address.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-prep-management.html#cb4-1"></a><span class="kw">aqs_signup</span>(<span class="st">&#39;YourEmailHere@uchicago.edu&#39;</span>)</span></code></pre></div>
+<p>For first time users of the AQS DataMart API, you must first register your email to recieve an API key. (Users who already have a DataMart API key, please skep to the next step). The API key is a required input for all querying functions in the <strong>aqsr</strong> package. Obtaining a key is made simple by calling the <code>aqs_signup()</code> function and inputting your own email address.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-prep-management.html#cb5-1"></a><span class="kw">aqs_signup</span>(<span class="st">&#39;YourEmailHere@uchicago.edu&#39;</span>)</span></code></pre></div>
 <p>Save your API key from the email confirmation for future reference. In case you don’t recieve an email, verify that your email address was typed correctly, and check your spam folder.</p>
 </div>
 <div id="using-your-api-key-in-aqsr" class="section level4" number="1.1.1.1">
 <h4><span class="header-section-number">1.1.1.1</span> Using your API Key in <strong>aqsr</strong></h4>
-<p>Setup your AQI key with the <strong>aqr</strong> package by using the <em>create_user()</em> function. This way, you won’t have to keep typing your email and API key each time you query for data.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-prep-management.html#cb5-1"></a>myuser =<span class="st"> </span><span class="kw">create_user</span>(<span class="dt">email =</span> <span class="st">&#39;YourEmailHere@uchicago.edu&#39;</span>, <span class="dt">key =</span> <span class="st">&#39;apikey123&#39;</span>)</span></code></pre></div>
+<p>Setup your AQI key with the <strong>aqr</strong> package by using the <code>create_user()</code> function. This way, you won’t have to keep typing your email and API key each time you query for data.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-prep-management.html#cb6-1"></a>myuser =<span class="st"> </span><span class="kw">create_user</span>(<span class="dt">email =</span> <span class="st">&#39;YourEmailHere@uchicago.edu&#39;</span>, <span class="dt">key =</span> <span class="st">&#39;apikey123&#39;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="pm2.5-data-query" class="section level3" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> PM2.5 Data Query</h3>
 <p>This section describes how to query for PM2.5 concetration data from EPA pollution sensors. We are looking for at PM2.5 data Wisconsin, Illinois, and Indiana between 2014 and 2018 for our project. First, let’s start small and query only for Illinois data for the first week of 2018.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-prep-management.html#cb6-1"></a>IL.data =<span class="st"> </span><span class="kw">aqs_dailyData_byState</span>(<span class="dt">aqs_user =</span> myuser,    <span class="co"># Previously defined user emailand API key</span></span>
-<span id="cb6-2"><a href="data-prep-management.html#cb6-2"></a>                                <span class="dt">param =</span> <span class="dv">88101</span>,        <span class="co"># EPA AQS Parameter Code for PM2.5</span></span>
-<span id="cb6-3"><a href="data-prep-management.html#cb6-3"></a>                                <span class="dt">bdate =</span> <span class="st">&quot;20180101&quot;</span>,   <span class="co"># Starting Date (Jan 1st ,2018)</span></span>
-<span id="cb6-4"><a href="data-prep-management.html#cb6-4"></a>                                <span class="dt">edate =</span> <span class="st">&quot;20180107&quot;</span>,   <span class="co"># Ending Date (Jan 7th, 2018)</span></span>
-<span id="cb6-5"><a href="data-prep-management.html#cb6-5"></a>                                <span class="dt">state =</span> <span class="st">&quot;17&quot;</span>)         <span class="co"># State FIPS Code for Illinois</span></span>
-<span id="cb6-6"><a href="data-prep-management.html#cb6-6"></a></span>
-<span id="cb6-7"><a href="data-prep-management.html#cb6-7"></a></span>
-<span id="cb6-8"><a href="data-prep-management.html#cb6-8"></a>IL.data[<span class="dv">1</span>,]</span></code></pre></div>
-<pre><code>##   state_code county_code site_number parameter_code poc latitude longitude datum                parameter sample_duration
-## 2         17         115        0013          88101   3 39.86683 -88.92559 WGS84 PM2.5 - Local Conditions   24-HR BLK AVG
-##   pollutant_standard date_local            units_of_measure event_type observation_count observation_percent
-## 2  PM25 24-hour 2006 2018-01-03 Micrograms/cubic meter (LC)       None                 1                 100
-##   validity_indicator arithmetic_mean first_max_value first_max_hour aqi method_code
-## 2                  Y            12.1            12.1              0  51         183
-##                                                             method local_site_name site_address    state county    city
-## 2 Thermo Scientific 5014i or FH62C14-DHS w/VSCC - Beta Attenuation    IEPA TRAILER 2200 N. 22ND Illinois  Macon Decatur
-##   cbsa_code        cbsa date_of_last_change
-## 2     19500 Decatur, IL          2019-01-24</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-prep-management.html#cb7-1"></a>IL.data =<span class="st"> </span><span class="kw">aqs_dailyData_byState</span>(<span class="dt">aqs_user =</span> myuser,    <span class="co"># Previously defined user emailand API key</span></span>
+<span id="cb7-2"><a href="data-prep-management.html#cb7-2"></a>                                <span class="dt">param =</span> <span class="dv">88101</span>,        <span class="co"># EPA AQS Parameter Code for PM2.5</span></span>
+<span id="cb7-3"><a href="data-prep-management.html#cb7-3"></a>                                <span class="dt">bdate =</span> <span class="st">&quot;20180101&quot;</span>,   <span class="co"># Starting Date (Jan 1st ,2018)</span></span>
+<span id="cb7-4"><a href="data-prep-management.html#cb7-4"></a>                                <span class="dt">edate =</span> <span class="st">&quot;20180107&quot;</span>,   <span class="co"># Ending Date (Jan 7th, 2018)</span></span>
+<span id="cb7-5"><a href="data-prep-management.html#cb7-5"></a>                                <span class="dt">state =</span> <span class="st">&quot;17&quot;</span>)         <span class="co"># State FIPS Code for Illinois</span></span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="4%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="3%" />
+<col width="7%" />
+<col width="8%" />
+<col width="4%" />
+<col width="20%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">state_code</th>
+<th align="left">county_code</th>
+<th align="left">site_number</th>
+<th align="left">parameter_code</th>
+<th align="right">poc</th>
+<th align="right">latitude</th>
+<th align="right">longitude</th>
+<th align="left">datum</th>
+<th align="left">parameter</th>
+<th align="left">sample_duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">17</td>
+<td align="left">115</td>
+<td align="left">0013</td>
+<td align="left">88101</td>
+<td align="right">3</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">1 HOUR</td>
+</tr>
+<tr class="even">
+<td align="left">2100</td>
+<td align="left">17</td>
+<td align="left">115</td>
+<td align="left">0013</td>
+<td align="left">88101</td>
+<td align="right">3</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24-HR BLK AVG</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">17</td>
+<td align="left">115</td>
+<td align="left">0013</td>
+<td align="left">88101</td>
+<td align="right">3</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24-HR BLK AVG</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">17</td>
+<td align="left">115</td>
+<td align="left">0013</td>
+<td align="left">88101</td>
+<td align="right">3</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24-HR BLK AVG</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">17</td>
+<td align="left">115</td>
+<td align="left">0013</td>
+<td align="left">88101</td>
+<td align="right">3</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24-HR BLK AVG</td>
+</tr>
+</tbody>
+</table>
 <p>The outputted data frame includes many fields regarding the PM2.5 observation, including spatial data for the sensor’s location. We will focus on these details later on in our data wrangling process. The next code chunk describes how to query for PM2.5 data across our three states and four years.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-prep-management.html#cb8-1"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb8-2"><a href="data-prep-management.html#cb8-2"></a></span>
@@ -237,33 +327,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-21"><a href="data-prep-management.html#cb8-21"></a><span class="st">                        </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, .)</span>
 <span id="cb8-22"><a href="data-prep-management.html#cb8-22"></a>        }) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb8-23"><a href="data-prep-management.html#cb8-23"></a><span class="st">                </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, .)</span></code></pre></div>
+<hr />
 </div>
 </div>
 <div id="faa-weather-data" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> FAA Weather Data</h2>
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg/1280px-2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg" alt="An ASOS Observation Station in Elko, NV. (Wikimedia Commons)"  />
+<p class="caption">
+Figure 1.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
+</p>
+</div>
 <p>FAA weather data gathered from the <a href="https://en.wikipedia.org/wiki/Automated_airport_weather_station">Automated Surface Observing System (ASOS)</a> can be imported using the <strong>riem</strong> package. This package, created by <a href="https://ropensci.org/">ROpenSci</a>, queries weather data from the <a href="https://mesonet.agron.iastate.edu/ASOS/">Iowa Environmental Mesonet</a>, an online portal for international ASOS data maintained by Iowa State University. First, let’s load the package.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-prep-management.html#cb9-1"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&#39;ropensci/riem&#39;</span>)</span></code></pre></div>
-<pre><code>## Skipping install of &#39;riem&#39; from a github remote, the SHA1 (ea0f082d) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-prep-management.html#cb11-1"></a><span class="kw">library</span>(riem, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-prep-management.html#cb9-1"></a><span class="co"># devtools::install_github(&#39;ropensci/riem&#39;)</span></span>
+<span id="cb9-2"><a href="data-prep-management.html#cb9-2"></a><span class="kw">library</span>(riem, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <div id="sample-query" class="section level3" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> Sample Query</h3>
 <p>Below is an R code snippet that performs the simplest weather data query possible in the <strong>riem</strong> package. It specifies a particular weather station using an airport code and a date range to query for. The output is a tibble table of raw ASOS weather data. The code snippet below extracts sensor data at the San Francisco International Airport.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-prep-management.html#cb12-1"></a>SFO.weather =<span class="st"> </span><span class="kw">riem_measures</span>(<span class="dt">station =</span> <span class="st">&#39;KSFO&#39;</span>, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&#39;2014-01-02&#39;</span>)</span>
-<span id="cb12-2"><a href="data-prep-management.html#cb12-2"></a><span class="kw">head</span>(SFO.weather)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 31
-##   station valid                 lon   lat  tmpf  dwpf  relh  drct  sknt  p01i  alti  mslp  vsby gust  skyc1 skyc2 skyc3
-##   &lt;chr&gt;   &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 SFO     2014-01-01 00:56:00 -122.  37.6  54.0  43.0  66.3   290     8     0  30.2 1021.    10 NA    SCT   &lt;NA&gt;  &lt;NA&gt; 
-## 2 SFO     2014-01-01 01:56:00 -122.  37.6  52.0  43.0  71.3   280     9     0  30.2 1022.    10 NA    FEW   &lt;NA&gt;  &lt;NA&gt; 
-## 3 SFO     2014-01-01 02:56:00 -122.  37.6  51.1  44.1  76.8   290     8     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
-## 4 SFO     2014-01-01 03:56:00 -122.  37.6  48.9  37.9  65.7     0     0     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
-## 5 SFO     2014-01-01 04:56:00 -122.  37.6  50    39.9  68.2     0     0     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
-## 6 SFO     2014-01-01 05:56:00 -122.  37.6  48.9  37.0  63.4     0     0     0  30.2 1022.    10 NA    CLR   &lt;NA&gt;  &lt;NA&gt; 
-## # … with 14 more variables: skyc4 &lt;lgl&gt;, skyl1 &lt;dbl&gt;, skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;, skyl4 &lt;lgl&gt;, wxcodes &lt;lgl&gt;,
-## #   ice_accretion_1hr &lt;lgl&gt;, ice_accretion_3hr &lt;lgl&gt;, ice_accretion_6hr &lt;lgl&gt;, peak_wind_gust &lt;lgl&gt;, peak_wind_drct &lt;lgl&gt;,
-## #   peak_wind_time &lt;lgl&gt;, feel &lt;dbl&gt;, metar &lt;chr&gt;</code></pre>
-<p>The outputted table shows weather data for a 24-hour period on January 1st, 2014 at the San Francisco International Airport. The <em>valid</em> column species when each weather report was generated, typically at 1-hour intervals. The <em>tmpf</em> and <em>dwpf</em> columns give the ambient air temperature and dew point in Fahrenheit (ºF). Other important variables in our project include air pressure (<em>alti</em>), measured in inches of mercury (in.Hg), and visibility (<em>vsby</em>) in miles. For more information on all available varibles, see Iowa State’s <a href="https://mesonet.agron.iastate.edu/request/download.phtml">Documentation</a>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-prep-management.html#cb10-1"></a>SFO.weather =<span class="st"> </span><span class="kw">riem_measures</span>(<span class="dt">station =</span> <span class="st">&#39;KSFO&#39;</span>, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&#39;2014-01-02&#39;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station</th>
+<th align="left">valid</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+<th align="right">tmpf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 00:56:00</td>
+<td align="right">-122.3749</td>
+<td align="right">37.619</td>
+<td align="right">53.96</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 01:56:00</td>
+<td align="right">-122.3749</td>
+<td align="right">37.619</td>
+<td align="right">51.98</td>
+</tr>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 02:56:00</td>
+<td align="right">-122.3749</td>
+<td align="right">37.619</td>
+<td align="right">51.08</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 03:56:00</td>
+<td align="right">-122.3749</td>
+<td align="right">37.619</td>
+<td align="right">48.92</td>
+</tr>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 04:56:00</td>
+<td align="right">-122.3749</td>
+<td align="right">37.619</td>
+<td align="right">50.00</td>
+</tr>
+</tbody>
+</table>
+<p>The outputted table shows weather data for a 24-hour period on January 1st, 2014 at the San Francisco International Airport. The <code>valid</code> column species when each weather report was generated, typically at 1-hour intervals. The <code>tmpf</code> and <code>dwpf</code> columns give the ambient air temperature and dew point in Fahrenheit (ºF). Other important variables in our project include air pressure (<code>alti</code>), measured in inches of mercury (in.Hg), and visibility (<code>vsby</code>) in miles. For more information on all available varibles, see Iowa State’s <a href="https://mesonet.agron.iastate.edu/request/download.phtml">Documentation</a>.</p>
 <p>Next, we will apply this function at a large scare across multiple sensors and timescales.</p>
 </div>
 <div id="finding-asos-sensors" class="section level3" number="1.2.2">
@@ -272,75 +402,150 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="finding-sensors-by-state" class="section level4 unnumbered" number="">
 <h4>Finding Sensors by State</h4>
 <p>In our project, we focus on certain counties in Illinois, Indiana, and Wisconsin, so we are interested in finding the sensors within that study area. The first step is to query the locations of all weather stations in the three states using the <strong>riem</strong> package. In the example below, we query for sensors in the Illinois ASOS sensor network.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-prep-management.html#cb14-1"></a><span class="kw">riem_stations</span>(<span class="dt">network =</span> <span class="st">&#39;IL_ASOS&#39;</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,]</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 4
-##   id    name               lon   lat
-##   &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;
-## 1 ALN   ALTON/ST LOUIS R -90.0  38.9
-## 2 BMI   BLOOMINGTON/NORM -88.9  40.5
-## 3 CPS   CAHOKIA/ST LOUIS -90.2  38.6</code></pre>
-<p>To query for data across multiple states, we are going the apply the <em>riem_stations</em> function to a list of weather station networks, as shown below.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-prep-management.html#cb16-1"></a>networks =<span class="st"> </span><span class="kw">list</span>(<span class="st">&#39;IL_ASOS&#39;</span>, <span class="st">&#39;IN_ASOS&#39;</span>, <span class="st">&#39;WI_ASOS&#39;</span>)</span>
-<span id="cb16-2"><a href="data-prep-management.html#cb16-2"></a></span>
-<span id="cb16-3"><a href="data-prep-management.html#cb16-3"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb16-4"><a href="data-prep-management.html#cb16-4"></a>station.locs =<span class="st"> </span><span class="kw">lapply</span>(networks, riem<span class="op">::</span>riem_stations) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-5"><a href="data-prep-management.html#cb16-5"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
-<p>Note: You can find a list of state abbreviations by typing ‘state.abb’ in your R console.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-prep-management.html#cb11-1"></a>IL.stations =<span class="st"> </span><span class="kw">riem_stations</span>(<span class="dt">network =</span> <span class="st">&#39;IL_ASOS&#39;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ALN</td>
+<td align="left">ALTON/ST LOUIS R</td>
+<td align="right">-90.04599</td>
+<td align="right">38.88992</td>
+</tr>
+<tr class="even">
+<td align="left">BMI</td>
+<td align="left">BLOOMINGTON/NORM</td>
+<td align="right">-88.91592</td>
+<td align="right">40.47711</td>
+</tr>
+<tr class="odd">
+<td align="left">CPS</td>
+<td align="left">CAHOKIA/ST LOUIS</td>
+<td align="right">-90.15622</td>
+<td align="right">38.57073</td>
+</tr>
+<tr class="even">
+<td align="left">CIR</td>
+<td align="left">Cairo</td>
+<td align="right">-89.21960</td>
+<td align="right">37.06470</td>
+</tr>
+<tr class="odd">
+<td align="left">MDH</td>
+<td align="left">CARBONDALE/MURPH</td>
+<td align="right">-89.25000</td>
+<td align="right">37.78000</td>
+</tr>
+<tr class="even">
+<td align="left">CUL</td>
+<td align="left">Carmi</td>
+<td align="right">-88.12306</td>
+<td align="right">38.08948</td>
+</tr>
+</tbody>
+</table>
+<p>To query for data across multiple states, we are going the apply the <code>riem_stations</code> function to a list of weather station networks, as shown below.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-prep-management.html#cb12-1"></a>networks =<span class="st"> </span><span class="kw">list</span>(<span class="st">&#39;IL_ASOS&#39;</span>, <span class="st">&#39;IN_ASOS&#39;</span>, <span class="st">&#39;WI_ASOS&#39;</span>)</span>
+<span id="cb12-2"><a href="data-prep-management.html#cb12-2"></a></span>
+<span id="cb12-3"><a href="data-prep-management.html#cb12-3"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb12-4"><a href="data-prep-management.html#cb12-4"></a>station.locs =<span class="st"> </span><span class="kw">lapply</span>(networks, riem<span class="op">::</span>riem_stations) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-5"><a href="data-prep-management.html#cb12-5"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<p>Note: You can find a list of state abbreviations by typing <code>state.abb</code> in your R console.</p>
 </div>
 <div id="converting-latitude-and-longitude-coordinates-to-spatial-data" class="section level4 unnumbered" number="">
 <h4>Converting Latitude and Longitude Coordinates to Spatial Data</h4>
-<p>The data tables returned by the <strong>riem</strong> package must be converted to spatial data to determine which sensors are located in the study area. Since the lon/lat coordinates are already provided, the data table is easily converted to a spatial <em>sf</em> object.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-prep-management.html#cb17-1"></a>station.locs.sf =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_as_sf</span>(station.locs, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb17-2"><a href="data-prep-management.html#cb17-2"></a></span>
-<span id="cb17-3"><a href="data-prep-management.html#cb17-3"></a><span class="co"># Plot stations and study area boundaries to verify that the correct sensors were selected</span></span>
-<span id="cb17-4"><a href="data-prep-management.html#cb17-4"></a><span class="kw">plot</span>(station.locs.sf<span class="op">$</span>geometry)</span>
-<span id="cb17-5"><a href="data-prep-management.html#cb17-5"></a><span class="kw">plot</span>(sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>The data tables returned by the <strong>riem</strong> package must be converted to spatial data to determine which sensors are located in the study area. Since the lon/lat coordinates are already provided, the data table is easily converted to a spatial <code>sf</code> object.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data-prep-management.html#cb13-1"></a>station.locs.sf =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_as_sf</span>(station.locs, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb13-2"><a href="data-prep-management.html#cb13-2"></a></span>
+<span id="cb13-3"><a href="data-prep-management.html#cb13-3"></a><span class="co"># Plot stations and study area boundaries to verify that the correct sensors were selected</span></span>
+<span id="cb13-4"><a href="data-prep-management.html#cb13-4"></a><span class="kw">plot</span>(station.locs.sf<span class="op">$</span>geometry)</span>
+<span id="cb13-5"><a href="data-prep-management.html#cb13-5"></a><span class="kw">plot</span>(sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/csv.to.spatial-1.png" width="672" /></p>
 <p>We plot to results to verify that our query and data conversion process worked correctly. For reference, the boundaires of the study area is outlined in red.</p>
 </div>
 <div id="selecting-sensors-within-our-study-area" class="section level4 unnumbered" number="">
 <h4>Selecting Sensors within our Study Area</h4>
 <p>Next, we perform a spatial join to only keep the points located within the boundaries of our study area polygons. The spatial join is completed by the <strong>sf</strong> package, as shown below. For more information regarding spatial joins and spatial predicates, please see <a href="https://gisgeography.com/spatial-join/">this</a> helpful blog post by GISgeography.com.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-prep-management.html#cb18-1"></a><span class="co"># Loading study area boundaries</span></span>
-<span id="cb18-2"><a href="data-prep-management.html#cb18-2"></a>study.area =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb18-3"><a href="data-prep-management.html#cb18-3"></a></span>
-<span id="cb18-4"><a href="data-prep-management.html#cb18-4"></a>study.sensors =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_join</span>(station.locs.sf, study.area, <span class="dt">left =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb18-5"><a href="data-prep-management.html#cb18-5"></a></span>
-<span id="cb18-6"><a href="data-prep-management.html#cb18-6"></a><span class="co"># Verify Spatial Join by Plotting</span></span>
-<span id="cb18-7"><a href="data-prep-management.html#cb18-7"></a><span class="kw">plot</span>(study.area<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>)</span>
-<span id="cb18-8"><a href="data-prep-management.html#cb18-8"></a><span class="kw">plot</span>(study.sensors<span class="op">$</span>geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb18-9"><a href="data-prep-management.html#cb18-9"></a><span class="kw">title</span>(<span class="st">&#39;Weather Stations Within the Study Area&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-prep-management.html#cb14-1"></a><span class="co"># Loading study area boundaries</span></span>
+<span id="cb14-2"><a href="data-prep-management.html#cb14-2"></a>study.area =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb14-3"><a href="data-prep-management.html#cb14-3"></a></span>
+<span id="cb14-4"><a href="data-prep-management.html#cb14-4"></a>study.sensors =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_join</span>(station.locs.sf, study.area, <span class="dt">left =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb14-5"><a href="data-prep-management.html#cb14-5"></a></span>
+<span id="cb14-6"><a href="data-prep-management.html#cb14-6"></a><span class="co"># Verify Spatial Join by Plotting</span></span>
+<span id="cb14-7"><a href="data-prep-management.html#cb14-7"></a><span class="kw">plot</span>(study.area<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb14-8"><a href="data-prep-management.html#cb14-8"></a><span class="kw">plot</span>(study.sensors<span class="op">$</span>geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb14-9"><a href="data-prep-management.html#cb14-9"></a><span class="kw">title</span>(<span class="st">&#39;Weather Stations Within the Study Area&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/sensor.join-1.png" width="672" /></p>
 <p>Now that we have a dataset of which weather stations we are interested in, we can query for the weather data associated with each station.</p>
 </div>
 </div>
 <div id="weather-data-query" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Weather Data Query</h3>
-<p>Again we use the <em>lapply</em> function in base R to execute the <em>riem_measures</em> function on a list of sensor IDs. This allows us to iteratively query for weather data from each individual sensor in a list. In the code snippet below, we take the study sensors obtained previously and query for a single day’s worth of weather data.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-prep-management.html#cb19-1"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb19-2"><a href="data-prep-management.html#cb19-2"></a></span>
-<span id="cb19-3"><a href="data-prep-management.html#cb19-3"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2014-01-02&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb19-4"><a href="data-prep-management.html#cb19-4"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
-<pre><code>## Warning: No results for this query.
-
-## Warning: No results for this query.
-
-## Warning: No results for this query.</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-prep-management.html#cb21-1"></a>weather.data[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,]</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 31
-##   station valid                 lon   lat  tmpf  dwpf  relh  drct  sknt   p01i  alti  mslp  vsby  gust skyc1 skyc2 skyc3
-##   &lt;chr&gt;   &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 MDW     2014-01-01 00:49:00 -87.8  41.8  12.2  8.6   85.2   230     3 0.01    30.3   NA      2    NA FEW   BKN   OVC  
-## 2 MDW     2014-01-01 00:51:00 -87.8  41.8  12.9  8.96  83.8   230     3 0.01    30.3 1029.     2    NA FEW   BKN   OVC  
-## 3 MDW     2014-01-01 01:51:00 -87.8  41.8  12.9  8.96  83.8   280     3 0.0001  30.3 1030.     2    NA FEW   OVC   &lt;NA&gt; 
-## # … with 14 more variables: skyc4 &lt;lgl&gt;, skyl1 &lt;dbl&gt;, skyl2 &lt;dbl&gt;, skyl3 &lt;dbl&gt;, skyl4 &lt;lgl&gt;, wxcodes &lt;chr&gt;,
-## #   ice_accretion_1hr &lt;dbl&gt;, ice_accretion_3hr &lt;lgl&gt;, ice_accretion_6hr &lt;dbl&gt;, peak_wind_gust &lt;lgl&gt;, peak_wind_drct &lt;lgl&gt;,
-## #   peak_wind_time &lt;lgl&gt;, feel &lt;dbl&gt;, metar &lt;chr&gt;</code></pre>
+<p>Again we use the <code>lapply</code> function in base R to execute the <code>riem_measures</code> function on a list of sensor IDs. This allows us to iteratively query for weather data from each individual sensor in a list. In the code snippet below, we take the study sensors obtained previously and query for a single day’s worth of weather data.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-prep-management.html#cb15-1"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb15-2"><a href="data-prep-management.html#cb15-2"></a></span>
+<span id="cb15-3"><a href="data-prep-management.html#cb15-3"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2014-01-02&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-4"><a href="data-prep-management.html#cb15-4"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station</th>
+<th align="left">valid</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+<th align="right">tmpf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 00:49:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">12.20</td>
+</tr>
+<tr class="even">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 00:51:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">12.92</td>
+</tr>
+<tr class="odd">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 01:51:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">12.92</td>
+</tr>
+<tr class="even">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 02:27:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">14.00</td>
+</tr>
+<tr class="odd">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 02:51:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">14.00</td>
+</tr>
+</tbody>
+</table>
 <div id="querying-full-weather-dataset" class="section level4 unnumbered" number="">
 <h4>Querying Full Weather Dataset</h4>
 <p>Use caution when querying for a large amount of data. Data tables can easily become unwieldy after querying for a large number of weather stations across a wide time scale. The code snippet below downloads all ASOS weather data for sensors in our study area from January 1st 2014 to December 31st 2018, which is our study time period. It has approximately 4.8 Million records and takes 6-10 minutes to download.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-prep-management.html#cb23-1"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2018-12-31&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb23-2"><a href="data-prep-management.html#cb23-2"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-prep-management.html#cb16-1"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2018-12-31&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-2"><a href="data-prep-management.html#cb16-2"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
 
 </div>
 </div>
