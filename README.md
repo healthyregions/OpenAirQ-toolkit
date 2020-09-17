@@ -1,14 +1,14 @@
 # OpenAirQ-toolkit
 Analytic Toolkit Bookdown for OpenAirQ Projectes
 
-## General Modeling Guidance
-1 - Intro to R, survey of basic features, link to resources and tools
-2 - Intro to different types of spatial data (raster, vector - point, line, area), temporal)
-3 - Visualization: Exploring and Mapping Weather Variables
-4 - Interpolation: Move from point sensors to surfaces
-5 - Model: Extend interpolation with diff models, summarize the issues associated
-6 - Translate: Aggregating to different scales (ie. raster air quality model at 1km to census tracts)
-7 - Linking neighborhood factors for additional analysis
+## Tutorial Goals (Write, Edit)
+ - Intro to R, survey of basic features, link to resources and tools (,) 
+ - Intro to different types of spatial data (raster, vector - point, line, area), temporal) (,)
+ - Visualization: Exploring and Mapping Weather Variables 
+ - Interpolation: Move from point sensors to surfaces
+ - Model: Extend interpolation with diff models, summarize the issues associated
+ - Translate: Aggregating to different scales (ie. raster air quality model at 1km to census tracts)
+ - Linking neighborhood factors for additional analysis
 
 ## Appendix: Data Types
 Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data (in R) to the format needed. We can tag each tutorial based on key factors.
