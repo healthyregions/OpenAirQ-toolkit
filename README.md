@@ -6,7 +6,7 @@ Analytic Toolkit Bookdown for OpenAirQ Projectes
 Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data to the format needed.
 
 Name | Source(s) | Write | Edit | Raw Script | Final Link
---- | --- | --- | --- | --- | ---  | --- 
+--- | --- | --- | --- | --- | ---  
 Air Quality Indicators | EPA Sensors (link) | Lorenz | X | X | X
 Point Emission Data | National Emissions Inventory (link) | X | X | X | X
 
