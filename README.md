@@ -19,7 +19,7 @@ Each of the following variables needs to have a tutorial that shows users how to
 
 Name | Source(s) | Write | Edit | Raw Script | Final Tutorial
 --- | --- | --- | --- | --- | ---  
-PM 2.5 | EPA Sensors (link) (data) | |  | [PM 2.5 Interpoliation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/sensors/epa-sensors/PM25) | 
+PM 2.5 | EPA Sensors (link) (data) | |  | [PM 2.5 Interpolation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/sensors/epa-sensors/PM25) | 
 Aerosol Optical Depth | EPA Sensors (link) (data) |  |  | [AOD Processing](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/aod-MAIAC) | 
 Temperature | NOAA (link) (data) | | | [Temperature Interpolation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/meteorological-data/Temperature)
 Point Emission Data | National Emissions Inventory (link) (data) |  | | [Distance to Point Emissions](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/point-emissions) |  
