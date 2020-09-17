@@ -9,6 +9,8 @@ Name | Source(s) | Write | Edit | Raw Script | Final Link
 --- | --- | --- | --- | --- | ---  | --- 
 Air Quality Indicators / Sensor Data | EPA Sensor | Lorenz | --- | ---  | --- 
 Point Emission Data | National Emissions Inventory | --- | --- | --- | ---  | --- 
+
+
 Road Emissions: (1) road length summary, (2) traffic volume summary | OSM, IDOT | SHP | varies | varies| Multiple proxies
 Meteorological Data | NOAA monitoring stations | CSV | address-level | Daily, Monthly | few validated weather stations in metro area; weather underground data not reliabale and historical data is costly
 NDVI | MODIS | raster | 1km, 500m, 250, grid | Monthly, Yearly | 
