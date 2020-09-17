@@ -10,7 +10,7 @@ Wrangling Spatiotemporal Point Data (Weather EPA) | Lorenz |  |[Wrangling Weathe
 Wrangling + Mapping Vector Data (Temperature, Roads) | | | |  
 Wrangling + Mapping Raster Data (NDVI, Land Cover) | | | |  
 Moving from point sensors to surfaces (KDE of Facilities) | | | |  
-Extend interpolation with diff models (AOT Sensors) | | | |  
+Extend interpolation with diff models (EPA, AOT) | | | *part of Lorenz's 01 module |  
 Aggregating to different scales (AOD to tract)  | | | |  
 Linking neighborhood factors (tidycensus) | | | |  
 
