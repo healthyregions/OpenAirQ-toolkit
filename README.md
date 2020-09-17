@@ -2,9 +2,13 @@
 Analytic Toolkit Bookdown for OpenAirQ Projectes
 
 
-Name | Source(s) | File | Spatial Resolution | Time Resolution | Comments
---- | --- | --- | --- | --- | --- 
-Point Emission Data | NEI and CDPH | CSV | address-level | varies | Options for use: (1) Distance to nearest facility (either all or subset of high polluters), (2) Raster surface (over 100 available for Chicago area)
+## Data Types
+Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data to the format needed.
+
+Name | Source(s) | Write | Edit | Raw Script | Final Link
+--- | --- | --- | --- | --- | ---  | --- 
+Air Quality Indicators / Sensor Data | EPA Sensor | Lorenz | --- | ---  | --- 
+Point Emission Data | National Emissions Inventory | --- | --- | --- | ---  | --- 
 Road Emissions: (1) road length summary, (2) traffic volume summary | OSM, IDOT | SHP | varies | varies| Multiple proxies
 Meteorological Data | NOAA monitoring stations | CSV | address-level | Daily, Monthly | few validated weather stations in metro area; weather underground data not reliabale and historical data is costly
 NDVI | MODIS | raster | 1km, 500m, 250, grid | Monthly, Yearly | 
