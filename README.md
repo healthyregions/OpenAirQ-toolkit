@@ -5,17 +5,17 @@ Analytic Toolkit Bookdown for OpenAirQ Projectes
 
  Title | Write | Edit | Raw Script | Final Tutorial 
  --- | --- | --- | --- | --- | 
-Intro to R, survey of basic features, link to resources and tools | | | | 
-Intro to different types of spatial data (raster, vector - point, line, area), temporal) | | | | 
-Wrangling Weather Sensor Data  | Lorenz | [Wrangling Weather Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd) | | 
-Basics of Mapping Point Data | | | |  
+Intro to R, Survey Basics| | | | 
+Wrangling Spatiotemporal Point Data  | Lorenz | [Wrangling Weather Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd) | | 
+Wrangling + Mapping Vector Data | | | |  
+Wrangling + Mapping Raster Data | | | |  
 Moving from point sensors to surfaces | | | |  
-Model: Extend interpolation with diff models, summarize the issues associated | | | |  
-Translate: Aggregating to different scales (ie. raster air quality model at 1km to census tracts) | | | |  
-Connect: Linking neighborhood factors for additional analysis | | | |  
+Extend interpolation with diff models | | | |  
+Aggregating to different scales | | | |  
+Linking neighborhood factors | | | |  
 
 ## Appendix: Data Types
-Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data (in R) to the format needed. We can tag each tutorial based on key factors.
+Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data (in R) to the format needed. We can tag each tutorial based on key factors. Need to introduce this as essentially all the major variables that are required for air quality modeling based on existing literature surveys (in mixed hybrid approach).
 
 Name | Source(s) | Write | Edit | Raw Script | Final Tutorial
 --- | --- | --- | --- | --- | ---  
