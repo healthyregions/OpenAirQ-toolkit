@@ -6,9 +6,9 @@ Analytic Toolkit Bookdown for OpenAirQ Projectes
  Title | Write | Edit | Raw Script | Final Tutorial 
  --- | --- | --- | --- | --- | 
 Intro to R, Survey Basics| | | | 
-Wrangling Spatiotemporal Point Data (Pollutants, EPA) | Lorenz |  |[Wrangling EPA Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd) *add some of the melt instructions from NOAA tutorial| 
 Wrangling + Mapping Vector Data (Temperature, Roads) | | | |  
 Wrangling + Mapping Raster Data (NDVI, Land Cover) | | | |  
+Dynamic Sensor Querying (Pollutants, EPA) | Lorenz |  |[Wrangling EPA Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd) *add some of the melt instructions from NOAA tutorial| 
 Moving from point sensors to surfaces (KDE of Facilities) | | | |  
 Extend interpolation with diff models (EPA, AOT) | | | *part of Lorenz's 01 module |  
 Aggregating to different scales (AOD to tract)  | | | |  
