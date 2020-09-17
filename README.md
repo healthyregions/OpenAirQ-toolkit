@@ -8,7 +8,7 @@ Each of the following variables needs to have a tutorial that shows users how to
 
 Name | Source(s) | Write | Edit | Raw Script | Final Link
 --- | --- | --- | --- | --- | ---  
-PM 2.5 | Interpolated Surface | EPA Sensors (link) (data) | Lorenz | X |  | 
+PM 2.5 | EPA Sensors (link) (data) | Lorenz |  |  | 
 Aerosol Optical Depth | Interpolated Surface | EPA Sensors (link) (data) | Lorenz | X |  | 
 Point Emission Data | National Emissions Inventory (link) (data) |  |  |  | 
 Road Emissions | Open Street Map (link) (data) |  |  |  | 
