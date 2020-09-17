@@ -6,7 +6,7 @@ Analytic Toolkit Bookdown for OpenAirQ Projectes
  Title | Write | Edit | Raw Script | Final Tutorial 
  --- | --- | --- | --- | --- | 
 Intro to R, Survey Basics| | | | 
-Wrangling Spatiotemporal Point Data (Weather EPA) | Lorenz |  |[Wrangling Weather Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd)| 
+Wrangling Spatiotemporal Point Data (Weather EPA) | Lorenz |  |[Wrangling Weather Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd) *add some of the melt instructions from NOAA tutorial| 
 Wrangling + Mapping Vector Data (Temperature, Roads) | | | |  
 Wrangling + Mapping Raster Data (NDVI, Land Cover) | | | |  
 Moving from point sensors to surfaces (KDE of Facilities) | | | |  
