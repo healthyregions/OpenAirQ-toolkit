@@ -7,8 +7,9 @@ Analytic Toolkit Bookdown for OpenAirQ Projectes
  --- | --- | --- | --- | --- | 
 Intro to R, survey of basic features, link to resources and tools | | | | 
 Intro to different types of spatial data (raster, vector - point, line, area), temporal) | | | | 
-Visualization: Exploring and Mapping Weather Variables | Lorenz | | | 
-Interpolation: Move from point sensors to surfaces | | | |  
+Wrangling Weather Sensor Data  | Lorenz | [Wrangling Weather Sensor Data](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/01-weather.Rmd) | | 
+Basics of Mapping Point Data | | | |  
+Moving from point sensors to surfaces | | | |  
 Model: Extend interpolation with diff models, summarize the issues associated | | | |  
 Translate: Aggregating to different scales (ie. raster air quality model at 1km to census tracts) | | | |  
 Connect: Linking neighborhood factors for additional analysis | | | |  
