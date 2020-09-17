@@ -2,18 +2,19 @@
 Analytic Toolkit Bookdown for OpenAirQ Projectes
 
 
+
 ## Data Types
-Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data to the format needed.
+Each of the following variables needs to have a tutorial that shows users how to access, extract, model, and then aggregate data to the format needed. We can tag each tutorial based on key factors.
 
 Name | Source(s) | Write | Edit | Raw Script | Final Link
 --- | --- | --- | --- | --- | ---  
-Air Quality Indicators | EPA Sensors (link) | Lorenz | X | X | X
-Point Emission Data | National Emissions Inventory (link) | X | X | X | X
+PM 2.5 | Interpolated Surface | EPA Sensors (link) (data) | Lorenz | X |  | 
+Aerosol Optical Depth | Interpolated Surface | EPA Sensors (link) (data) | Lorenz | X |  | 
+Point Emission Data | National Emissions Inventory (link) (data) |  |  |  | 
+Road Emissions | Open Street Map (link) (data) |  |  |  | 
+NDVI | MODIS (link) (data) |  |  |  | 
+Elevation | National Land Elevation Model (link) (data) |  |  |  | 
+Land Use | USGS (link) (data) |  |  |  |
 
 
-Road Emissions: (1) road length summary, (2) traffic volume summary | OSM, IDOT | SHP | varies | varies| Multiple proxies
-Meteorological Data | NOAA monitoring stations | CSV | address-level | Daily, Monthly | few validated weather stations in metro area; weather underground data not reliabale and historical data is costly
-NDVI | MODIS | raster | 1km, 500m, 250, grid | Monthly, Yearly | 
-Land Cover | SAL product, CMAP | raster | 30m | 2016, 2011, 2006 |
-Elevation | National Land Elevation Model | raster | 1m | yearly | alt: building height dataset
 
