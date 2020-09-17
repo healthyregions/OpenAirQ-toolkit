@@ -7,8 +7,8 @@ Each of the following variables needs to have a tutorial that shows users how to
 
 Name | Source(s) | Write | Edit | Raw Script | Final Link
 --- | --- | --- | --- | --- | ---  | --- 
-Air Quality Indicators / Sensor Data | EPA Sensor | Lorenz | X | X | X
-Point Emission Data | National Emissions Inventory | X | X | X | X
+Air Quality Indicators | EPA Sensors (link) | Lorenz | X | X | X
+Point Emission Data | National Emissions Inventory (link) | X | X | X | X
 
 
 Road Emissions: (1) road length summary, (2) traffic volume summary | OSM, IDOT | SHP | varies | varies| Multiple proxies
