@@ -22,7 +22,7 @@ Name | Source(s) | Write | Edit | Raw Script | Final Tutorial
 PM 2.5 | EPA Sensors (link) (data) | Yuming |  | [PM 2.5 Interpolation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/sensors/epa-sensors/PM25) | 
 Aerosol Optical Depth | EPA Sensors (link) (data) |  |  | [AOD Processing](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/aod-MAIAC) | 
 Temperature | NOAA (link) (data) | | | [Temperature Interpolation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/meteorological-data/Temperature)
-Point Emission Data | National Emissions Inventory (link) (data) | Jizhou | | [Distance to Point Emissions](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/point-emissions) |  
+Point Emission Data | National Emissions Inventory (link) (data) | [Jizhou](https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/Documentation/Tutorial_data_types/Point_Emission_Data/Point%20Emission%20Data.Rmd) | | [Distance to Point Emissions](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/point-emissions) |  
 Road Emissions | Open Street Map (link) (data) |  |  | [Road Length by Area](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/road-emissions) | 
 NDVI | MODIS (link) (data) |  |  | [NDVI Aggregation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/ndvi-data) | 
 Elevation | National Land Elevation Model (link) (data) |  |  |  | 
