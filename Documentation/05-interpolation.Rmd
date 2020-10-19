@@ -1,0 +1,50 @@
+# Using Weather Data to Interpolate a Raster Surface
+To refine our models, we need to know or estimate meteorological variables across our entire study area. However, the downloaded weather data is only accurate at the exact sensor location where the measurement was taken. Therefore, we propose to linearly interpolate meteorological variables. The method used is an Inverse Distance Weighting for a raster resolution of 1 km, implemented in R as described below. 
+
+## Your First Interpolation
+This section describes how to create interpolated raster surfaces using the purpose-built **sensor2raster** package. First, let's download and install the package.
+
+``` {r load.sensor.package, message = FALSE, warning = FALSE}
+devtools::install_url('https://uchicago.box.com/shared/static/u57vxg90ytieu86ow3m8xats3ebmfek4.tar.gz', quiet = TRUE)
+library(sensor2raster)
+
+```
+
+### Workflow Execution {-}
+Next, we run the *Sensor.to.Raster* function on a sample EPA dataset of PM2.5 readings across Indiana Illinois, and Wisconsin in 2017. The function takes the raw output from an EPA or FAA data query, a data type ('EPA' or 'FAA' only) to perform the IDW analysis. An input of county boundaries defines the extent of the raster output. Meanwhile, the reference.grid input allows the user to input a vector-format grid to improve the readability of the output.
+
+```{r sensor.to.raster.1, warning = FALSE}
+raster = Sensor.to.Raster(Sensor.data = sample.data, 
+                          data.type = 'EPA', 
+                          reference.grid = km.grid, 
+                          counties = sample.counties)
+```
+
+### Output Interpretation {-}
+The *Sensor.to.Raster* function outputs four objects in a list. The first two elements contain Vector data products at Monthly and Quarterly time scales. The last two elements contain the equivalent product in Raster format.
+
+#### Raster Product {-}
+Below is the sample Raster output for the 1st Quarter and 1st Month of 2017. Notice how multiple list objects are subsetted in the ouput of *Sensor.to.Raster*
+
+```{r sensor.to.raster.results1}
+raster::plot(raster$Quarterly_Raster_Data$Q1.2017, main = 'Average Observed PM2.5 Levels in Q1 2017')
+sp::plot(sample.counties, add = TRUE) # Adding county boundaries for reference
+```
+```{r sensor.to.raster.results2}
+raster::plot(raster$Monthly_Raster_Data$M1.2017, main = 'Average Observed PM2.5 Levels in Jan 2017')
+sp::plot(sample.counties, add = TRUE) # Adding county boundaries for reference
+```
+
+#### Vector Product {-}
+The same data is available is a vecorized grid format using the same grid specified by the user as an input. In this format, each month or quarter is represented by as a data field in the attribute table. This not only makes the data more compact, but also allows for improved data analysis. Below, we show the attribute table for the first five grid cells.
+
+```{r sensor.to.raster.results3}
+as.data.frame(raster$Monthly_Vector_Data[1:5,])
+```
+
+## The IDW Workflow
+The workflow is designed to take time-series data input for a **single** variable from a multitude of either EPA or FAA ASOS sensors, and create IDW surfaces at monthly and quarterly timescales. The final data product models the intensity of the chosen variable across a wide area.
+
+For example, this workflow can take ASOS Temperature data gathered from multiple sensors across a wide-area and predict the temperature in each location across the area, even if a sensor is not located there.
+
+The entire workflow is divided into five helper functions that are each called in sucession by the larger *Sensor.to.Raster* function. Three functions act upon the EPA or FAA data to wrangle it into an approprite format for the IDW interpolation. The interpolation is handeled by another helper function based off the *idw* function from the **gstat** package. Finally, the data is post-processed into manageble vector and raster products.
