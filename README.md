@@ -24,7 +24,7 @@ Aerosol Optical Depth | EPA Sensors (link) (data) |  |  | [AOD Processing](https
 Temperature | NOAA (link) (data) | | | [Temperature Interpolation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/meteorological-data/Temperature)
 Point Emission Data | National Emissions Inventory (link) (data) | Jizhou, @Yuming for review | | [Distance to Point Emissions](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/point-emissions) |  
 Road Emissions | Open Street Map (link) (data) |  |  | [Road Length by Area](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/road-emissions) | 
-NDVI | MODIS (link) (data) | Jizhou |  | [NDVI Aggregation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/ndvi-data) | 
+NDVI | MODIS (link) (data) | Jizhou, @Yuming for review |  | [NDVI Aggregation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/ndvi-data) | 
 Elevation | National Land Elevation Model (link) (data) |  |  |  | 
 Land Use | USGS (link) (data) |   || [Landuse Processing](https://github.com/GeoDaCenter/OpenAirQ-phase1/blob/master/data-workflows/covariates/land-use/processLU.R) | 
 Land Cover |  |  |  |  |   
