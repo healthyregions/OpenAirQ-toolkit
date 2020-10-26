@@ -3,10 +3,6 @@ title: "Point Sensors to Surfaces"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Introduction
 
 This chapter will introduce how to convert point sensors to surfaces. In it, we will work with the CSV file for the 2017 National Emissions Inventory, downloadable from the EPA's website [here](ftp://newftp.epa.gov/air/nei/2017/data_summaries/2017v1/2017neiApr_facility_process_byregions.zip). If you wish to follow along with this chapter, please download the dataset now. If you have a specific interest area and would like to skip the data wrangling in R, you can download state-specific and pollutant-specific summaries from the NEI website. 
