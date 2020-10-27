@@ -35,6 +35,7 @@ library(sp)
 library(rgdal)
 library(spatialEco)
 library(tmap)
+library(readr)
 ```
 
 ## Read and Examine the Data
@@ -42,7 +43,7 @@ library(tmap)
 Now that we have loaded our required packages, we will now read in our National Emissions Inventory CSV. After unzipping the zipped folder downloaded from the EPA, you will have two files: "process_12345.csv" and "process678910.csv". For the purposes of this chapter, we will only need "process_12345.csv". This file is quite large, so beware that it may take 30 seconds to load.
 
 ```{r, nei.load, warning=FALSE, message=FALSE}
-nei.data <- read_csv("process_12345.csv")
+nei.data <- readr::read_csv("../data/process_12345.csv.zip")
 ```
 
 Having successfully read our data into the R environment, let's take a second to examine it. 
