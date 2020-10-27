@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Merging Satellite and Point Sensor Data | Welcome to the Documentation!</title>
+  <title>3 Merging Satellite and Point Sensor Data | Welcome to the Documentation!</title>
   <meta name="description" content="I love documentation! Don’t you? :)" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
+  <meta property="og:title" content="3 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
+  <meta name="twitter:title" content="3 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
   
   <meta name="twitter:description" content="I love documentation! Don’t you? :)" />
   
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="data-prep-management.html"/>
 
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +51,21 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
 
 
 <style type="text/css">
@@ -133,24 +148,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#hello-world"><i class="fa fa-check"></i>Hello World!</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="data-prep-management.html"><a href="data-prep-management.html"><i class="fa fa-check"></i><b>1</b> Data Prep &amp; Management</a>
+<li class="chapter" data-level="1" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html"><i class="fa fa-check"></i><b>1</b> Vector Data Mapping</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="data-prep-management.html"><a href="data-prep-management.html#epa-pollution-data"><i class="fa fa-check"></i><b>1.1</b> EPA Pollution Data</a>
+<li class="chapter" data-level="1.1" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#required-packages"><i class="fa fa-check"></i><b>1.1</b> Required Packages</a></li>
+<li class="chapter" data-level="1.2" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#political-boundaries"><i class="fa fa-check"></i><b>1.2</b> Political Boundaries</a></li>
+<li class="chapter" data-level="1.3" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#ground-based-data-sensor-locations"><i class="fa fa-check"></i><b>1.3</b> Ground-based Data Sensor Locations</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="data-prep-management.html"><a href="data-prep-management.html#getting-started"><i class="fa fa-check"></i><b>1.1.1</b> Getting Started</a></li>
-<li class="chapter" data-level="1.1.2" data-path="data-prep-management.html"><a href="data-prep-management.html#pm2.5-data-query"><i class="fa fa-check"></i><b>1.1.2</b> PM2.5 Data Query</a></li>
+<li class="chapter" data-level="1.3.1" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#epa-particulate-matter-sensors"><i class="fa fa-check"></i><b>1.3.1</b> EPA Particulate Matter Sensors</a></li>
+<li class="chapter" data-level="1.3.2" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#weather-stations"><i class="fa fa-check"></i><b>1.3.2</b> Weather Stations</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="data-prep-management.html"><a href="data-prep-management.html#faa-weather-data"><i class="fa fa-check"></i><b>1.2</b> FAA Weather Data</a>
+<li class="chapter" data-level="1.4" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.4</b> Point Sources of Pollution</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-prep-management.html"><a href="data-prep-management.html"><i class="fa fa-check"></i><b>2</b> Data Prep &amp; Management</a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="data-prep-management.html"><a href="data-prep-management.html#sample-query"><i class="fa fa-check"></i><b>1.2.1</b> Sample Query</a></li>
-<li class="chapter" data-level="1.2.2" data-path="data-prep-management.html"><a href="data-prep-management.html#finding-asos-sensors"><i class="fa fa-check"></i><b>1.2.2</b> Finding ASOS Sensors</a></li>
-<li class="chapter" data-level="1.2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#weather-data-query"><i class="fa fa-check"></i><b>1.2.3</b> Weather Data Query</a></li>
+<li class="chapter" data-level="2.1" data-path="data-prep-management.html"><a href="data-prep-management.html#epa-pollution-data"><i class="fa fa-check"></i><b>2.1</b> EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-prep-management.html"><a href="data-prep-management.html#getting-started"><i class="fa fa-check"></i><b>2.1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-prep-management.html"><a href="data-prep-management.html#pm2.5-data-query"><i class="fa fa-check"></i><b>2.1.2</b> PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-prep-management.html"><a href="data-prep-management.html#faa-weather-data"><i class="fa fa-check"></i><b>2.2</b> FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-prep-management.html"><a href="data-prep-management.html#sample-query"><i class="fa fa-check"></i><b>2.2.1</b> Sample Query</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-prep-management.html"><a href="data-prep-management.html#finding-asos-sensors"><i class="fa fa-check"></i><b>2.2.2</b> Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#weather-data-query"><i class="fa fa-check"></i><b>2.2.3</b> Weather Data Query</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html"><i class="fa fa-check"></i><b>2</b> Merging Satellite and Point Sensor Data</a>
+<li class="chapter" data-level="3" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html"><i class="fa fa-check"></i><b>3</b> Merging Satellite and Point Sensor Data</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#generate-rasters"><i class="fa fa-check"></i><b>2.1</b> Generate Rasters</a></li>
-<li class="chapter" data-level="2.2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#export-to-csv"><i class="fa fa-check"></i><b>2.2</b> Export to CSV</a></li>
+<li class="chapter" data-level="3.1" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#generate-rasters"><i class="fa fa-check"></i><b>3.1</b> Generate Rasters</a></li>
+<li class="chapter" data-level="3.2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#export-to-csv"><i class="fa fa-check"></i><b>3.2</b> Export to CSV</a></li>
 </ul></li>
 </ul>
 
@@ -169,37 +195,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="merging-satellite-and-point-sensor-data" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Merging Satellite and Point Sensor Data</h1>
+<div id="merging-satellite-and-point-sensor-data" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Merging Satellite and Point Sensor Data</h1>
 <p>There’s a fundamental challenge in our project to merge AOD data and predictor variables because the data capture techniques are very different. The satellite-based AOD data is measured continuously across the surface of the earth on a 1km by 1km grid system. Meanwhile, sensor data is only captured locally at the sensor location. Therefore, a method to interpolate local sensor data to generate a continuous surface of data is required.</p>
-<p>An ‘Optimized’ IDW interpolation was used to estimate sensor values across a 1km by 1km grid system. This method takes into account the sensor locations and value for each variable to estimate values in grid cells without a sensor based on a linear interpolation of nearby sensor values. The specific number of sensors to take into account and the distance decay power function were optimized by minimizing the RMSE (Error). This method was adapted from an <a href="https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data">RSpatial Tutorial</a> on IDW interpolation with pollution and weather data.</p>
-<p>To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named <strong>sensor2raster</strong>. The next sections demonstrate how to apply this package to sensor data.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="merging-satellite-and-point-sensor-data.html#cb17-1"></a><span class="co"># devtools::install_url(&#39;https://uchicago.box.com/shared/static/tp7z7rffapjfan6x7tq6ajxj01s9qefe.tar.gz&#39;)</span></span>
-<span id="cb17-2"><a href="merging-satellite-and-point-sensor-data.html#cb17-2"></a><span class="kw">library</span>(sensor2raster, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<div id="generate-rasters" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Generate Rasters</h2>
-<p>Creating raster surfaces is easy using the <code>sensor2raster</code> function. This function takes the raw output from the <strong>riem</strong> or <strong>aqsr</strong> packages and identifies the sensor locations and data values to interpolate. The underlying IDW interpolation is performed by the <strong>gstat</strong> package.</p>
+<p>An ‘Optimized’ IDW interpolation was used to estimate sensor values across a 1km by 1km grid system. This method takes into account the sensor locations and value for each variable to estimate values in grid cells without a sensor based on a linear interpolation of nearby sensor values. The specific number of sensors to take into account and the distance decay power function were optimized by medinimizing the RMSE (Error). This method was adapted from an <a href="https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data">RSpatial Tutorial</a> on IDW interpolation with pollution and weather data.</p>
+<p>To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named <code>sensor2raster</code>. The next sections demonstrate how to apply this package to sensor data.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="merging-satellite-and-point-sensor-data.html#cb35-1" aria-hidden="true"></a><span class="co"># devtools::install_local(&#39;../data/sensor2raster_0.04.tar.gz&#39;)</span></span>
+<span id="cb35-2"><a href="merging-satellite-and-point-sensor-data.html#cb35-2" aria-hidden="true"></a><span class="kw">library</span>(sensor2raster, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div id="generate-rasters" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Generate Rasters</h2>
+<p>Creating raster surfaces is easy using the <code>sensor2raster</code> function. This function takes the raw output from the <code>riem</code> or <code>aqsr</code> packages and identifies the sensor locations and data values to interpolate. The underlying IDW interpolation is performed by the <code>gstat</code> package.</p>
 <p>The code chunk below demonstrates how to take ASOS weather data and convert it to a Raster format. The <code>weather data</code> variable is a data frame containing temperature data measured at airports in the Greater Chicago and Milwaukee Areas in 2018. We also pass the <code>AOD.grid</code>, a RasterLayer object representing the grid cells where we want to predict temperature. These grid cells correspond exactly to the pixels of satellite AOD data.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="merging-satellite-and-point-sensor-data.html#cb18-1"></a>temp.rasters =<span class="st"> </span><span class="kw">sensor2raster</span>(<span class="dt">sensor.data =</span> weather.data, <span class="co"># Input the raw data.frame from riem</span></span>
-<span id="cb18-2"><a href="merging-satellite-and-point-sensor-data.html#cb18-2"></a>                        <span class="dt">data.type =</span> <span class="st">&#39;ASOS&#39;</span>, <span class="co"># Specify data type (&#39;ASOS&#39; or &#39;EPA&#39;)</span></span>
-<span id="cb18-3"><a href="merging-satellite-and-point-sensor-data.html#cb18-3"></a>                        <span class="dt">reference.grid =</span> AOD.grid, <span class="co"># Grid to interpolate over</span></span>
-<span id="cb18-4"><a href="merging-satellite-and-point-sensor-data.html#cb18-4"></a>                        <span class="dt">subvariable =</span> <span class="st">&#39;tmpf&#39;</span>) <span class="co"># Column name of variable to interpolate</span></span></code></pre></div>
-<pre><code>## Reading layer `Lake_Michigan_Shoreline&#39; from data source `https://opendata.arcgis.com/datasets/5e2911231fe246128d0ff8495935ee85_12.geojson&#39; using driver `GeoJSON&#39;
-## Simple feature collection with 2 features and 7 fields
-## geometry type:  POLYGON
-## dimension:      XY
-## bbox:           xmin: -88.65146 ymin: 41.50734 xmax: -84.91368 ymax: 46.10369
-## CRS:            4326</code></pre>
-<pre><code>## Reading layer `Large Area Counties&#39; from data source `https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39; using driver `GeoJSON&#39;
-## Simple feature collection with 21 features and 8 fields
-## geometry type:  MULTIPOLYGON
-## dimension:      XY
-## bbox:           xmin: -88.77879 ymin: 40.73641 xmax: -86.46629 ymax: 43.21831
-## CRS:            4326</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="1152" /></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="merging-satellite-and-point-sensor-data.html#cb36-1" aria-hidden="true"></a>temp.rasters =<span class="st"> </span><span class="kw">sensor2raster</span>(<span class="dt">sensor.data =</span> weather.data, <span class="co"># Input the raw data.frame from riem</span></span>
+<span id="cb36-2"><a href="merging-satellite-and-point-sensor-data.html#cb36-2" aria-hidden="true"></a>                        <span class="dt">data.type =</span> <span class="st">&#39;ASOS&#39;</span>, <span class="co"># Specify data type (&#39;ASOS&#39; or &#39;EPA&#39;)</span></span>
+<span id="cb36-3"><a href="merging-satellite-and-point-sensor-data.html#cb36-3" aria-hidden="true"></a>                        <span class="dt">reference.grid =</span> AOD.grid, <span class="co"># Grid to interpolate over</span></span>
+<span id="cb36-4"><a href="merging-satellite-and-point-sensor-data.html#cb36-4" aria-hidden="true"></a>                        <span class="dt">subvariable =</span> <span class="st">&#39;tmpf&#39;</span>) <span class="co"># Column name of variable to interpolate</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="1152" /></p>
 </div>
-<div id="export-to-csv" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Export to CSV</h2>
+<div id="export-to-csv" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Export to CSV</h2>
 <p>While Raster data is helpful for spatial data analysis and geovisualizations, it is sometimes helpful to store the interpolation in a non-spatial format. The <code>grid2csv</code> function allows you to convert Raster data to CSV either cell-by-cell, or by aggregating to a vector geometry.</p>
 <p>The exported data.frame is halfway between Long and Wide format due to the 3-dimensional nature of our data. The table below describes how these CSVs are structured in the cell-by-cell case.</p>
 <table>
@@ -250,8 +264,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>The length of the table equals the number of cells in the RasterStack. Each cell is given a unique identifier stored in the <code>Raster.Cell</code> column. The <code>Var_Name</code> colums represent the variable of interest. When there are multiple variables, they are row binded together, giving a long table format. The rest of the columns represent the names given to the layers within each RasterStack. Im this case, each column represents a month and year combination. Additional time periods are appended column-wise to the table.</p>
 <p>The following table describes the outputted data frame from the monthly temperature Rasters generated earlier.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="merging-satellite-and-point-sensor-data.html#cb21-1"></a>temp.export =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
-<span id="cb21-2"><a href="merging-satellite-and-point-sensor-data.html#cb21-2"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="merging-satellite-and-point-sensor-data.html#cb37-1" aria-hidden="true"></a>temp.export =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
+<span id="cb37-2"><a href="merging-satellite-and-point-sensor-data.html#cb37-2" aria-hidden="true"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="14%" />
@@ -387,12 +401,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>The format of the table changes slightly when subsetting using a vecor object. A new column <code>sj_join</code> appears in the table, representing a unique allowing the table to be joined back to the origin <code>sf</code> object if needed. When subsetting by point features, the <code>Raster_Cell</code> column describes the cell that overlapped with each point feature. When subsettting by line or polygon features, the <code>Raster_Cell</code> column describes the cell that overlapped with the centroid of each geometry.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="merging-satellite-and-point-sensor-data.html#cb22-1"></a>temp.export.sf =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
-<span id="cb22-2"><a href="merging-satellite-and-point-sensor-data.html#cb22-2"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>, </span>
-<span id="cb22-3"><a href="merging-satellite-and-point-sensor-data.html#cb22-3"></a>         <span class="dt">sf.obj =</span> counties)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="merging-satellite-and-point-sensor-data.html#cb38-1" aria-hidden="true"></a>temp.export.sf =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
+<span id="cb38-2"><a href="merging-satellite-and-point-sensor-data.html#cb38-2" aria-hidden="true"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>, </span>
+<span id="cb38-3"><a href="merging-satellite-and-point-sensor-data.html#cb38-3" aria-hidden="true"></a>         <span class="dt">sf.obj =</span> counties)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
+<th align="left"></th>
 <th align="left">Var_Name</th>
 <th align="right">Raster_Cell</th>
 <th align="right">sf_join</th>
@@ -402,6 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">21</td>
 <td align="left">Monthly_Temperature</td>
 <td align="right">4745</td>
 <td align="right">21</td>
@@ -409,6 +425,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">24.89580</td>
 </tr>
 <tr class="even">
+<td align="left">3</td>
 <td align="left">Monthly_Temperature</td>
 <td align="right">4970</td>
 <td align="right">3</td>
@@ -416,6 +433,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">25.13390</td>
 </tr>
 <tr class="odd">
+<td align="left">8</td>
 <td align="left">Monthly_Temperature</td>
 <td align="right">11038</td>
 <td align="right">8</td>
@@ -423,6 +441,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">26.08940</td>
 </tr>
 <tr class="even">
+<td align="left">20</td>
 <td align="left">Monthly_Temperature</td>
 <td align="right">12957</td>
 <td align="right">20</td>
@@ -430,6 +449,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">25.46473</td>
 </tr>
 <tr class="odd">
+<td align="left">19</td>
 <td align="left">Monthly_Temperature</td>
 <td align="right">15155</td>
 <td align="right">19</td>
@@ -437,6 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">26.94046</td>
 </tr>
 <tr class="even">
+<td align="left">4</td>
 <td align="left">Monthly_Temperature</td>
 <td align="right">21000</td>
 <td align="right">4</td>
@@ -446,124 +467,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>The code chunk below demonstrates how to exploit the <code>sf_join</code> field to join the table data back to the spatial <code>sf</code> object.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="merging-satellite-and-point-sensor-data.html#cb23-1"></a>counties.join =<span class="st"> </span>counties <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">sf_join =</span> rowid)</span>
-<span id="cb23-2"><a href="merging-satellite-and-point-sensor-data.html#cb23-2"></a></span>
-<span id="cb23-3"><a href="merging-satellite-and-point-sensor-data.html#cb23-3"></a>counties.join =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>, <span class="dt">sf.obj =</span> counties.join) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb23-4"><a href="merging-satellite-and-point-sensor-data.html#cb23-4"></a><span class="st">        </span><span class="kw">left_join</span>(counties.join) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb23-5"><a href="merging-satellite-and-point-sensor-data.html#cb23-5"></a><span class="st">        </span><span class="kw">st_as_sf</span>()</span></code></pre></div>
-<table>
-<colgroup>
-<col width="0%" />
-<col width="0%" />
-<col width="0%" />
-<col width="0%" />
-<col width="0%" />
-<col width="99%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Var_Name</th>
-<th align="right">Raster_Cell</th>
-<th align="right">sf_join</th>
-<th align="right">M1.2018</th>
-<th align="right">M2.2018</th>
-<th align="left">geometry</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Monthly_Temperature</td>
-<td align="right">4745</td>
-<td align="right">21</td>
-<td align="right">22.74704</td>
-<td align="right">24.89580</td>
-<td align="left">list(list(c(-88.516899109, -88.508293152, -88.47769928, -88.457695007, -88.444396973, -88.438095093, -88.429298401, -88.4180984499999, -88.414199829, -88.406097412, -88.399398804, -88.390693665, -88.379295349, -88.374893188, -88.36190033, -88.344993591, -88.333396912, -88.327095032, -88.3115997309999, -88.29989624, -88.2912979129999, -88.2851943969999, -88.280693054, -88.273895264, -88.270500183, -88.267097473, -88.2497940059999, -88.241394043, -88.239097595, -88.232597351, -88.222396851, -88.2192001339999,</td>
-</tr>
-</tbody>
-</table>
-<p>-88.213897705, -88.204597473, -88.202095032, -88.1809997559999, -88.165893555, -88.1607971189999, -88.156997681, -88.142997742, -88.128593445, -88.126197815, -88.10799408, -88.103294373, -88.099899292, -88.087097168, -88.0831985469999, -88.077697754, -88.064193726, -88.0637969969999, -88.064094543, -88.064193726, -88.0643997189999, -88.0643997189999, -88.0646972659999, -88.0646972659999, -88.064796448, -88.06489563, -88.065193176, -88.065696716, -88.065895081, -88.065994263, -88.066093445, -88.066299438,
--88.066299438, -88.066398621, -88.066398621, -88.0664978029999, -88.066696167, -88.066795349, -88.066795349, -88.066894531, -88.066894531, -88.066993713, -88.066894531, -88.066993713, -88.066993713, -88.067092896, -88.067199707, -88.067298889, -88.0674972529999, -88.067695618, -88.067695618, -88.067993164, -88.06829834, -88.0683975219999, -88.068595886, -88.068695068, -88.0687942499999, -88.0690002439999, -88.069198608, -88.069198608, -88.069396973, -88.069396973, -88.069496155, -88.069595337, -88.069496155,
--88.069595337, -88.069595337, -88.069496155, -88.069595337, -88.069595337, -88.069496155, -88.069595337, -88.069595337, -88.0696945189999, -88.0696945189999, -88.069892883, -88.069892883, -88.122497559, -88.139396667, -88.148696899, -88.153999329, -88.16230011, -88.168395996, -88.17779541, -88.183494568, -88.2130966189999, -88.216094971, -88.221199036, -88.229598999, -88.232795715, -88.245498657, -88.2506942749999, -88.2672958369999, -88.2773971559999, -88.2866973879999, -88.3063964839999, -88.311500549,
--88.3164978029999, -88.3269958499999, -88.3334960939999, -88.336196899, -88.34299469, -88.3482971189999, -88.357597351, -88.365493774, -88.375595093, -88.385398865, -88.40599823, -88.417098999, -88.420295715, -88.463294983, -88.473396301, -88.4828948969999, -88.4981002809999, -88.5009002689999, -88.53099823, -88.541496277, -88.5416946409999, -88.541793823, -88.541999817, -88.5421981809999, -88.542098999, -88.542297363, -88.542297363, -88.542098999, -88.542297363, -88.542297363, -88.542098999, -88.5421981809999,
--88.541999817, -88.541999817, -88.541893005, -88.541893005, -88.541793823, -88.5416946409999, -88.541595459, -88.541595459, -88.5416946409999, -88.5416946409999, -88.541496277, -88.541893005, -88.5416946409999, -88.541595459, -88.541595459, -88.541397095, -88.540893555, -88.540893555, -88.540596008, -88.540298462, -88.54019928, -88.54019928, -88.5397949219999, -88.539894104, -88.540100098, -88.539596558, -88.539299011, -88.5391006469999, -88.538993835, -88.538993835, -88.5388946529999, -88.538696289,
--88.538398743, -88.538299561, -88.537994385, -88.537796021, -88.5369949339999, -88.5351943969999, -88.526794434, -88.516899109, 43.1958122250001, 43.195613861, 43.195613861, 43.1957130430001, 43.195411682, 43.195411682, 43.1951103210001, 43.1948127750001, 43.1944122310001, 43.194213867, 43.194011688, 43.1938133240001, 43.1934127810001, 43.1933135990001, 43.192813873, 43.192813873, 43.192611694, 43.192611694, 43.192813873, 43.1929130550001, 43.1930122380001, 43.1930122380001, 43.1932106020001, 43.1932106020001,
-43.1934127810001, 43.1933135990001, 43.1933135990001, 43.1932106020001, 43.1932106020001, 43.19311142, 43.19311142, 43.1930122380001, 43.1930122380001, 43.192813873, 43.1929130550001, 43.1925125120001, 43.1924133300001, 43.192211151, 43.1921119690001, 43.191913605, 43.191913605, 43.191810608, 43.191810608, 43.191711426, 43.191711426, 43.191913605, 43.191913605, 43.191810608, 43.1915130620001, 43.185112, 43.176113129, 43.1684112550001, 43.161613464, 43.15511322, 43.1489105220001, 43.1456108090001,
-43.1414108280001, 43.1387138370001, 43.1345138550001, 43.11971283, 43.115013123, 43.1115112300001, 43.1089134220001, 43.1015129090001, 43.0895118710001, 43.0854110720001, 43.0809135440001, 43.0779113770001, 43.069911957, 43.067211151, 43.058612823, 43.054210663, 43.0481109620001, 43.044712067, 43.041511536, 43.0357131960001, 43.0302124020001, 43.0224113460001, 43.0183105470001, 43.0159111020001, 43.0086135860001, 43.003013611, 42.999313354, 42.9958114620001, 42.9862136840001, 42.9838104250001, 42.979911804,
-42.9761123660001, 42.973114014, 42.963413239, 42.9580116270001, 42.9516105650001, 42.94821167, 42.940811157, 42.937713623, 42.9327125550001, 42.929710388, 42.923912048, 42.900913239, 42.898113251, 42.8943138120001, 42.887012482, 42.882911682, 42.8807106020001, 42.8662109370001, 42.8626136780001, 42.858112335, 42.851711273, 42.84331131, 42.84331131, 42.843013763, 42.843013763, 42.842910767, 42.842910767, 42.8428115840001, 42.8428115840001, 42.842910767, 42.8423118590001, 42.8422126770001, 42.842113495,
-42.842010498, 42.842113495, 42.8413124080001, 42.8417129520001, 42.842010498, 42.8418121340001, 42.842010498, 42.842113495, 42.8422126770001, 42.842113495, 42.842510223, 42.8425140380001, 42.84261322, 42.8428115840001, 42.8428115840001, 42.84261322, 42.8427124020001, 42.8428115840001, 42.8428115840001, 42.8427124020001, 42.8427124020001, 42.84261322, 42.84261322, 42.8427124020001, 42.8427124020001, 42.84261322, 42.84261322, 42.8427124020001, 42.84331131, 42.8522109990001, 42.858211517, 42.867210388,
-42.8798103330001, 42.884311676, 42.8873138430001, 42.8906135560001, 42.901412964, 42.9057121280001, 42.9178123470001, 42.927112579, 42.930812836, 42.9356117250001, 42.940410614, 42.944011688, 42.9521102910001, 42.960010529, 42.9664115910001, 42.974411011, 42.988712311, 42.9926109310001, 42.9980125430001, 43.0031127930001, 43.006511688, 43.010612488, 43.0147132870001, 43.0192108150001, 43.0240135190001, 43.0348129270001, 43.044212341, 43.0483131410001, 43.063613892, 43.0708122250001, 43.0793113710001,
-43.0932121280001, 43.099311829, 43.1024131770001, 43.10761261, 43.120910645, 43.126411438, 43.1299133300001, 43.133911133, 43.138214111, 43.1409111020001, 43.1462135310001, 43.1511116030001, 43.16021347, 43.1647109990001, 43.1773109440001, 43.1960105900001, 43.195911407, 43.1958122250001))) |
-|Monthly_Temperature | 4970| 3| 23.00074| 25.13390|list(list(c(-87.979095459, -87.974395752, -87.972396851, -87.968193054, -87.96509552, -87.957794189, -87.95489502, -87.9501953129999, -87.945396423, -87.9344940189999, -87.923194885, -87.920799255, -87.917900085, -87.9144973749999, -87.904800415, -87.899398804, -87.892886, -87.887588501, -87.886386, -87.885787964, -87.881088257, -87.881088257, -87.885285, -87.8850860599999, -87.88948822, -87.892288208, -87.894485, -87.896585, -87.898485, -87.900285, -87.901185, -87.901385, -87.901385, -87.900886536,
--87.900485, -87.899485, -87.898986816, -87.897888184, -87.896685, -87.895988464, -87.893188477, -87.890487671, -87.890083313, -87.886385, -87.880884, -87.878486633, -87.876084, -87.875084, -87.8730850219999, -87.8708877559999, -87.870584, -87.870584, -87.867484, -87.866884, -87.866484, -87.864083943, -87.863984, -87.864284, -87.868884, -87.870185852, -87.875484, -87.8757858279999, -87.875686646, -87.877284, -87.883087158, -87.882446875, -87.882084, -87.883880724, -87.883984, -87.885582562, -87.885681152,
--87.886784, -87.887734, -87.887484036, -87.889884949, -87.888885498, -87.88898468, -87.890084, -87.8881835939999, -87.886581421, -87.88178449, -87.8818836949999, -87.8841857909999, -87.887384, -87.890684786, -87.895084, -87.896385193, -87.896684, -87.89528656, -87.895385742, -87.8970870969999, -87.89834, -87.898330688, -87.898223877, -87.8980026249999, -87.897815, -87.8973464969999, -87.896492004, -87.896224976, -87.895942688, -87.895889282, -87.895721436, -87.895703, -87.89578, -87.895911, -87.896206,
--87.897155762, -87.8971786499999, -87.897155762, -87.897155762, -87.897232056, -87.89729, -87.89729, -87.897213, -87.897079468, -87.896732, -87.89617157, -87.8960723879999, -87.896338, -87.896338, -87.896133058, -87.895484924, -87.894721985, -87.894434, -87.8942489619999, -87.894424438, -87.894927979, -87.895256042, -87.895517, -87.895706177, -87.89591217, -87.896194458, -87.896289001, -87.899383545, -87.8992843629999, -87.899085999, -87.895984, -87.89528656, -87.897483826, -87.897285461, -87.894983026,
--87.894485474, -87.896784, -87.896484, -87.894082742, -87.893287659, -87.895784, -87.8905868529999, -87.889183, -87.888383, -87.8881835939999, -87.8878860469999, -87.888383, -87.887084961, -87.887683, -87.884383, -87.882883, -87.8826827999999, -87.882385254, -87.882781982, -87.878684998, -87.871582, -87.868682, -87.862083435, -87.860682, -87.857185364, -87.855182, -87.854484558, -87.855282, -87.848381042, -87.845184326, -87.844881, -87.844881, -87.84538269, -87.845184326, -87.8435821529999, -87.843482971,
--87.842681885, -87.843383789, -87.844581604, -87.845681, -87.84578, -87.84378, -87.83948, -87.83928, -87.84008, -87.840782099, -87.84158, -87.842681885, -87.843482971, -87.8444824219999, -87.845581055, -87.84578, -87.846580505, -87.84768, -87.8480911249999, -87.8477865139999, -87.84778, -87.842888807, -87.8425903419999, -87.8457859439999, -87.844279, -87.8435058589999, -87.841171265, -87.838379, -87.837479, -87.83618927, -87.834892273, -87.829978943, -87.829078, -87.826393127, -87.8246917719999,
--87.827578, -87.827278137, -87.827221865, -87.826896667, -87.841896057, -87.852592468, -87.8645935059999, -87.88469696, -87.89099884, -87.89389801, -87.902694702, -87.909896851, -87.913795471, -87.9236984249999, -87.926597595, -87.931900024, -87.942596436, -87.952095032, -87.9562988279999, -87.991897583, -88.0012969969999, -88.010696411, -88.031097412, -88.069892883, -88.069892883, -88.0696945189999, -88.0696945189999, -88.069595337, -88.069595337, -88.069496155, -88.069595337, -88.069595337, -88.069496155,
--88.069595337, -88.069595337, -88.069496155, -88.069595337, -88.069496155, -88.069396973, -88.069396973, -88.069198608, -88.069198608, -88.0690002439999, -88.0687942499999, -88.068695068, -88.068595886, -88.0683975219999, -88.06829834, -88.067993164, -88.067695618, -88.067695618, -88.0674972529999, -88.067298889, -88.067199707, -88.067092896, -88.066993713, -88.066993713, -88.066894531, -88.066993713, -88.066894531, -88.066894531, -88.066795349, -88.066795349, -88.066696167, -88.0664978029999, -88.066398621,
--88.066398621, -88.066299438, -88.066299438, -88.066093445, -88.065994263, -88.065895081, -88.065696716, -88.065193176, -88.06489563, -88.064796448, -88.0646972659999, -88.0646972659999, -88.0643997189999, -88.0643997189999, -88.064193726, -88.064094543, -88.0637969969999, -88.064193726, -88.053695679, -88.0440979, -88.038597107, -88.033996582, -88.023895264, -88.004295349, -87.993797302, -87.990394592, -87.9840927119999, -87.979095459, 43.192710876, 43.192611694, 43.192611694, 43.1925125120001,
-43.1925125120001, 43.1924133300001, 43.192314148, 43.1923103330001, 43.1924133300001, 43.192211151, 43.192211151, 43.1921119690001, 43.1921119690001, 43.192211151, 43.1921119690001, 43.192211151, 43.192008, 43.186607361, 43.183608, 43.181106567, 43.1706085210001, 43.1698074340001, 43.161809, 43.1615104680001, 43.154407501, 43.1487083440001, 43.14501, 43.14261, 43.13961, 43.13731, 43.13491, 43.13321, 43.13161, 43.127708435, 43.12591, 43.12371, 43.122310638, 43.1203117370001, 43.118411, 43.117412567,
-43.114009857, 43.111209869, 43.110809326, 43.107611, 43.102811, 43.1014099120001, 43.099011, 43.094611, 43.0905113220001, 43.0871124270001, 43.084112, 43.081912, 43.075312, 43.074612, 43.074412, 43.0742112560001, 43.072912, 43.070012, 43.064512, 43.064411163, 43.059913, 43.05941391, 43.0577125550001, 43.057213, 43.053012848, 43.0518002380001, 43.051113, 43.05061391, 43.051113, 43.05081327, 43.0510635380001, 43.051513, 43.050413, 43.050312967, 43.0481147770001, 43.0473136900001, 43.0468139650001,
-43.045713, 43.044612885, 43.0460128780001, 43.0461120210001, 43.0459136110001, 43.045814514, 43.043313, 43.042313, 43.042313, 43.039211273, 43.038113, 43.0381126400001, 43.036613464, 43.036514282, 43.030468, 43.0299530030001, 43.0296211240001, 43.0293502810001, 43.029157, 43.028865814, 43.0289001460001, 43.029022217, 43.0292358400001, 43.0293502810001, 43.0299530030001, 43.030378, 43.030708, 43.031076, 43.031405, 43.031772614, 43.0318717960001, 43.0320243840001, 43.0323562620001, 43.0325660710001,
-43.032643, 43.03272, 43.032817, 43.0329322810001, 43.033147, 43.0333976750001, 43.033496857, 43.0337473110001, 43.033806, 43.033881868, 43.0333976750001, 43.0326423650001, 43.032103, 43.0312118530001, 43.03055191, 43.0296211240001, 43.0292739870001, 43.029138, 43.0290794370001, 43.0289649960001, 43.028636932, 43.0257147780001, 43.025615692, 43.02501297, 43.0244140620001, 43.024714, 43.021915436, 43.020015717, 43.019412994, 43.021212248, 43.020313263, 43.018214, 43.017414, 43.019411641, 43.0179138180001,
-43.015814, 43.0041122440001, 43.004814, 43.004214, 43.0026130680001, 43.0026130680001, 43.002214, 43.001113892, 43.000514, 42.997615, 42.997515, 42.9973144530001, 42.997116089, 42.996513367, 42.992416382, 42.987915, 42.986315, 42.981815338, 42.980615, 42.9780159000001, 42.977515, 42.9766159060001, 42.976115, 42.966213226, 42.962013245, 42.960215, 42.957715, 42.956115723, 42.9546165470001, 42.951515198, 42.949314117, 42.944114685, 42.941017151, 42.9371147160001, 42.930216, 42.927416, 42.921416, 42.914816,
-42.913116, 42.912416, 42.906216262, 42.906316, 42.9064178470001, 42.906116486, 42.9055175780001, 42.9041175840001, 42.903816, 42.9008178710001, 42.898716, 42.893112183, 42.889615931, 42.889216, 42.8886180760001, 42.8850136980001, 42.883412202, 42.880617, 42.877986908, 42.8722381590001, 42.865817, 42.864017, 42.8607139590001, 42.856712341, 42.8493156430001, 42.848517, 42.8492126460001, 42.8461151120001, 42.845317, 42.844017029, 42.8438886920001, 42.8423118590001, 42.842113495, 42.8422126770001, 42.8422126770001,
-42.8424110410001, 42.8425140380001, 42.8425140380001, 42.8428115840001, 42.8428115840001, 42.8427124020001, 42.842910767, 42.843013763, 42.843013763, 42.8431129460001, 42.843410492, 42.843513489, 42.843513489, 42.843410492, 42.843410492, 42.84331131, 42.84331131, 42.851711273, 42.858112335, 42.8626136780001, 42.8662109370001, 42.8807106020001, 42.882911682, 42.887012482, 42.8943138120001, 42.898113251, 42.900913239, 42.923912048, 42.929710388, 42.9327125550001, 42.937713623, 42.940811157, 42.94821167,
-42.9516105650001, 42.9580116270001, 42.963413239, 42.973114014, 42.9761123660001, 42.979911804, 42.9838104250001, 42.9862136840001, 42.9958114620001, 42.999313354, 43.003013611, 43.0086135860001, 43.0159111020001, 43.0183105470001, 43.0224113460001, 43.0302124020001, 43.0357131960001, 43.041511536, 43.044712067, 43.0481109620001, 43.054210663, 43.058612823, 43.067211151, 43.069911957, 43.0779113770001, 43.0809135440001, 43.0854110720001, 43.0895118710001, 43.1015129090001, 43.1089134220001, 43.1115112300001,
-43.115013123, 43.11971283, 43.1345138550001, 43.1387138370001, 43.1414108280001, 43.1456108090001, 43.1489105220001, 43.15511322, 43.161613464, 43.1684112550001, 43.176113129, 43.185112, 43.1915130620001, 43.192211151, 43.1923103330001, 43.1924133300001, 43.1924133300001, 43.1925125120001, 43.1925125120001, 43.192710876, 43.192611694, 43.192710876, 43.192710876)), list(c(-87.897285783, -87.897201538, -87.8999701769999, -87.897285783, 43.2148060230001, 43.214416504, 43.2183101520001, 43.2148060230001
-))) |
-|Monthly_Temperature | 11038| 8| 23.88734| 26.08940|list(list(c(-87.827221865, -87.82649, -87.815696481, -87.792396545, -87.781387329, -87.7721405029999, -87.7500762939999, -87.7472229, -87.747950749, -87.7500762939999, -87.75994873, -87.761402, -87.763002, -87.7669219969999, -87.7687620039999, -87.768829346, -87.768714905, -87.768539429, -87.765899658, -87.7666015629999, -87.77053833, -87.772201538, -87.774745, -87.793712667, -87.798906, -87.804906, -87.805839539, -87.808692932, -87.815193176, -87.818099976, -87.820495605, -87.822692871, -87.8251953129999,
--87.827796936, -87.831497192, -87.8367996219999, -87.842498779, -87.84589386, -87.86289978, -87.8725967409999, -87.876098633, -87.88419342, -87.895294189, -87.915794373, -87.9300994869999, -87.9424972529999, -87.982894897, -87.9916992189999, -88.001693726, -88.0169982909999, -88.036598206, -88.044700623, -88.051498413, -88.07069397, -88.083999634, -88.105796814, -88.1101989749999, -88.129798889, -88.1385955809999, -88.1490936279999, -88.1588973999999, -88.168899536, -88.187995911, -88.188293457,
--88.1881942749999, -88.188095093, -88.188095093, -88.1881942749999, -88.1881942749999, -88.188095093, -88.188095093, -88.187995911, -88.207695007, -88.215400696, -88.222496033, -88.2253952029999, -88.2299957279999, -88.2706985469999, -88.2869949339999, -88.29259491, -88.295295715, -88.3026962279999, -88.3058929439999, -88.3059997559999, -88.306098938, -88.3059997559999, -88.3059997559999, -88.306098938, -88.306098938, -88.30619812, -88.306297302, -88.3058929439999, -88.3058929439999, -88.3059997559999,
--88.306098938, -88.306098938, -88.30619812, -88.3066940309999, -88.3067932129999, -88.3067932129999, -88.306900024, -88.306900024, -88.3067932129999, -88.306999207, -88.307098389, -88.307197571, -88.307594299, -88.307998657, -88.3078994749999, -88.3076934809999, -88.307594299, -88.307495117, -88.307395935, -88.3072967529999, -88.306900024, -88.3067932129999, -88.306594849, -88.3063964839999, -88.2866973879999, -88.2773971559999, -88.2672958369999, -88.2506942749999, -88.245498657, -88.232795715,
--88.229598999, -88.221199036, -88.216094971, -88.2130966189999, -88.183494568, -88.17779541, -88.168395996, -88.16230011, -88.153999329, -88.148696899, -88.139396667, -88.122497559, -88.069892883, -88.031097412, -88.010696411, -88.0012969969999, -87.991897583, -87.9562988279999, -87.952095032, -87.942596436, -87.931900024, -87.926597595, -87.9236984249999, -87.913795471, -87.909896851, -87.902694702, -87.89389801, -87.89099884, -87.88469696, -87.8645935059999, -87.852592468, -87.841896057, -87.826896667,
--87.827221865, 42.8438886920001, 42.842227, 42.842303981, 42.8175544740001, 42.806224823, 42.8005294800001, 42.784778595, 42.7824974060001, 42.7817803510001, 42.779693604, 42.770324707, 42.7678435130001, 42.7653155130001, 42.7588691710001, 42.7556991710001, 42.7506446840001, 42.7450294490001, 42.7406578060001, 42.733844757, 42.726131439, 42.7101325990001, 42.704738617, 42.700259513, 42.6682605120001, 42.6682595130001, 42.668359513, 42.6681098940001, 42.66791153, 42.6678123470001, 42.6678123470001,
-42.66791153, 42.66791153, 42.6678123470001, 42.6678123470001, 42.66791153, 42.66791153, 42.6681137080001, 42.6681137080001, 42.6686134340001, 42.6687126160001, 42.668811798, 42.668811798, 42.6690139770001, 42.669212341, 42.669311523, 42.6695137020001, 42.6695137020001, 42.669612885, 42.670211792, 42.67011261, 42.67011261, 42.6700134280001, 42.6700134280001, 42.6699104310001, 42.6699104310001, 42.669712067, 42.669612885, 42.6694107060001, 42.669212341, 42.669212341, 42.6691131590001, 42.6691131590001,
-42.669311523, 42.661911011, 42.65681076, 42.653713226, 42.649513245, 42.6442108150001, 42.636211395, 42.6298103330001, 42.6221122740001, 42.6112136840001, 42.6112136840001, 42.6111106870001, 42.6111106870001, 42.6112136840001, 42.6111106870001, 42.6111106870001, 42.6110115050001, 42.610912323, 42.610912323, 42.6108131410001, 42.6108131410001, 42.6180114750001, 42.6216125490001, 42.624713898, 42.633411407, 42.639011383, 42.6442108150001, 42.652313232, 42.6594123840001, 42.663211823, 42.6677131650001,
-42.6717109680001, 42.673912048, 42.676712036, 42.6837120060001, 42.6912117000001, 42.69411087, 42.697711945, 42.7018127440001, 42.7126121520001, 42.7155113220001, 42.7182121280001, 42.724411011, 42.7312126160001, 42.749210358, 42.756214142, 42.7619133000001, 42.7733116150001, 42.7784118650001, 42.7853126530001, 42.795612335, 42.7981109620001, 42.8216133120001, 42.82831192, 42.837013245, 42.842113495, 42.842010498, 42.8418121340001, 42.842010498, 42.8417129520001, 42.8413124080001, 42.842113495, 42.842010498,
-42.842113495, 42.8422126770001, 42.8423118590001, 42.842910767, 42.8428115840001, 42.8428115840001, 42.842910767, 42.842910767, 42.843013763, 42.843013763, 42.84331131, 42.84331131, 42.84331131, 42.843410492, 42.843410492, 42.843513489, 42.843513489, 42.843410492, 42.8431129460001, 42.843013763, 42.843013763, 42.842910767, 42.8427124020001, 42.8428115840001, 42.8428115840001, 42.8425140380001, 42.8425140380001, 42.8424110410001, 42.8422126770001, 42.8422126770001, 42.842113495, 42.8423118590001,
-42.8438886920001))) |
-|Monthly_Temperature | 12957| 20| 23.22283| 25.46473|list(list(c(-88.53099823, -88.5009002689999, -88.4981002809999, -88.4828948969999, -88.473396301, -88.463294983, -88.420295715, -88.417098999, -88.40599823, -88.385398865, -88.375595093, -88.365493774, -88.357597351, -88.3482971189999, -88.34299469, -88.336196899, -88.3334960939999, -88.3269958499999, -88.3164978029999, -88.311500549, -88.3063964839999, -88.306594849, -88.3067932129999, -88.306900024, -88.3072967529999, -88.307395935, -88.307495117, -88.307594299, -88.3076934809999, -88.3078994749999,
--88.307998657, -88.307594299, -88.307197571, -88.307098389, -88.306999207, -88.3067932129999, -88.306900024, -88.306900024, -88.3067932129999, -88.3067932129999, -88.3066940309999, -88.30619812, -88.306098938, -88.306098938, -88.3059997559999, -88.3058929439999, -88.3058929439999, -88.306297302, -88.30619812, -88.306098938, -88.306098938, -88.3059997559999, -88.3059997559999, -88.306098938, -88.3059997559999, -88.3058929439999, -88.305793762, -88.30569458, -88.30569458, -88.305595398, -88.305397034,
--88.305297852, -88.305297852, -88.3051986689999, -88.3050994869999, -88.3050994869999, -88.304992676, -88.305000305, -88.305000305, -88.3048934939999, -88.304695129, -88.304695129, -88.304298401, -88.311096191, -88.3549957279999, -88.375099182, -88.38999939, -88.407295227, -88.496894836, -88.500099182, -88.5071945189999, -88.5157928469999, -88.525794983, -88.550193787, -88.5594940189999, -88.566596985, -88.5696945189999, -88.583396912, -88.589492798, -88.625099182, -88.638694763, -88.6435928339999,
--88.65259552, -88.659698486, -88.667098999, -88.670799255, -88.678199768, -88.687797546, -88.698097229, -88.704399109, -88.707397461, -88.713195801, -88.722496033, -88.72719574, -88.732192993, -88.7368927, -88.746498108, -88.750099182, -88.765396118, -88.769599915, -88.776496887, -88.776496887, -88.7765960689999, -88.776695251, -88.776695251, -88.7765960689999, -88.776496887, -88.776397705, -88.776397705, -88.776298523, -88.776298523, -88.776397705, -88.776397705, -88.776496887, -88.776496887, -88.7765960689999,
--88.7765960689999, -88.776496887, -88.776496887, -88.7765960689999, -88.776695251, -88.777000427, -88.777198792, -88.777297974, -88.7773971559999, -88.7774963379999, -88.777694702, -88.7777938839999, -88.777893066, -88.77809906, -88.778297424, -88.7786941529999, -88.778793335, -88.778594971, -88.778594971, -88.7786941529999, -88.77809906, -88.77809906, -88.7779998779999, -88.7777938839999, -88.7777938839999, -88.777297974, -88.777198792, -88.777198792, -88.776695251, -88.770599365, -88.75239563,
--88.750198364, -88.711097717, -88.708000183, -88.679199219, -88.663093567, -88.6592941279999, -88.6524963379999, -88.644897461, -88.634300232, -88.625099182, -88.619995117, -88.615699768, -88.607894897, -88.601898193, -88.597198486, -88.579696655, -88.576095581, -88.57219696, -88.565895081, -88.560897827, -88.545097351, -88.541496277, -88.53099823, 42.8427124020001, 42.84261322, 42.84261322, 42.8427124020001, 42.8427124020001, 42.84261322, 42.84261322, 42.8427124020001, 42.8427124020001, 42.8428115840001,
-42.8428115840001, 42.8427124020001, 42.84261322, 42.8428115840001, 42.8428115840001, 42.84261322, 42.8425140380001, 42.842510223, 42.842113495, 42.8422126770001, 42.842113495, 42.837013245, 42.82831192, 42.8216133120001, 42.7981109620001, 42.795612335, 42.7853126530001, 42.7784118650001, 42.7733116150001, 42.7619133000001, 42.756214142, 42.749210358, 42.7312126160001, 42.724411011, 42.7182121280001, 42.7155113220001, 42.7126121520001, 42.7018127440001, 42.697711945, 42.69411087, 42.6912117000001,
-42.6837120060001, 42.676712036, 42.673912048, 42.6717109680001, 42.6677131650001, 42.663211823, 42.6594123840001, 42.652313232, 42.6442108150001, 42.639011383, 42.633411407, 42.624713898, 42.6216125490001, 42.6180114750001, 42.6108131410001, 42.60351181, 42.5959129330001, 42.589412689, 42.5818138120001, 42.5671119690001, 42.558113098, 42.5527114870001, 42.5494117740001, 42.5389137270001, 42.534111023, 42.5312118530001, 42.5274124150001, 42.5239105220001, 42.5165138240001, 42.505210876, 42.498813629,
-42.495010376, 42.4946136470001, 42.4946136470001, 42.494510651, 42.494510651, 42.4946136470001, 42.4946136470001, 42.4948120120001, 42.4949111940001, 42.4949111940001, 42.495010376, 42.495010376, 42.495113373, 42.495113373, 42.495010376, 42.4952125550001, 42.495113373, 42.495113373, 42.495010376, 42.495010376, 42.4949111940001, 42.4948120120001, 42.4946136470001, 42.494510651, 42.494312286, 42.4941139220001, 42.493812561, 42.493610382, 42.493610382, 42.4934120180001, 42.493110657, 42.4930114750001,
-42.492912292, 42.4927139280001, 42.4925117490001, 42.492412567, 42.4921112060001, 42.4920120240001, 42.4920120240001, 42.520412445, 42.535511017, 42.548912048, 42.5565109250001, 42.5610122680001, 42.5643119810001, 42.570510864, 42.580513, 42.588310242, 42.6250114440001, 42.628311157, 42.633010864, 42.6379127500001, 42.6401138310001, 42.6438102720001, 42.6521110530001, 42.6631126400001, 42.6676139830001, 42.671512604, 42.6744117740001, 42.6821136470001, 42.685310364, 42.6925125120001, 42.694911957,
-42.6978111270001, 42.7044105530001, 42.707912445, 42.717113495, 42.7255134580001, 42.740013123, 42.7500114440001, 42.7549133300001, 42.7624130250001, 42.7693138120001, 42.7721138000001, 42.789112091, 42.791912079, 42.7963104250001, 42.805713654, 42.8087120060001, 42.8268127440001, 42.83241272, 42.836612701, 42.842010498, 42.8428115840001, 42.8428115840001, 42.8427124020001, 42.8427124020001, 42.84261322, 42.84261322, 42.8425140380001, 42.842510223, 42.8425140380001, 42.842510223, 42.8425140380001,
-42.8424110410001, 42.8424110410001, 42.8425140380001, 42.842510223, 42.8425140380001, 42.84261322, 42.84261322, 42.8427124020001, 42.8427124020001, 42.8428115840001, 42.842910767, 42.842910767, 42.84331131, 42.8427124020001))) |
-|Monthly_Temperature | 15155| 19| 24.72884| 26.94046|list(list(c(-87.8167749099999, -87.816972467, -87.817073846, -87.8167749099999, 42.592318693, 42.591923578, 42.592220051, 42.592318693)), list(c(-87.822074, -87.821477954, -87.8222731979999, -87.822074, 42.61072, 42.6102232960001, 42.6104203130001, 42.61072)), list(c(-87.9916992189999, -87.982894897, -87.9424972529999, -87.9300994869999, -87.915794373, -87.895294189, -87.88419342, -87.876098633, -87.8725967409999, -87.86289978, -87.84589386, -87.842498779, -87.8367996219999, -87.831497192, -87.827796936,
--87.8251953129999, -87.822692871, -87.820495605, -87.818099976, -87.815193176, -87.808692932, -87.805839539, -87.806175232, -87.8094805809999, -87.809700012, -87.8108051789999, -87.814674377, -87.816375732, -87.816375732, -87.816474915, -87.8162765499999, -87.816871643, -87.816874, -87.816774024, -87.816874, -87.817474, -87.817771912, -87.817774, -87.81817627, -87.8191756529999, -87.819673989, -87.8193740839999, -87.819974, -87.820472717, -87.820671082, -87.820960712, -87.820671082, -87.821372986,
--87.821773895, -87.8209740569999, -87.821774, -87.822673776, -87.8215280599999, -87.821907043, -87.822975159, -87.8221740719999, -87.8211746219999, -87.8208770749999, -87.818774, -87.818574, -87.816574, -87.815773785, -87.814376831, -87.815073924, -87.811576843, -87.815474, -87.816574, -87.81727406, -87.8178710939999, -87.8175735469999, -87.816474, -87.816474, -87.817375183, -87.818275452, -87.818673909, -87.817375183, -87.817774, -87.817873971, -87.815374, -87.810874939, -87.810775757, -87.810874939,
--87.813272943, -87.81187439, -87.811775208, -87.810974121, -87.810775757, -87.811273, -87.8116760249999, -87.8116760249999, -87.812173, -87.812173001, -87.812272998, -87.809672, -87.8040721789999, -87.802574158, -87.800971985, -87.80057671, -87.802672, -87.8031695, -87.8036727909999, -87.804172, -87.804374695, -87.804972, -87.8051605219999, -87.8059997559999, -87.809700012, -87.816398621, -87.821395874, -87.826896667, -87.830596924, -87.8340988159999, -87.839195251, -87.844497681, -87.858695984,
--87.862594604, -87.8716964719999, -87.882499695, -87.88609314, -87.897598267, -87.9015960689999, -87.911598206, -87.9180984499999, -87.9313964839999, -87.950393677, -87.955299377, -87.971298218, -87.981193542, -87.990493774, -88.0021972659999, -88.006195068, -88.0261993409999, -88.037994385, -88.062393188, -88.066299438, -88.0696945189999, -88.081497192, -88.0849990839999, -88.091400146, -88.096298218, -88.102493286, -88.109199524, -88.111694336, -88.11529541, -88.149200439, -88.1588973999999, -88.178199768,
--88.20009613, -88.208999634, -88.2140960689999, -88.2377929689999, -88.2475967409999, -88.250099182, -88.260795593, -88.265800476, -88.26839447, -88.285095215, -88.299293518, -88.304298401, -88.304695129, -88.304695129, -88.3048934939999, -88.305000305, -88.305000305, -88.304992676, -88.3050994869999, -88.3050994869999, -88.3051986689999, -88.305297852, -88.305297852, -88.305397034, -88.305595398, -88.30569458, -88.30569458, -88.305793762, -88.3058929439999, -88.3026962279999, -88.295295715, -88.29259491,
--88.2869949339999, -88.2706985469999, -88.2299957279999, -88.2253952029999, -88.222496033, -88.215400696, -88.207695007, -88.187995911, -88.188095093, -88.188095093, -88.1881942749999, -88.1881942749999, -88.188095093, -88.188095093, -88.1881942749999, -88.188293457, -88.187995911, -88.168899536, -88.1588973999999, -88.1490936279999, -88.1385955809999, -88.129798889, -88.1101989749999, -88.105796814, -88.083999634, -88.07069397, -88.051498413, -88.044700623, -88.036598206, -88.0169982909999, -88.001693726,
--87.9916992189999, 42.669612885, 42.6695137020001, 42.6695137020001, 42.669311523, 42.669212341, 42.6690139770001, 42.668811798, 42.668811798, 42.6687126160001, 42.6686134340001, 42.6681137080001, 42.6681137080001, 42.66791153, 42.66791153, 42.6678123470001, 42.6678123470001, 42.66791153, 42.66791153, 42.6678123470001, 42.6678123470001, 42.66791153, 42.6681098940001, 42.668018341, 42.657060555, 42.656414032, 42.653614218, 42.6440200810001, 42.6367187500001, 42.6363220210001, 42.6357192990001, 42.635520935,
-42.6331214900001, 42.6316203420001, 42.6308201950001, 42.629520513, 42.6283205130001, 42.6274299620001, 42.626420513, 42.6255187990001, 42.616219189, 42.615820178, 42.606620789, 42.6074205130001, 42.607521057, 42.607521057, 42.6085745460001, 42.6093215940001, 42.610721588, 42.612020171, 42.613320292, 42.6156205130001, 42.616020029, 42.614199978, 42.612171173, 42.611019135, 42.6100196840001, 42.608020782, 42.6073188780001, 42.60612, 42.60602, 42.60182, 42.601719003, 42.5952186580001, 42.5941202480001,
-42.58782196, 42.587620513, 42.589520513, 42.5894205930001, 42.5902214050001, 42.590518951, 42.5922203420001, 42.5942201710001, 42.592922211, 42.5908203120001, 42.590120287, 42.588718414, 42.5877205130001, 42.586820387, 42.58702, 42.58731842, 42.584220886, 42.5801200870001, 42.57922015, 42.5734214780001, 42.571632385, 42.5702209470001, 42.5649185180001, 42.564320513, 42.563919067, 42.559822083, 42.557920171, 42.5494202570001, 42.529820338, 42.51482, 42.5013206890001, 42.494918823, 42.492519379, 42.4921202890001,
-42.4920205130001, 42.4920205130001, 42.4937210080001, 42.493720513, 42.4926223750001, 42.492120513, 42.492027283, 42.491912842, 42.49181366, 42.4920120240001, 42.4920120240001, 42.4921112060001, 42.4921112060001, 42.492210388, 42.492210388, 42.492313385, 42.4925117490001, 42.4925117490001, 42.4926109310001, 42.49281311, 42.49281311, 42.4930114750001, 42.4930114750001, 42.493110657, 42.493110657, 42.4934120180001, 42.493713379, 42.493812561, 42.4940109250001, 42.494312286, 42.494510651, 42.4946136470001,
-42.494510651, 42.495010376, 42.495113373, 42.495513916, 42.495513916, 42.495613098, 42.495613098, 42.4957122800001, 42.4958114620001, 42.495910645, 42.495910645, 42.496112823, 42.496112823, 42.4962120060001, 42.4962120060001, 42.496112823, 42.496013641, 42.496013641, 42.496013641, 42.495910645, 42.495910645, 42.4958114620001, 42.4958114620001, 42.4952125550001, 42.4949111940001, 42.4948120120001, 42.4948120120001, 42.4946136470001, 42.495010376, 42.498813629, 42.505210876, 42.5165138240001, 42.5239105220001,
-42.5274124150001, 42.5312118530001, 42.534111023, 42.5389137270001, 42.5494117740001, 42.5527114870001, 42.558113098, 42.5671119690001, 42.5818138120001, 42.589412689, 42.5959129330001, 42.60351181, 42.6108131410001, 42.6108131410001, 42.610912323, 42.610912323, 42.6110115050001, 42.6111106870001, 42.6111106870001, 42.6112136840001, 42.6111106870001, 42.6111106870001, 42.6112136840001, 42.6112136840001, 42.6221122740001, 42.6298103330001, 42.636211395, 42.6442108150001, 42.649513245, 42.653713226,
-42.65681076, 42.661911011, 42.669311523, 42.6691131590001, 42.6691131590001, 42.669212341, 42.669212341, 42.6694107060001, 42.669612885, 42.669712067, 42.6699104310001, 42.6699104310001, 42.6700134280001, 42.6700134280001, 42.67011261, 42.67011261, 42.670211792, 42.669612885))) |
-|Monthly_Temperature | 21000| 4| 24.81107| 27.53006|list(list(c(-88.20009613, -88.199798584, -88.199394226, -88.199195862, -88.199195862, -88.19909668, -88.19909668, -88.198997498, -88.198898315, -88.198898315, -88.198997498, -88.198997498, -88.19909668, -88.19909668, -88.199195862, -88.199394226, -88.199394226, -88.1992950439999, -88.1992950439999, -88.199195862, -88.1992950439999, -88.199394226, -88.19959259, -88.199699402, -88.19960022, -88.19960022, -88.199493408, -88.199493408, -88.199394226, -88.199394226, -88.198898315, -88.198493958, -88.198493958,
--88.198799133, -88.198898315, -88.198799133, -88.198898315, -88.198898315, -88.198799133, -88.198799133, -88.198097229, -88.197898865, -88.197799683, -88.197799683, -88.1977004999999, -88.197692871, -88.197593689, -88.197593689, -88.1977004999999, -88.1977004999999, -88.197799683, -88.198196411, -88.1983947749999, -88.19859314, -88.198699951, -88.19859314, -88.19859314, -88.198699951, -88.198997498, -88.198898315, -88.198898315, -88.198997498, -88.198997498, -88.19909668, -88.199195862, -88.199195862,
--88.1992950439999, -88.1992950439999, -88.199493408, -88.19960022, -88.199394226, -88.1992950439999, -88.199493408, -88.2189941409999, -88.22379303, -88.232200623, -88.23789978, -88.2395935059999, -88.248092651, -88.251197815, -88.261695862, -88.264694214, -88.2681961059999, -88.27179718, -88.300598145, -88.3035964969999, -88.3072967529999, -88.316795349, -88.321594238, -88.326797485, -88.345596313, -88.3541946409999, -88.3599929809999, -88.368598938, -88.376396179, -88.383499146, -88.392997742,
--88.396499634, -88.399200439, -88.402297974, -88.408294678, -88.4328994749999, -88.4446945189999, -88.462493896, -88.472396851, -88.477493286, -88.481994629, -88.500099182, -88.5117950439999, -88.517997742, -88.535293579, -88.544692993, -88.550697327, -88.5742950439999, -88.588493347, -88.5926971439999, -88.612197876, -88.617797852, -88.646697998, -88.666496277, -88.705596924, -88.705596924, -88.7056961059999, -88.705596924, -88.705596924, -88.705497742, -88.705497742, -88.705596924, -88.705497742,
--88.705497742, -88.705596924, -88.705596924, -88.7056961059999, -88.705795288, -88.705795288, -88.7056961059999, -88.7056961059999, -88.70589447, -88.70589447, -88.705795288, -88.70589447, -88.70589447, -88.705993652, -88.7060928339999, -88.706199646, -88.7065963749999, -88.70639801, -88.70639801, -88.7065963749999, -88.706794739, -88.707099915, -88.707298279, -88.707397461, -88.704399109, -88.698097229, -88.687797546, -88.678199768, -88.670799255, -88.667098999, -88.659698486, -88.65259552, -88.6435928339999,
--88.638694763, -88.625099182, -88.589492798, -88.583396912, -88.5696945189999, -88.566596985, -88.5594940189999, -88.550193787, -88.525794983, -88.5157928469999, -88.5071945189999, -88.500099182, -88.496894836, -88.407295227, -88.38999939, -88.375099182, -88.3549957279999, -88.311096191, -88.304298401, -88.299293518, -88.285095215, -88.26839447, -88.265800476, -88.260795593, -88.250099182, -88.2475967409999, -88.2377929689999, -88.2140960689999, -88.208999634, -88.20009613, 42.496013641, 42.4920120240001,
-42.4856109620001, 42.4810104370001, 42.4737129210001, 42.4664115910001, 42.4626121520001, 42.4585113530001, 42.4553108220001, 42.4516105650001, 42.4479141240001, 42.444011688, 42.440013885, 42.435413361, 42.432613373, 42.4297103880001, 42.4274139400001, 42.4244117740001, 42.4208106990001, 42.4158134460001, 42.4127120970001, 42.4094123840001, 42.404510498, 42.4011116030001, 42.397712708, 42.39491272, 42.3872108460001, 42.3756103520001, 42.372711182, 42.3663139340001, 42.3579101560001, 42.3506126400001,
-42.333812714, 42.3288116460001, 42.3256111150001, 42.3226127620001, 42.317813873, 42.313911438, 42.3037109370001, 42.297912598, 42.2916107180001, 42.288711548, 42.286613464, 42.2775115970001, 42.2735137940001, 42.2697105410001, 42.2669105530001, 42.2638130190001, 42.2610130310001, 42.2586135860001, 42.252910614, 42.248813629, 42.245613098, 42.241012573, 42.2367134090001, 42.2342109680001, 42.2237129210001, 42.219413757, 42.21661377, 42.2146110530001, 42.211910248, 42.2071113590001, 42.202812195,
-42.1985130310001, 42.195011139, 42.187713623, 42.1833114620001, 42.176113129, 42.172111511, 42.168811798, 42.165111542, 42.1613121030001, 42.1542129520001, 42.1542129520001, 42.15411377, 42.1543121340001, 42.154010773, 42.15411377, 42.1543121340001, 42.1539115910001, 42.1539115910001, 42.1538124080001, 42.153713226, 42.1538124080001, 42.1538124080001, 42.153713226, 42.1538124080001, 42.1538124080001, 42.1539115910001, 42.15411377, 42.15411377, 42.1542129520001, 42.1542129520001, 42.154010773, 42.154010773,
-42.1539115910001, 42.1539115910001, 42.1538124080001, 42.1538124080001, 42.15411377, 42.1543121340001, 42.1543121350001, 42.1542129520001, 42.1542129520001, 42.15411377, 42.1542129520001, 42.1542129520001, 42.154010773, 42.1538124080001, 42.1538124080001, 42.153713226, 42.153610229, 42.153713226, 42.153713226, 42.1536140440001, 42.153610229, 42.1536140440001, 42.153610229, 42.1536140440001, 42.1535110470001, 42.1535110470001, 42.1833114620001, 42.186611176, 42.1971130370001, 42.2118110660001, 42.2169113160001,
-42.240512848, 42.2446136470001, 42.2490119930001, 42.2564125060001, 42.262512207, 42.2697105410001, 42.2771110530001, 42.2945137020001, 42.3193130490001, 42.3277130130001, 42.3423118590001, 42.3497123720001, 42.3787117000001, 42.3858108520001, 42.3941116330001, 42.4066123960001, 42.41501236, 42.4236106870001, 42.4295120240001, 42.44411087, 42.4518127440001, 42.4567108150001, 42.4658126830001, 42.474113464, 42.485012054, 42.490512848, 42.493610382, 42.493610382, 42.493812561, 42.4941139220001, 42.494312286,
-42.494510651, 42.4946136470001, 42.4948120120001, 42.4949111940001, 42.495010376, 42.495010376, 42.495113373, 42.495113373, 42.4952125550001, 42.495010376, 42.495113373, 42.495113373, 42.495010376, 42.495010376, 42.4949111940001, 42.4949111940001, 42.4948120120001, 42.4946136470001, 42.4946136470001, 42.494510651, 42.494510651, 42.4946136470001, 42.4946136470001, 42.495010376, 42.4946136470001, 42.4948120120001, 42.4948120120001, 42.4949111940001, 42.4952125550001, 42.4958114620001, 42.4958114620001,
-42.495910645, 42.495910645, 42.496013641, 42.496013641))) |</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="merging-satellite-and-point-sensor-data.html#cb24-1"></a><span class="kw">plot</span>(counties.join[<span class="st">&#39;M1.2018&#39;</span>])</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="merging-satellite-and-point-sensor-data.html#cb39-1" aria-hidden="true"></a><span class="co"># counties.join = counties %&gt;% tibble::rowid_to_column() %&gt;% dplyr::rename(sf_join = rowid)</span></span>
+<span id="cb39-2"><a href="merging-satellite-and-point-sensor-data.html#cb39-2" aria-hidden="true"></a><span class="co"># </span></span>
+<span id="cb39-3"><a href="merging-satellite-and-point-sensor-data.html#cb39-3" aria-hidden="true"></a><span class="co"># counties.join = grid2csv(rasters = list(temp.rasters[[1]]), var.names = &#39;Monthly_Temperature&#39;, sf.obj = counties.join) %&gt;% </span></span>
+<span id="cb39-4"><a href="merging-satellite-and-point-sensor-data.html#cb39-4" aria-hidden="true"></a><span class="co">#         left_join(counties.join) %&gt;% </span></span>
+<span id="cb39-5"><a href="merging-satellite-and-point-sensor-data.html#cb39-5" aria-hidden="true"></a><span class="co">#         st_as_sf()</span></span></code></pre></div>
 
 </div>
 </div>
