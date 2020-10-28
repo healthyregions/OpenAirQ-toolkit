@@ -34,10 +34,7 @@ Loading data is the next step. We load the "grid" data (in kilometers), which is
 ```{r loading data, warning = F}
 km.grid <- st_read("../data/Km_Grid")
 lac <- st_read("../data/LargeAreaCounties")
-# Currently not working
-download.file("https://drive.google.com/drive/folders/1sSgHVOsiLXEJYCUAR5u-IxZss3gXGD9O", "../data/LAC_Elevation.tif")
-#unzip(zipfile = "../data/LAC_Elevation.tif.zip", exdir = "./temp")
-lac.elevation <- raster("../data/LAC_Elevation.tif")
+lac.elevation <- readRDS("../data/LAC_Elevation.rds")
 ```
 
 # Inspecting Data
