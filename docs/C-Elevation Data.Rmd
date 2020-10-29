@@ -37,6 +37,8 @@ lac <- st_read("../data/LargeAreaCounties")
 lac.elevation <- readRDS("../data/LAC_Elevation.rds")
 ```
 
+The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
+
 # Inspecting Data
 Before we proceed any further, let's check the resolution of our elevation data first. The resolution is shown in degrees because that is the unit of CRS.
 
