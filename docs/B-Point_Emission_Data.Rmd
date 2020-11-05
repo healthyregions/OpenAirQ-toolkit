@@ -9,11 +9,11 @@ output:
 
 In this tutorial, we will demonstrate how to represent PM2.5 point emission data on maps. As an example, we will look at the PM2.5 data for four states - Illinois, Indiana, Wisconsin, and Michigan. The goal of this exercise is to create a point data map that provides a clear visualization of the point source of PM2.5 emission.
 
-# Loading Packages and Data
+## Loading Packages and Data
 
 We start by loading the necessary packages - "tidyverse", "sf", and "tmap". "Tidyverse" is a system of packages for data manipulation and is frequently utilized in statistical analyses. "Sf" is a package that offers a standardized way to encode spatial vector data in R. Lastly, "tmap" allows us to generate and customize a variety of maps, although we will only use it to create a simple point data map in the tutorial.
 
-```{r package.setup.points, message = FALSE}
+```{r B_package.setup.points, message = FALSE}
 library(tidyverse)
 library(sf)
 library(tmap)
@@ -23,12 +23,12 @@ Besides the packages, we also need to load our data, which can be done by runnin
 ```{r warning = FALSE, message = FALSE}
 # pe1 <- read_csv("process_12345.csv")
 ```
-# Data Manipulation
+## Data Manipulation
 
 Once we have our data and the packages ready, we will start the data manipulation process. Since we will only look at the data from Illinois, Indiana, Wisconsin, and Michigan, we can use the `filter` function to pick out only the four states that we are interested in, and we name the new data frame `fourstate.pe1`. This is accomplished by the commented-out code below.
 
 This dataset comes from 2014 National Emissions Inventory, which is "a comprehensive and detailed estimate of air emissions of criteria pollutants, criteria precursors, and hazardous air pollutants from air emissions sources." You can read more about this dataset on this [website](https://www.epa.gov/air-emissions-inventories/national-emissions-inventory-nei).
-```{r filtering the states}
+```{r B_filtering the states}
 # states.abbr <- c("IL", "IN", "WI", "MI")
 
 # fourstate.pe <- pe1 %>%
@@ -40,13 +40,13 @@ fourstate.pe <- read_csv("../data/four_state.csv")
 ```
 Next, we turn our focus to the pollutant data. To familiarize ourselves with the variable `pollutant desc`, we use the `unique` function to examine all the unique values of this variable. 
 
-```{r inspecting PM 2.5}
+```{r B_inspecting PM 2.5}
 #Find pollutant names for pm2.5
 unique(fourstate.pe$`pollutant desc`)
 ```
 
 We see that there are quite a number of different pollutants, but we are primarily interested in the PM2.5 data. Therefore, we use the `filter` function again to subset the data, retaining only those observations with the pollutant being "PM2.5 Filterable" or "PM2.5 Primary (Filt + Cond)".
-```{r filtering PM 2.5}
+```{r C_filtering PM 2.5}
 pm25 <- c("PM2.5 Filterable",  "PM2.5 Primary (Filt + Cond)")
 
 #Filter for pm2.5
@@ -55,24 +55,24 @@ fourstate.pm <- fourstate.pe %>%
 ```
 
 Now we will take care of the duplicates and missing values, both of which should be removed from our data. The following line of code eliminates any duplicated values in `eis facility id`.
-```{r eliminating duplicates}
+```{r C_eliminating duplicates}
 #remove duplicates
 fourstate.pm.final <- fourstate.pm[!duplicated(fourstate.pm$`eis facility id`),] 
 ```
 
 The following line of code eliminates any missing values in `site latitude`. We call this cleaned data frame `fourstate.pm.final`.
-```{r eliminating missing values}
+```{r C_eliminating missing values}
 #remove na coords 
 fourstate.pm.final <- fourstate.pm.final[!is.na(fourstate.pm.final$`site latitude`),] 
 ```
 
 The last step in the data manipulation process is to turn our data points into a spatial object, which we can accomplish by using the `st_as_sf` function. Notice that we use the coordinate reference system 4326, which is the geodetic coordinate system for world. More information about coordinate reference systems can be found on this [website](https://epsg.io).
-```{r making spatial object}
+```{r C_making spatial object}
 #Turn into sf object
 fourstate.pm.spatial <- st_as_sf(fourstate.pm.final, coords = c("site longitude", "site latitude"), crs = 4326)
 ```
 
-# Making Point Data Maps
+## Making Point Data Maps
 At this point, we only have the point data for the source of PM2.5 emission. To make a map, however, we also need to load the shapefile for the four states that we are analyzing. 
 ```{r}
 fourstates <- st_read("../data/FourStates")
@@ -83,7 +83,7 @@ tmap_mode("view")
 ```
 
 Finally, we are ready to make some maps! The command for generating a point data map is actually quite easy. We just need to specify the shapefile that stores the shape of the states and the point data which we have turned into a spatial object earlier. We adjust the size of the dots to 0.01 so that the pattern of those points is discernible. 
-```{r making a map - tm_dots}
+```{r C_making a map - tm_dots}
 tm_shape(fourstates) +
         tm_borders() +
         tm_shape(fourstate.pm.spatial) +
@@ -94,7 +94,7 @@ The map above is neat, but it only conveys limited information. It is impossible
 
 To improve the simple map above, we use the `tem_bubbles` function instead of `tm_dots`. Within `tm_bubbles`, we can choose how to classify the PM2.5 data by specifying the `style`. Some common choices of `style` include "fisher", "jenks", "quantile", etc. Customization of the color palette is also possible, and there are plenty of online tutorials on this topic. 
 
-```{r making a map - tm_bubbles}
+```{r C_making a map - tm_bubbles}
 tm_shape(fourstates) +
         tm_borders() +
         tm_shape(fourstate.pm.spatial) +

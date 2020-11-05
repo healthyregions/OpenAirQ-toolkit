@@ -29,7 +29,7 @@ To process our data and create a Kernal Density Estimation, we will need the fol
 
 If you do not already have any of these packages installed, you will want to install them using `install.package("*PackageName*")`. Once they are installed, we are going to load the required packages:
 
-```{r, package.load, results='hide', warning=FALSE, message=FALSE}
+```{r, nei.xpackage.load, results='hide', warning=FALSE, message=FALSE}
 library(tidyverse)
 library(sp)
 library(rgdal)
@@ -59,7 +59,7 @@ As we can see, the dataset is huge, with over 3 million observations and 53 attr
 
 As a reminder, this dataset contains data for many pollutants across the entire United States. Looking at the code snippet above, we can see that the tibble contains columns for state abbreviations and pollutant descriptions, two factors which we are interested in filtering. First, let's filter our tibble to only those observations within our state, Illinois. We are going to be using the `filter()` function from the dplyr package (included in the tidyverse). 
 
-```{r, state.filter}
+```{r, nei.state.filter}
 state.abbr <- c("IL") 
 
 state.nei <- nei.data %>%
@@ -76,7 +76,7 @@ The second line of this code is using the pipe (`%>%`) operator to *pipe* in the
 This code is written this way to allow this code to be used for larger, multistate study areas. If you are interested in examining points from multiple states, simply add their abbreviations to the `state.abbr` vector. If you are only using one state, feel free to simplify the code to your liking. We are next going to filter our data down further to include only those points within Cook County, IL.
 
 
-```{r, county.filter}
+```{r, nei.county.filter}
 county.names <- c("Cook")
 
 county.nei <- state.nei %>%
@@ -89,7 +89,7 @@ nrow(county.nei)
 Let's finish filtering our data by restricting our results to only those emissions sources emitting PM2.5. We will first examine the different labels for pollution descriptions using the `unique()` function. We will then filter our dataset for only those labels that seem related to PM2.5 using the same process as above. 
 
 
-```{r, pm.filter}
+```{r, nei.pm.filter}
 unique(county.nei$`pollutant desc`)
 
 pm25.names <- c("PM2.5 Filterable",  "PM2.5 Primary (Filt + Cond)")
@@ -106,7 +106,7 @@ Now, with a manageable number of observations in our area of interest, we are go
 
 We first want to use our filtered tibble to create an sp Spatial Points object. 
 
-```{r, sp.create}
+```{r, nei.sp.create}
 #Assign the proper coordinates 
 coordinates(county.pm25) <- county.pm25[,c("site longitude","site latitude")]
 
@@ -123,9 +123,9 @@ With everything looking as it should, let's look back on what we just did. We in
 
 Here, we will use the spatial data visualization skills learned in an earlier chapter to visualize the point locations of PM2.5 sources in Cook County. 
 
-```{r, point.dataviz}
+```{r, nei.point.dataviz}
 #Read in Cook County Shapefile using sp's readOGR function
-cook.county <- readOGR("CookCounty") 
+cook.county <- readOGR("../data/CookCounty.geojson") 
 
 #Check projection
 proj4string(cook.county)
@@ -140,7 +140,7 @@ tm_shape(cook.county) +
 
 This is clearly a very basic plot of the data. We can get a basic idea of where the point density may be highest, but we cannot tell much else about the data. Let's now create an interactive map with the dots colored and sized based off of the volume of emissions (self-reported) given off at each point location.
 
-```{r, point.interactive.dataviz, warning=FALSE, message=FALSE}
+```{r, nei.point.interactive.dataviz, warning=FALSE, message=FALSE}
 #Set tmap mode to view
 tmap_mode("view")
 
@@ -162,7 +162,7 @@ A Kernal Density Estimation (KDE) map at its most basic level is, as the name su
 
 Let's now create our first KDE from the point data we've been using. We are going to be using the `sp.kde()` function from the spatialEco package, however there are several other R packages that achieve a more or less identical outcome. 
 
-```{r, kde.unweighted, message=F, warning=F}
+```{r, nei.kde.unweighted, message=F, warning=F}
 #Construct KDE
 county.kde <- sp.kde(county.pm25, nr=500, nc=500)
 
@@ -171,7 +171,7 @@ plot(county.kde)
 
 We've now produced a continuous surface representing the density of PM2.5 emissions sources across Cook County. Let's look over the `sp.kde()` function in a little more detail. In addition to inputting our sp object, we also input values of 500 for the `nr` and `nc` arguments. These abbreviations are short for "number of rows" and "number of columns" respectively. The `sp.kde` function creates a grid on which to map the results of the KDE, and these arguments tell the function what the dimensions of this grid should be. Let's look at how changing these two arguments changes the appearance of our KDE map:
 
-```{r, kde.resolution.changes, message=F, warning=F}
+```{r, nei.kde.resolution.changes, message=F, warning=F}
 #10x10 grid
 county.kde.10 <- sp.kde(county.pm25, nr=10, nc=10)
 plot(county.kde.10)
@@ -188,7 +188,7 @@ plot(county.kde.500)
 
 Note the changes in the plots as the resolution of the grid is increased. Let's now look at the `y` argument used to add a weight to the KDE. Let's say we wanted to weigh our KDE based on the amount of total emissions from individual sites. Here's how you would do that:
 
-```{r, kde.weighted, message=F, warning=F}
+```{r, nei.kde.weighted, message=F, warning=F}
 #Construct weighted KDE
 county.kde.weighted <- sp.kde(county.pm25, y=county.pm25$`total emissions`, nr=500, nc=500)
 

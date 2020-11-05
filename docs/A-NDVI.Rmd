@@ -9,10 +9,10 @@ output:
 
 In this tutorial, we will learn to deal with raster data. For illustrative purposes, we will take a look at the NDVI data (Normalized Difference Vegetation Index) of 21 large counties in the Midwest. 
 
-# Loading Packages and Data
+## Loading Packages and Data
 
 First, let's load the packages needed for this exercise. 
-```{r package.setup, message = FALSE}
+```{r A_package.setup, message = FALSE}
 library(raster)
 library(sf)
 library(tmap)
@@ -21,42 +21,42 @@ library(tmap)
 Both the "sf" package and the "tmap" package are standard tools to handle spatial data. Since we are mainly analyzing raster data in this tutorial, we also load the "raster" package, which "implements basic and high-level functions for raster data and for vector data operations such as intersections." The detailed documentation can be found [here](https://cran.r-project.org/web/packages/raster/raster.pdf).
 
 Next, we load the data. The data we are analyzing is the quarterly average of the Normalized Difference Vegetation Index for 21 large counties in the Midwest, from 2014 to 2018. It is stacked chronologically. Note that the original dataset is quite large (over 50 gigabytes), so we processed the data in advance. We can load the pre-processed data simply by running the command below. 
-```{r loading ndvi data}
+```{r A_loading ndvi data}
 ndvi.quarterly <- stack("../data/NDVILargeAreaQuarterlyStack.tif")
 ```
 
 (Remark: You may encounter trouble loading the data if you do not have the "rgdal" package installed!)
 
 It is a good idea to take a glance at our dataset before we proceed any further.
-```{r examining ndvi data}
+```{r A_examining ndvi data}
 ndvi.quarterly
 ```
 
 Also remember to load the shapfile of the 21 large counties. We will use it shortly when we start plotting. 
-```{r loading shapefile ndvi}
+```{r A_loading shapefile ndvi}
 counties <- st_read("../data/LargeAreaCounties")
 ```
 
 # Data manipulation and Plotting
 
 We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.
-```{r extracting ndvi data}
+```{r A_extracting ndvi data}
 #this.qtr <- ndvi.quarterly[[19]]
-this.qtr <- subset(ndvi.quarterly, 19, drop = FALSE)
+this.qtr <- raster::subset(ndvi.quarterly, 19, drop = FALSE)
 ```
 
 Thanks to the data processing done beforehand, we don't have much data manipulation to do. It is time for us to start making plots! We begin with the most basic raster map.
-```{r message = FALSE, fig.align='center'}
+```{r message=FALSE, eval = F}
 tm_shape(this.qtr) +
   tm_raster() +
   tm_layout(legend.outside = TRUE)
 ```
 
-This plot gives an overview of the NDVI of the 21 lareg counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.
+This plot gives an overview of the NDVI of the 21 large counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.
 
 Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers. 
 
-```{r fig.align='center', message = FALSE}
+```{r fig.align='center', message = FALSE, eval = F}
 tm_shape(this.qtr) +
   tm_raster(title = "NDVI") +
   tm_shape(counties) +
@@ -67,7 +67,7 @@ tm_shape(this.qtr) +
 With this nicer plot, it is possible to compare the NDVI of different counties. Those who are familiar with the geography of the Midwest would immediately recognize that Cook county seems to have a lower NDVI than other counties. It is not at all surprising since the City of Chicago is located in Cook County, and metropolitan areas tend to have less vegetation than rural areas.
 
 We can also make the plot interactive so that the readers can explore the plot more thoroughly.
-```{r interavtive ndvi, message = FALSE, warning = FALSE}
+```{r A_interavtive ndvi, message = FALSE, warning = FALSE, eval = F}
 tmap_mode("view")
 
 tm_shape(this.qtr) +
@@ -78,24 +78,24 @@ tm_shape(this.qtr) +
 ```
 
 We can turn off the interactive mode by running the following code. 
-```{r Plot Mode ndvi, message = FALSE, warning = FALSE}
+```{r A_Plot Mode ndvi, message = FALSE, warning = FALSE, eval = F}
 tmap_mode("plot")
 ```
 
 Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset `this.qtr`. Notice that we use `raster::summary` here to specifiy that we want R to use the `summary` function from the "raster" package.
-```{r summary ndvi, message = FALSE, warning = FALSE}
+```{r A_summary ndvi, message = FALSE, warning = FALSE}
 raster::summary(this.qtr)
 ```
 
 # More Plotting!
 
 Now that we have learned how to make a raster map, let's make more. In this section, we will place our focus on the NDVI of Cook County, IL - the home county of Chicago. First, we will extract the shape of Cook County.
-```{r Extract Cook County Shape ndvi}
+```{r A_Extract Cook County Shape ndvi}
 cook.county <- counties[counties$COUNTYNAME == "Cook", ]
 ```
 
 Before we do anything else, we can plot the shape of Cook County that we just extracted to make sure we subsetted the dataset correctly. 
-```{r Plot Cook County Shape ndvi, fig.align='center'}
+```{r A_Plot Cook County Shape ndvi, fig.align='center'}
 plot(cook.county$geometry)
 ```
 
@@ -103,13 +103,13 @@ This is a very crude plot since it only shows the border of Cook County. Rest as
 
 The following two lines of code crop and mask raster data to Cook County. Cropping and then masking accelerates the actions for large raster data. It probably does not matter in our case, since we are only looking at Cook County, and the volume of our data is rather small.
 
-```{r Crop and Mask ndvi}
+```{r A_Crop and Mask ndvi}
 cook.ndvi <- raster::crop(this.qtr, cook.county)
 cook.ndvi <- raster::mask(cook.ndvi, cook.county)
 ```
 
 Now we can plot a raster map for Cook County. The commands we use here are very similar to the ones we used before. 
-```{r Plot Cook County ndvi, fig.align='center'}
+```{r A_Plot Cook County ndvi, fig.align='center', eval = F}
 tm_shape(cook.ndvi) +
   tm_raster(title = "NDVI", palette = "Greens") +
   tm_shape(cook.county) +
