@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Data manipulation and Plotting | Point Sensors to Surfaces</title>
+  <meta name="description" content="I love documentation! Don’t you? :)" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Data manipulation and Plotting | Point Sensors to Surfaces" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="I love documentation! Don’t you? :)" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Data manipulation and Plotting | Point Sensors to Surfaces" />
+  
+  <meta name="twitter:description" content="I love documentation! Don’t you? :)" />
+  
+
+<meta name="author" content="Authors Names Here" />
+
+
+<meta name="date" content="2019-12-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="appendix-a-ndvi.html"/>
+<link rel="next" href="more-plotting.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#hello-world"><i class="fa fa-check"></i>Hello World!</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html"><i class="fa fa-check"></i><b>1</b> Vector Data Mapping</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#required-packages"><i class="fa fa-check"></i><b>1.1</b> Required Packages</a></li>
+<li class="chapter" data-level="1.2" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#political-boundaries"><i class="fa fa-check"></i><b>1.2</b> Political Boundaries</a></li>
+<li class="chapter" data-level="1.3" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#ground-based-data-sensor-locations"><i class="fa fa-check"></i><b>1.3</b> Ground-based Data Sensor Locations</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#epa-particulate-matter-sensors"><i class="fa fa-check"></i><b>1.3.1</b> EPA Particulate Matter Sensors</a></li>
+<li class="chapter" data-level="1.3.2" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#weather-stations"><i class="fa fa-check"></i><b>1.3.2</b> Weather Stations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="vector-data-mapping.html"><a href="vector-data-mapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.4</b> Point Sources of Pollution</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-prep-management.html"><a href="data-prep-management.html"><i class="fa fa-check"></i><b>2</b> Data Prep &amp; Management</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-prep-management.html"><a href="data-prep-management.html#epa-pollution-data"><i class="fa fa-check"></i><b>2.1</b> EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-prep-management.html"><a href="data-prep-management.html#getting-started"><i class="fa fa-check"></i><b>2.1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-prep-management.html"><a href="data-prep-management.html#pm2.5-data-query"><i class="fa fa-check"></i><b>2.1.2</b> PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-prep-management.html"><a href="data-prep-management.html#faa-weather-data"><i class="fa fa-check"></i><b>2.2</b> FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-prep-management.html"><a href="data-prep-management.html#sample-query"><i class="fa fa-check"></i><b>2.2.1</b> Sample Query</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-prep-management.html"><a href="data-prep-management.html#finding-asos-sensors"><i class="fa fa-check"></i><b>2.2.2</b> Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#weather-data-query"><i class="fa fa-check"></i><b>2.2.3</b> Weather Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#introduction"><i class="fa fa-check"></i><b>2.3</b> Introduction</a></li>
+<li class="chapter" data-level="2.4" data-path="data-prep-management.html"><a href="data-prep-management.html#loading-the-required-packages"><i class="fa fa-check"></i><b>2.4</b> Loading the Required Packages</a></li>
+<li class="chapter" data-level="2.5" data-path="data-prep-management.html"><a href="data-prep-management.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>2.5</b> Read and Examine the Data</a></li>
+<li class="chapter" data-level="2.6" data-path="data-prep-management.html"><a href="data-prep-management.html#data-wrangling"><i class="fa fa-check"></i><b>2.6</b> Data Wrangling</a></li>
+<li class="chapter" data-level="2.7" data-path="data-prep-management.html"><a href="data-prep-management.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>2.7</b> Creating a Spatial Object using sp</a></li>
+<li class="chapter" data-level="2.8" data-path="data-prep-management.html"><a href="data-prep-management.html#data-visualization-review"><i class="fa fa-check"></i><b>2.8</b> Data Visualization Review</a></li>
+<li class="chapter" data-level="2.9" data-path="data-prep-management.html"><a href="data-prep-management.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>2.9</b> Constructing a Kernal Density Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><i class="fa fa-check"></i><b>3</b> Example: Interpolating Average Temperature across the 21-county study area.</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#wrangling-data"><i class="fa fa-check"></i><b>3.1</b> Wrangling Data</a></li>
+<li class="chapter" data-level="3.2" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#exploring-the-null-model"><i class="fa fa-check"></i><b>3.2</b> Exploring the Null Model</a></li>
+<li class="chapter" data-level="3.3" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-1-voronoi-model"><i class="fa fa-check"></i><b>3.3</b> Model 1: Voronoi Model</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#validating-the-voronoi-model"><i class="fa fa-check"></i><b>3.3.1</b> Validating the Voronoi Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-2-nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>3.4</b> Model 2: Nearest Neighbor Interpolation</a></li>
+<li class="chapter" data-level="3.5" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-3-idw-interpolation-using-baseline-parameters"><i class="fa fa-check"></i><b>3.5</b> Model 3: IDW Interpolation using baseline parameters</a></li>
+<li class="chapter" data-level="3.6" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-4-optimized-idw-interpolation"><i class="fa fa-check"></i><b>3.6</b> Model 4: Optimized IDW Interpolation</a></li>
+<li class="chapter" data-level="3.7" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-5-thin-plate-spline-model"><i class="fa fa-check"></i><b>3.7</b> Model 5: Thin Plate Spline Model</a></li>
+<li class="chapter" data-level="3.8" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-6-ordinary-kriging"><i class="fa fa-check"></i><b>3.8</b> Model 6: Ordinary Kriging</a></li>
+<li class="chapter" data-level="3.9" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-7-blending-all-models"><i class="fa fa-check"></i><b>3.9</b> Model 7: Blending all models</a></li>
+<li class="chapter" data-level="3.10" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#conclusion"><i class="fa fa-check"></i><b>3.10</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html"><i class="fa fa-check"></i><b>4</b> Merging Satellite and Point Sensor Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#generate-rasters"><i class="fa fa-check"></i><b>4.1</b> Generate Rasters</a></li>
+<li class="chapter" data-level="4.2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#export-to-csv"><i class="fa fa-check"></i><b>4.2</b> Export to CSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
+<ul>
+<li class="chapter" data-level="4.3" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html#loading-packages-and-data"><i class="fa fa-check"></i><b>4.3</b> Loading Packages and Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-manipulation-and-plotting.html"><a href="data-manipulation-and-plotting.html"><i class="fa fa-check"></i><b>5</b> Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="6" data-path="more-plotting.html"><a href="more-plotting.html"><i class="fa fa-check"></i><b>6</b> More Plotting!</a></li>
+<li class="chapter" data-level="" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html#loading-packages-and-data"><i class="fa fa-check"></i><b>6.1</b> Loading Packages and Data</a></li>
+<li class="chapter" data-level="6.2" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html#data-manipulation"><i class="fa fa-check"></i><b>6.2</b> Data Manipulation</a></li>
+<li class="chapter" data-level="6.3" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html#making-point-data-maps"><i class="fa fa-check"></i><b>6.3</b> Making Point Data Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-c-elevation-data.html"><a href="appendix-c-elevation-data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
+<ul>
+<li class="chapter" data-level="6.4" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html#loading-packages-and-data"><i class="fa fa-check"></i><b>6.4</b> Loading Packages and Data</a></li>
+<li class="chapter" data-level="6.5" data-path="appendix-c-elevation-data.html"><a href="appendix-c-elevation-data.html#inspecting-data"><i class="fa fa-check"></i><b>6.5</b> Inspecting Data</a></li>
+<li class="chapter" data-level="6.6" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html#data-manipulation"><i class="fa fa-check"></i><b>6.6</b> Data Manipulation</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Point Sensors to Surfaces</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-manipulation-and-plotting" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Data manipulation and Plotting</h1>
+<p>We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="data-manipulation-and-plotting.html#cb228-1" aria-hidden="true"></a><span class="co">#this.qtr &lt;- ndvi.quarterly[[19]]</span></span>
+<span id="cb228-2"><a href="data-manipulation-and-plotting.html#cb228-2" aria-hidden="true"></a>this.qtr &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">subset</span>(ndvi.quarterly, <span class="dv">19</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>Thanks to the data processing done beforehand, we don’t have much data manipulation to do. It is time for us to start making plots! We begin with the most basic raster map.</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="data-manipulation-and-plotting.html#cb229-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb229-2"><a href="data-manipulation-and-plotting.html#cb229-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>() <span class="op">+</span></span>
+<span id="cb229-3"><a href="data-manipulation-and-plotting.html#cb229-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>This plot gives an overview of the NDVI of the 21 large counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.</p>
+<p>Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="data-manipulation-and-plotting.html#cb230-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb230-2"><a href="data-manipulation-and-plotting.html#cb230-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
+<span id="cb230-3"><a href="data-manipulation-and-plotting.html#cb230-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
+<span id="cb230-4"><a href="data-manipulation-and-plotting.html#cb230-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb230-5"><a href="data-manipulation-and-plotting.html#cb230-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<p>With this nicer plot, it is possible to compare the NDVI of different counties. Those who are familiar with the geography of the Midwest would immediately recognize that Cook county seems to have a lower NDVI than other counties. It is not at all surprising since the City of Chicago is located in Cook County, and metropolitan areas tend to have less vegetation than rural areas.</p>
+<p>We can also make the plot interactive so that the readers can explore the plot more thoroughly.</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="data-manipulation-and-plotting.html#cb231-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
+<span id="cb231-2"><a href="data-manipulation-and-plotting.html#cb231-2" aria-hidden="true"></a></span>
+<span id="cb231-3"><a href="data-manipulation-and-plotting.html#cb231-3" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb231-4"><a href="data-manipulation-and-plotting.html#cb231-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
+<span id="cb231-5"><a href="data-manipulation-and-plotting.html#cb231-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
+<span id="cb231-6"><a href="data-manipulation-and-plotting.html#cb231-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb231-7"><a href="data-manipulation-and-plotting.html#cb231-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - the 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<p>We can turn off the interactive mode by running the following code.</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="data-manipulation-and-plotting.html#cb232-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<p>Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset <code>this.qtr</code>. Notice that we use <code>raster::summary</code> here to specifiy that we want R to use the <code>summary</code> function from the “raster” package.</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="data-manipulation-and-plotting.html#cb233-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(this.qtr)</span></code></pre></div>
+<pre><code>##         NDVILargeAreaQuarterlyStack.19
+## Min.                     -9.315484e-02
+## 1st Qu.                   6.263003e-01
+## Median                    6.918114e-01
+## 3rd Qu.                   7.413675e-01
+## Max.                      9.006166e-01
+## NA&#39;s                      4.571800e+05</code></pre>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="appendix-a-ndvi.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="more-plotting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

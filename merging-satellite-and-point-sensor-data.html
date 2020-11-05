@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Merging Satellite and Point Sensor Data | Welcome to the Documentation!</title>
+  <title>4 Merging Satellite and Point Sensor Data | Point Sensors to Surfaces</title>
   <meta name="description" content="I love documentation! Don’t you? :)" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
+  <meta property="og:title" content="4 Merging Satellite and Point Sensor Data | Point Sensors to Surfaces" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Merging Satellite and Point Sensor Data | Welcome to the Documentation!" />
+  <meta name="twitter:title" content="4 Merging Satellite and Point Sensor Data | Point Sensors to Surfaces" />
   
   <meta name="twitter:description" content="I love documentation! Don’t you? :)" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-prep-management.html"/>
-
+<link rel="prev" href="example-interpolating-average-temperature-across-the-21-county-study-area-.html"/>
+<link rel="next" href="appendix-a-ndvi.html"/>
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,11 +172,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.2" data-path="data-prep-management.html"><a href="data-prep-management.html#finding-asos-sensors"><i class="fa fa-check"></i><b>2.2.2</b> Finding ASOS Sensors</a></li>
 <li class="chapter" data-level="2.2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#weather-data-query"><i class="fa fa-check"></i><b>2.2.3</b> Weather Data Query</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="data-prep-management.html"><a href="data-prep-management.html#introduction"><i class="fa fa-check"></i><b>2.3</b> Introduction</a></li>
+<li class="chapter" data-level="2.4" data-path="data-prep-management.html"><a href="data-prep-management.html#loading-the-required-packages"><i class="fa fa-check"></i><b>2.4</b> Loading the Required Packages</a></li>
+<li class="chapter" data-level="2.5" data-path="data-prep-management.html"><a href="data-prep-management.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>2.5</b> Read and Examine the Data</a></li>
+<li class="chapter" data-level="2.6" data-path="data-prep-management.html"><a href="data-prep-management.html#data-wrangling"><i class="fa fa-check"></i><b>2.6</b> Data Wrangling</a></li>
+<li class="chapter" data-level="2.7" data-path="data-prep-management.html"><a href="data-prep-management.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>2.7</b> Creating a Spatial Object using sp</a></li>
+<li class="chapter" data-level="2.8" data-path="data-prep-management.html"><a href="data-prep-management.html#data-visualization-review"><i class="fa fa-check"></i><b>2.8</b> Data Visualization Review</a></li>
+<li class="chapter" data-level="2.9" data-path="data-prep-management.html"><a href="data-prep-management.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>2.9</b> Constructing a Kernal Density Estimation</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html"><i class="fa fa-check"></i><b>3</b> Merging Satellite and Point Sensor Data</a>
+<li class="chapter" data-level="3" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><i class="fa fa-check"></i><b>3</b> Example: Interpolating Average Temperature across the 21-county study area.</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#generate-rasters"><i class="fa fa-check"></i><b>3.1</b> Generate Rasters</a></li>
-<li class="chapter" data-level="3.2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#export-to-csv"><i class="fa fa-check"></i><b>3.2</b> Export to CSV</a></li>
+<li class="chapter" data-level="3.1" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#wrangling-data"><i class="fa fa-check"></i><b>3.1</b> Wrangling Data</a></li>
+<li class="chapter" data-level="3.2" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#exploring-the-null-model"><i class="fa fa-check"></i><b>3.2</b> Exploring the Null Model</a></li>
+<li class="chapter" data-level="3.3" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-1-voronoi-model"><i class="fa fa-check"></i><b>3.3</b> Model 1: Voronoi Model</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#validating-the-voronoi-model"><i class="fa fa-check"></i><b>3.3.1</b> Validating the Voronoi Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-2-nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>3.4</b> Model 2: Nearest Neighbor Interpolation</a></li>
+<li class="chapter" data-level="3.5" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-3-idw-interpolation-using-baseline-parameters"><i class="fa fa-check"></i><b>3.5</b> Model 3: IDW Interpolation using baseline parameters</a></li>
+<li class="chapter" data-level="3.6" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-4-optimized-idw-interpolation"><i class="fa fa-check"></i><b>3.6</b> Model 4: Optimized IDW Interpolation</a></li>
+<li class="chapter" data-level="3.7" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-5-thin-plate-spline-model"><i class="fa fa-check"></i><b>3.7</b> Model 5: Thin Plate Spline Model</a></li>
+<li class="chapter" data-level="3.8" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-6-ordinary-kriging"><i class="fa fa-check"></i><b>3.8</b> Model 6: Ordinary Kriging</a></li>
+<li class="chapter" data-level="3.9" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#model-7-blending-all-models"><i class="fa fa-check"></i><b>3.9</b> Model 7: Blending all models</a></li>
+<li class="chapter" data-level="3.10" data-path="example-interpolating-average-temperature-across-the-21-county-study-area-.html"><a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html#conclusion"><i class="fa fa-check"></i><b>3.10</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html"><i class="fa fa-check"></i><b>4</b> Merging Satellite and Point Sensor Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#generate-rasters"><i class="fa fa-check"></i><b>4.1</b> Generate Rasters</a></li>
+<li class="chapter" data-level="4.2" data-path="merging-satellite-and-point-sensor-data.html"><a href="merging-satellite-and-point-sensor-data.html#export-to-csv"><i class="fa fa-check"></i><b>4.2</b> Export to CSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
+<ul>
+<li class="chapter" data-level="4.3" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html#loading-packages-and-data"><i class="fa fa-check"></i><b>4.3</b> Loading Packages and Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-manipulation-and-plotting.html"><a href="data-manipulation-and-plotting.html"><i class="fa fa-check"></i><b>5</b> Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="6" data-path="more-plotting.html"><a href="more-plotting.html"><i class="fa fa-check"></i><b>6</b> More Plotting!</a></li>
+<li class="chapter" data-level="" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html#loading-packages-and-data"><i class="fa fa-check"></i><b>6.1</b> Loading Packages and Data</a></li>
+<li class="chapter" data-level="6.2" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html#data-manipulation"><i class="fa fa-check"></i><b>6.2</b> Data Manipulation</a></li>
+<li class="chapter" data-level="6.3" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html#making-point-data-maps"><i class="fa fa-check"></i><b>6.3</b> Making Point Data Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-c-elevation-data.html"><a href="appendix-c-elevation-data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
+<ul>
+<li class="chapter" data-level="6.4" data-path="appendix-a-ndvi.html"><a href="appendix-a-ndvi.html#loading-packages-and-data"><i class="fa fa-check"></i><b>6.4</b> Loading Packages and Data</a></li>
+<li class="chapter" data-level="6.5" data-path="appendix-c-elevation-data.html"><a href="appendix-c-elevation-data.html#inspecting-data"><i class="fa fa-check"></i><b>6.5</b> Inspecting Data</a></li>
+<li class="chapter" data-level="6.6" data-path="appendix-b-point-emission-data.html"><a href="appendix-b-point-emission-data.html#data-manipulation"><i class="fa fa-check"></i><b>6.6</b> Data Manipulation</a></li>
 </ul></li>
 </ul>
 
@@ -187,7 +228,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Welcome to the Documentation!</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Point Sensors to Surfaces</a>
           </h1>
         </div>
 
@@ -195,25 +236,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="merging-satellite-and-point-sensor-data" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Merging Satellite and Point Sensor Data</h1>
+<div id="merging-satellite-and-point-sensor-data" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Merging Satellite and Point Sensor Data</h1>
 <p>There’s a fundamental challenge in our project to merge AOD data and predictor variables because the data capture techniques are very different. The satellite-based AOD data is measured continuously across the surface of the earth on a 1km by 1km grid system. Meanwhile, sensor data is only captured locally at the sensor location. Therefore, a method to interpolate local sensor data to generate a continuous surface of data is required.</p>
 <p>An ‘Optimized’ IDW interpolation was used to estimate sensor values across a 1km by 1km grid system. This method takes into account the sensor locations and value for each variable to estimate values in grid cells without a sensor based on a linear interpolation of nearby sensor values. The specific number of sensors to take into account and the distance decay power function were optimized by medinimizing the RMSE (Error). This method was adapted from an <a href="https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data">RSpatial Tutorial</a> on IDW interpolation with pollution and weather data.</p>
 <p>To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named <code>sensor2raster</code>. The next sections demonstrate how to apply this package to sensor data.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="merging-satellite-and-point-sensor-data.html#cb35-1" aria-hidden="true"></a><span class="co"># devtools::install_local(&#39;../data/sensor2raster_0.04.tar.gz&#39;)</span></span>
-<span id="cb35-2"><a href="merging-satellite-and-point-sensor-data.html#cb35-2" aria-hidden="true"></a><span class="kw">library</span>(sensor2raster, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<div id="generate-rasters" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Generate Rasters</h2>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="merging-satellite-and-point-sensor-data.html#cb217-1" aria-hidden="true"></a><span class="co"># devtools::install_local(&#39;../data/sensor2raster_0.04.tar.gz&#39;)</span></span>
+<span id="cb217-2"><a href="merging-satellite-and-point-sensor-data.html#cb217-2" aria-hidden="true"></a><span class="kw">library</span>(sensor2raster, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div id="generate-rasters" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Generate Rasters</h2>
 <p>Creating raster surfaces is easy using the <code>sensor2raster</code> function. This function takes the raw output from the <code>riem</code> or <code>aqsr</code> packages and identifies the sensor locations and data values to interpolate. The underlying IDW interpolation is performed by the <code>gstat</code> package.</p>
 <p>The code chunk below demonstrates how to take ASOS weather data and convert it to a Raster format. The <code>weather data</code> variable is a data frame containing temperature data measured at airports in the Greater Chicago and Milwaukee Areas in 2018. We also pass the <code>AOD.grid</code>, a RasterLayer object representing the grid cells where we want to predict temperature. These grid cells correspond exactly to the pixels of satellite AOD data.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="merging-satellite-and-point-sensor-data.html#cb36-1" aria-hidden="true"></a>temp.rasters =<span class="st"> </span><span class="kw">sensor2raster</span>(<span class="dt">sensor.data =</span> weather.data, <span class="co"># Input the raw data.frame from riem</span></span>
-<span id="cb36-2"><a href="merging-satellite-and-point-sensor-data.html#cb36-2" aria-hidden="true"></a>                        <span class="dt">data.type =</span> <span class="st">&#39;ASOS&#39;</span>, <span class="co"># Specify data type (&#39;ASOS&#39; or &#39;EPA&#39;)</span></span>
-<span id="cb36-3"><a href="merging-satellite-and-point-sensor-data.html#cb36-3" aria-hidden="true"></a>                        <span class="dt">reference.grid =</span> AOD.grid, <span class="co"># Grid to interpolate over</span></span>
-<span id="cb36-4"><a href="merging-satellite-and-point-sensor-data.html#cb36-4" aria-hidden="true"></a>                        <span class="dt">subvariable =</span> <span class="st">&#39;tmpf&#39;</span>) <span class="co"># Column name of variable to interpolate</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="1152" /></p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="merging-satellite-and-point-sensor-data.html#cb218-1" aria-hidden="true"></a>temp.rasters =<span class="st"> </span><span class="kw">sensor2raster</span>(<span class="dt">sensor.data =</span> weather.data, <span class="co"># Input the raw data.frame from riem</span></span>
+<span id="cb218-2"><a href="merging-satellite-and-point-sensor-data.html#cb218-2" aria-hidden="true"></a>                        <span class="dt">data.type =</span> <span class="st">&#39;ASOS&#39;</span>, <span class="co"># Specify data type (&#39;ASOS&#39; or &#39;EPA&#39;)</span></span>
+<span id="cb218-3"><a href="merging-satellite-and-point-sensor-data.html#cb218-3" aria-hidden="true"></a>                        <span class="dt">reference.grid =</span> AOD.grid, <span class="co"># Grid to interpolate over</span></span>
+<span id="cb218-4"><a href="merging-satellite-and-point-sensor-data.html#cb218-4" aria-hidden="true"></a>                        <span class="dt">subvariable =</span> <span class="st">&#39;tmpf&#39;</span>) <span class="co"># Column name of variable to interpolate</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="1152" /></p>
 </div>
-<div id="export-to-csv" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Export to CSV</h2>
+<div id="export-to-csv" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Export to CSV</h2>
 <p>While Raster data is helpful for spatial data analysis and geovisualizations, it is sometimes helpful to store the interpolation in a non-spatial format. The <code>grid2csv</code> function allows you to convert Raster data to CSV either cell-by-cell, or by aggregating to a vector geometry.</p>
 <p>The exported data.frame is halfway between Long and Wide format due to the 3-dimensional nature of our data. The table below describes how these CSVs are structured in the cell-by-cell case.</p>
 <table>
@@ -264,8 +305,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>The length of the table equals the number of cells in the RasterStack. Each cell is given a unique identifier stored in the <code>Raster.Cell</code> column. The <code>Var_Name</code> colums represent the variable of interest. When there are multiple variables, they are row binded together, giving a long table format. The rest of the columns represent the names given to the layers within each RasterStack. Im this case, each column represents a month and year combination. Additional time periods are appended column-wise to the table.</p>
 <p>The following table describes the outputted data frame from the monthly temperature Rasters generated earlier.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="merging-satellite-and-point-sensor-data.html#cb37-1" aria-hidden="true"></a>temp.export =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
-<span id="cb37-2"><a href="merging-satellite-and-point-sensor-data.html#cb37-2" aria-hidden="true"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="merging-satellite-and-point-sensor-data.html#cb219-1" aria-hidden="true"></a>temp.export =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
+<span id="cb219-2"><a href="merging-satellite-and-point-sensor-data.html#cb219-2" aria-hidden="true"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="14%" />
@@ -401,9 +442,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>The format of the table changes slightly when subsetting using a vecor object. A new column <code>sj_join</code> appears in the table, representing a unique allowing the table to be joined back to the origin <code>sf</code> object if needed. When subsetting by point features, the <code>Raster_Cell</code> column describes the cell that overlapped with each point feature. When subsettting by line or polygon features, the <code>Raster_Cell</code> column describes the cell that overlapped with the centroid of each geometry.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="merging-satellite-and-point-sensor-data.html#cb38-1" aria-hidden="true"></a>temp.export.sf =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
-<span id="cb38-2"><a href="merging-satellite-and-point-sensor-data.html#cb38-2" aria-hidden="true"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>, </span>
-<span id="cb38-3"><a href="merging-satellite-and-point-sensor-data.html#cb38-3" aria-hidden="true"></a>         <span class="dt">sf.obj =</span> counties)</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="merging-satellite-and-point-sensor-data.html#cb220-1" aria-hidden="true"></a>temp.export.sf =<span class="st"> </span><span class="kw">grid2csv</span>(<span class="dt">rasters =</span> <span class="kw">list</span>(temp.rasters[[<span class="dv">1</span>]]), </span>
+<span id="cb220-2"><a href="merging-satellite-and-point-sensor-data.html#cb220-2" aria-hidden="true"></a>         <span class="dt">var.names =</span> <span class="st">&#39;Monthly_Temperature&#39;</span>, </span>
+<span id="cb220-3"><a href="merging-satellite-and-point-sensor-data.html#cb220-3" aria-hidden="true"></a>         <span class="dt">sf.obj =</span> counties)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -467,11 +508,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>The code chunk below demonstrates how to exploit the <code>sf_join</code> field to join the table data back to the spatial <code>sf</code> object.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="merging-satellite-and-point-sensor-data.html#cb39-1" aria-hidden="true"></a><span class="co"># counties.join = counties %&gt;% tibble::rowid_to_column() %&gt;% dplyr::rename(sf_join = rowid)</span></span>
-<span id="cb39-2"><a href="merging-satellite-and-point-sensor-data.html#cb39-2" aria-hidden="true"></a><span class="co"># </span></span>
-<span id="cb39-3"><a href="merging-satellite-and-point-sensor-data.html#cb39-3" aria-hidden="true"></a><span class="co"># counties.join = grid2csv(rasters = list(temp.rasters[[1]]), var.names = &#39;Monthly_Temperature&#39;, sf.obj = counties.join) %&gt;% </span></span>
-<span id="cb39-4"><a href="merging-satellite-and-point-sensor-data.html#cb39-4" aria-hidden="true"></a><span class="co">#         left_join(counties.join) %&gt;% </span></span>
-<span id="cb39-5"><a href="merging-satellite-and-point-sensor-data.html#cb39-5" aria-hidden="true"></a><span class="co">#         st_as_sf()</span></span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="merging-satellite-and-point-sensor-data.html#cb221-1" aria-hidden="true"></a><span class="co"># counties.join = counties %&gt;% tibble::rowid_to_column() %&gt;% dplyr::rename(sf_join = rowid)</span></span>
+<span id="cb221-2"><a href="merging-satellite-and-point-sensor-data.html#cb221-2" aria-hidden="true"></a><span class="co"># </span></span>
+<span id="cb221-3"><a href="merging-satellite-and-point-sensor-data.html#cb221-3" aria-hidden="true"></a><span class="co"># counties.join = grid2csv(rasters = list(temp.rasters[[1]]), var.names = &#39;Monthly_Temperature&#39;, sf.obj = counties.join) %&gt;% </span></span>
+<span id="cb221-4"><a href="merging-satellite-and-point-sensor-data.html#cb221-4" aria-hidden="true"></a><span class="co">#         left_join(counties.join) %&gt;% </span></span>
+<span id="cb221-5"><a href="merging-satellite-and-point-sensor-data.html#cb221-5" aria-hidden="true"></a><span class="co">#         st_as_sf()</span></span></code></pre></div>
 
 </div>
 </div>
@@ -480,8 +521,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="data-prep-management.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="example-interpolating-average-temperature-across-the-21-county-study-area-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix-a-ndvi.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -531,6 +572,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
