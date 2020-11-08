@@ -37,7 +37,7 @@ Also remember to load the shapfile of the 21 large counties. We will use it shor
 counties <- st_read("../data/LargeAreaCounties")
 ```
 
-# Data manipulation and Plotting
+## Data manipulation and Plotting
 
 We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.
 ```{r A_extracting ndvi data}
@@ -87,7 +87,7 @@ Before we jump to the next section, it may be helpful to quickly examine the sum
 raster::summary(this.qtr)
 ```
 
-# More Plotting!
+## More Plotting!
 
 Now that we have learned how to make a raster map, let's make more. In this section, we will place our focus on the NDVI of Cook County, IL - the home county of Chicago. First, we will extract the shape of Cook County.
 ```{r A_Extract Cook County Shape ndvi}
