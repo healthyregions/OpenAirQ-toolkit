@@ -37,7 +37,7 @@ Loading data is the next step. We load the "grid" data (in kilometers), which is
 ```{r C_loading data, warning = F}
 km.grid <- st_read("../data/Km_Grid")
 lac <- st_read("../data/LargeAreaCounties")
-lac.elevation <- readRDS("../data/LAC_Elevation.rds")
+lac.elevation <- raster("../data/lac.elevation.grd")
 ```
 
 The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
@@ -51,7 +51,7 @@ raster::res(lac.elevation)
 
 We can now plot a raster map, as shown below.
 
-```{r C_Elevation raster map, warning = F, message = F, fig.align='center', eval = F}
+```{r C_Elevation raster map, warning = F, message = F, fig.align='center', eval = T}
 tm_shape(lac.elevation) +
   tm_raster(alpha = .5) +
   tm_shape(lac) +
@@ -67,12 +67,12 @@ Raster data manipulation is where the "velox" packages really shines as it conta
 
 First, we call the `velox` function to convert `lac.elevation` into a VeloxRaster object. Then we extract the mean value of each grid (km $\times$ km), and we name it `km.elecation.vx`. Note that "velox" is indeed good at *fast* raster data manipulation - running the two lines of code takes very little time.
 
-```{r C_Velox, eval = F}
+```{r C_Velox, eval = T}
 elevation.vx <- velox(lac.elevation)
 km.elevation.vx <- elevation.vx$extract(km.grid, fun = mean)
 ```
 
-```{r Data structure, eval = F}
+```{r Data structure, eval = T}
 head(km.elevation.vx)
 ```
 
@@ -80,15 +80,15 @@ Let's pause for a second and examine the object `km.elevation.vx`. As we would e
 
 Next, we join this elevation data with `km.grid`, which we loaded earlier but haven't touched at all. 
 
-```{r C_Join, eval = F}
+```{r C_Join, eval = T}
 km.grid$Elevation <- as.numeric(km.elevation.vx) 
 ```
 
-##S Plotting Grid Map
+## Plotting Grid Map
 
 With the data ready, we can now plot a graph. 
 
-```{r C_plotting, fig.align='center', eval = F}
+```{r C_plotting, fig.align='center', eval = T}
 tm_shape(km.grid) +
   tm_fill("Elevation") +
   tm_layout(legend.outside = TRUE, main.title = "Elevation of Large Counties in Midwest", main.title.size = 1.2)
@@ -96,7 +96,7 @@ tm_shape(km.grid) +
 
 We now have a nice grid map - we have successfully accomplished the goal of this tutorial. To save the results of all this work, we can use `st_write` to output a new shapefile.
 
-```{r eval = FALSE}
+```{r eval = F}
 st_write(km.grid, "Elevation_Grid.shp")
 ```
 

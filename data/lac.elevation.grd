@@ -1,0 +1,26 @@
+[general]
+creator=R package 'raster'
+created=2020-11-09 12:39:08
+[georeference]
+nrows=4424
+ncols=4163
+xmin=-88.781667379
+ymin=40.7366670182222
+xmax=-86.468889601
+ymax=43.194444796
+projection=+proj=longlat +ellps=GRS80 +no_defs
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=1
+bandorder=BIL
+categorical=FALSE
+minvalue=112.836471557617
+maxvalue=374.896270751953
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=LAC_Elevation
