@@ -43,7 +43,10 @@ lac.elevation <- raster("../data/lac.elevation.grd")
 The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
 
 ## Inspecting Data
+
 Before we proceed any further, let's check the resolution of our elevation data first. The resolution is shown in degrees because that is the unit of CRS.
+
+It is worth pointing out that the resolution of the original raster data file is finer than what is shown below. Unfortunately, because Github only supports data files that are less than 100 MB, we downsampled the raster data to decrease its size. In other words, we decreased the resolution of the raster data by applying the `aggregate` function in the "raster" package. The good news is that the current resolution (after the downsampling) is sufficient for our purposes. 
 
 ```{r C_Resolution}
 raster::res(lac.elevation)
