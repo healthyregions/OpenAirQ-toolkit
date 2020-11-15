@@ -7,11 +7,34 @@ output:
 
 # Appendix C: Elevation Data {-}
 
-The goal of this tutorial is to introduce the packages and techniques that are commonly utilized to manipulate raster data and create grid cells. We will use the elevation data of several larges counties in the Midwest as an example, and special emphasis will be placed on introducing the functionalities of the "velox" package. 
+## Overview
 
-## Loading Packages and Data
+The goal of this tutorial is to introduce the packages and techniques that are commonly utilized to manipulate raster data and create grid cells. We will use the elevation data of several larges counties in the Midwest as an example, and special emphasis will be placed on introducing the functionalities of the "velox" package. In short, our objectives are to:
 
-We start the tutorial by loading the required packages. The packages "sf," "raster," "gstat," and "tmap" are all standard packages widely used in spatial analysis. The package "tidyverse" is great for all kinds of data manipulation, and its application is not limited to spatial data. The only package that is worth special mention the "velox," which has excellent performance in fast raster data manipulation. Unfortunately, this package is no longer available. For the lack of substitutes, however, we will still utilize the "velox" package in this tutorial. 
+* Learn the features of the "velox" package
+* Inspect the elevation data of several large counties in the Midwest
+* Output a new shapefile that contains the elevation data for each grid
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include a shapefile of several large counties in the Midwest, a grid data file, and a raster file that contains the elevation data which is the focus of this tutorial. The files can be found here. **Insert Link!**
+
+Our output is a new shapefile in which we write the the elevation data for each grid.
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `sf`: to conduct basic spatial data manipulation
+* `tidyverse`: to perform simple statistical analyses
+* `raster`: to manipulate and analyze raster data
+* `gstat`: to conduct geostatistical modeling and simulation
+* `tamp`: to create spatial data visualization
+* `velox`: to manipulate raster data in time efficient manner
+
+The only package that is worth special mention the "velox," which has excellent performance in fast raster data manipulation. Unfortunately, this package is no longer available. For the lack of substitutes, however, we will still utilize the "velox" package in this tutorial. 
 
 To install "velox" from archive, we can run the following code.
 
@@ -29,8 +52,9 @@ library(raster)
 library(gstat)
 library(tmap)
 library(velox)
-library(tmap)
 ```
+
+### Load Data
 
 Loading data is the next step. We load the "grid" data (in kilometers), which is named `km.grid`, the shapefile of large counties, which is named `lac`, and also the elevation data, which is named `lac.elevation`.
 
@@ -41,6 +65,8 @@ lac.elevation <- raster("../data/lac.elevation.grd")
 ```
 
 The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
 ## Inspecting Data
 
@@ -68,7 +94,7 @@ tm_shape(lac.elevation) +
 
 Raster data manipulation is where the "velox" packages really shines as it contains a large number of functions that you will find useful in handling raster data. For example, `aggregate` allows users to aggregate a VeloxRaster object to a lower resolution. Another function, `crop`, as its name suggests, lets you crop a VeloxRaster function. If you want to rasterize a set of polygons, then you can use `rasterize`. There are many more functions that are of interest in raster data manipulation, but it is impossible to list all of them here. Detailed documentation about this package can be found [here](https://rdrr.io/cran/velox/api/), and you should feel free to explore it at your own pace. In our tutorial, we will mainly be using `velox` and `extract`.
 
-First, we call the `velox` function to convert `lac.elevation` into a VeloxRaster object. Then we extract the mean value of each grid (km $\times$ km), and we name it `km.elecation.vx`. Note that "velox" is indeed good at *fast* raster data manipulation - running the two lines of code takes very little time.
+First, we call the `velox` function to convert `lac.elevation` into a VeloxRaster object. Then we extract the mean value of each grid (km $\times$ km), and we name it `km.elecation.vx`. Note that "velox" is indeed good at **fast** raster data manipulation - running the two lines of code takes very little time.
 
 ```{r C_Velox, eval = T}
 elevation.vx <- velox(lac.elevation)
