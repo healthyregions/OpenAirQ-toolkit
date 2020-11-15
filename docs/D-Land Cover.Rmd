@@ -6,11 +6,32 @@ output:
 ---
 # Appendix D: Land Cover Data {-}
 
-In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. Let's load the packages and data first. 
+## Overview
 
-## Loading Packages and Data
+In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. To be clear, our objective are to:
 
-Among the packages we will be using, "tidyverse" is often used in all kinds of data manipulation and statistical analysis. The other three packages are more specialized and are mostly used for spatial analysis. It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. Instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
+* Conduct data manipulation using "for loops"
+* Calculate percentages of low, mid, and high intensity development for each grid
+* Write new variables into the existing grid data file
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include a raster dataset of land cover that is stored in `rds.` format, the shapefile of several large counties in the Midwwest, and a grid data file. The files can be found here. **Insert Link!**
+
+Our output is a `csv` file that records the percentages of low, mid, and high intensity development for each grid. We will also insert that information into the grid data file. 
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `tidyverse`: to perform simple statistical analyses
+* `sf`: to conduct basic spatial data manipulation
+* `velox`: to manipulate raster data in time efficient manner
+* `raster`: to manipulate and analyze raster data
+
+It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
 
 ```{r D.packages, message = F, warning = F}
 library(tidyverse)
@@ -19,14 +40,17 @@ library(velox)
 library(raster)
 ```
 
+### Load Data
+
 Next, we load relevant data - `lc` is the land cover data in the raster form, `lac` is the shapefile of several large counties in the Midwest, and `km.grid` is the grid data that defines the grid cells. 
 
 ```{r D.data}
-#lc <- raster("lc.tif")
 lc <- readRDS(file = "../data/lc.tif.rds")
 lac <- st_read("../data/LargeAreaCounties")
 km.grid <- st_read("../data/Km_Grid")
 ```
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
 ## Data Manipulation
 
