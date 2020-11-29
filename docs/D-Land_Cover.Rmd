@@ -1,0 +1,181 @@
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+# Appendix D: Land Cover Data {-}
+
+## Overview
+
+In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. To be clear, our objective are to:
+
+* Conduct data manipulation using "for loops"
+* Calculate percentages of low, mid, and high intensity development for each grid
+* Write new variables into the existing grid data file
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include a raster dataset of land cover that is stored in `rds.` format, the shapefile of several large counties in the Midwwest, and a grid data file. The files can be found here. **Insert Link!**
+
+Our output is a `csv` file that records the percentages of low, mid, and high intensity development for each grid. We will also insert that information into the grid data file. 
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `tidyverse`: to perform simple statistical analyses
+* `sf`: to conduct basic spatial data manipulation
+* `velox`: to manipulate raster data in time efficient manner
+* `raster`: to manipulate and analyze raster data
+
+It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
+
+```{r D.packages, message = F, warning = F}
+library(tidyverse)
+library(sf)
+library(velox)
+library(raster)
+```
+
+### Load Data
+
+Next, we load relevant data - `lc` is the land cover data in the raster form, `lac` is the shapefile of several large counties in the Midwest, and `km.grid` is the grid data that defines the grid cells. 
+
+```{r D.data}
+lc <- readRDS(file = "../data/lc.tif.rds")
+lac <- st_read("../data/LargeAreaCounties")
+km.grid <- st_read("../data/Km_Grid")
+```
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+
+## Data Manipulation
+
+With the data at hand, it is natural for us to begin the data cleaning process. In this tutorial, unfortunately, the data manipulation is a little messy. We will use "for loops" quite extensively in order to produce our final product. Before we get into the more complicated parts, however, let's first convert `lc` into a VeloxRaster object. 
+
+```{r D.VeloxRaster object}
+lc.vx <- velox(lc)
+```
+
+Now that `lc.vx` is a VeloxRaster object as we desired, we can extract values in each grid cell, and we call the new dataset `km.lc`
+
+```{r D.extract}
+km.lc <- lc.vx$extract(km.grid)
+```
+
+We would like to get rid of all the missing values, which can be done using the `map` function. The `map` function applies a function - in this case, the `na.omit` function - to each element of a vector. Note that `map` is a higher-order function which exist in many programming languages, and it is such an important one that it deserves an entire tutorial by itself. What we do here is the most straightforward application of this function.
+
+```{r D.rid.missing.values}
+km.lc <- map(km.lc, na.omit)
+```
+
+Next, to facilitate better data manipulation, we convert `km.lc` first into a data table and then into a dataframe. Data tables are essentially dataframes with extra features. In general, it is faster to handle data tables than dataframes if we have large datasets, and the syntax for data tables is also cleaner. For our purposes, however, it is not critical to understand the technical details since we will convert data tables to dataframes and then only deal with dataframes. 
+
+```{r D.data.table.frame}
+km.freq <- map(km.lc, table)
+
+for(i in 1:length(km.freq)) {
+  km.freq[[i]] <- as.data.frame(km.freq[[i]])
+}
+```
+
+In converting the data table into dataframe, we used "for loop." Now, we will again use "for loop" to unfactor the classification labels. In other words, we will convert each column of `km.freq` first into characters and then into numbers. We then reassign the numbers back to their original positions in the dataframe `km.freq`. By looping through the entire dataframe, we thus successfully "unfactor" the labels. 
+
+```{r D.unfactor}
+for(i in 1:length(km.freq)) {
+  km.freq[[i]][,1] <- as.numeric(as.character((km.freq[[i]][,1])))
+  km.freq[[i]][,2] <- as.numeric(as.character((km.freq[[i]][,2])))
+}
+```
+
+We then create a new data matrix called `developed`. In this matrix, each grid cell is given a row and is assigned a number for the percentages of low/mid/high intensity development. The columns are named "low," "mid," and "high." This is achieved by creating a vector containing all three strings and then assigning it to the "colnames" of `developed`. Eventually, we will write this matrix into a csv file and output it. 
+
+```{r D.new.matrix}
+developed <- matrix(nrow = length(km.freq), ncol = 3)
+colnames(developed) <- c("low", "mid", "high")
+```
+
+Now we enter the most complicated part of the data manipulation - we want to fill our data matrix. The logic here might be a little complex, and it might be particularly confusing to those who have little experience with programming. For this reason, we will describe what is being done in detail. 
+
+First, we will use "for loop" again to loop over the entire dataframe, and in each loop, we will go through three "if" statements. First, we check if any values in the first column are equal to `582`, which is the code for low intensity development. If yes, we use the `which` function to return the position of this value and store it in a variable called `low`. Using `low`, we are able to locate the values in the dataframe. We then extract the value and assign it to the variable `numlow`. If no values are found to be equal to `582`, we do nothing and assign the value `0` to `numlow`. 
+
+The next two "if" statements accomplish the same tasks, and we just change the variable names to indicate whether we are looking for low, mid, or high intensity development. Note that `583` is the code for mid intensity development, and `584` is the code for high intensity development.
+
+After going through the three "if" statements, the last step is to calculate the percentages of low, mid, and high intensity development. This is just simple algebra. The only thing worth mentioning is that we are dividing by the approximate area of the grid, which is 1000. This is not exact, but this level of precision is sufficient for our purpose. 
+
+The paragraphs above should give a clear picture of what the code chunk below intends to accomplish. It might still appear puzzling for some of the readers who are not experienced in coding. Please be assured that it is normal. It just takes a little practice to fully understand the technical details that may seem formidable at first glance. 
+
+```{r D.filL.matrix}
+for(i in 1:length(km.freq)) {
+  if(any((km.freq[[i]][,1] == 582))) {
+  low <- which((km.freq[[i]][,1] == 582))
+  numlow <- km.freq[[i]][,2][((low))]
+  } else(
+    numlow <- 0
+  )
+  if(any((km.freq[[i]][,1] == 583))) {
+    mid <- which((km.freq[[i]][,1] == 583))
+    nummid <- km.freq[[i]][,2][((mid))]
+  } else(
+    nummid <- 0
+  )
+  if(any((km.freq[[i]][,1] == 584))) {
+    high <- which((km.freq[[i]][,1] == 584))
+    numhigh <- km.freq[[i]][,2][((high))]
+  } else{
+    numhigh <- 0
+  }
+  
+  developed[i,1] <- numlow / 1000 
+  developed[i,2] <- nummid / 1000
+  developed[i,3] <- numhigh / 1000
+}
+```
+
+## Data Output
+
+After all the data manipulation, it is time to prepare our output. The good news is that R makes it pretty easy to write csv files - the simple `write.csv` function does the job perfectly.
+
+```{r D.output.csv, eval = F}
+write.csv(developed, "developedlc.csv") 
+```
+
+We also want to modify our `km.grid` data a little bit by adding the percentages of low, mid, and high intensity development to our existing data. This is done by the four lines of code below.
+
+```{r modify.km.grid}
+km.grid$DATA <- seq(1:nrow(km.grid))
+km.grid$low <- developed[,1]
+km.grid$mid <- developed[,2]
+km.grid$high <- developed[,3]
+```
+
+To see whether we have added the data successfully, we can just type `km.grid` and inspect the results. 
+
+```{r inspection}
+km.grid
+```
+
+As we see, we have indeed successfully modified `km.grid`, which now stores the percentages of land development of different levels of intensity. 
+
+This tutorial ends here. In this tutorial, we walked through how to extract information from raster data and how to construct dataframes for our own purposes. Working directly with dataframes is sometimes not so straightforward and requires a little bit of programming skills beyond the basics of R. However, how to build a dataframe from scratch and output it as a csv file is an important skill to have, and it will be rewarding in the long term. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
