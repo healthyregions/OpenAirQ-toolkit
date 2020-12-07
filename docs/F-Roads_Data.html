@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Appendix F: Roads Data | index.split</title>
+  <meta name="description" content="<span style='color: #982568; font-size:42px'>OpenAirQ Toolit
+</style>" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Appendix F: Roads Data | index.split" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Appendix F: Roads Data | index.split" />
+  
+  
+  
+
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-07" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C-Elevation_Data.html"/>
+
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-basics"><i class="fa fa-check"></i>Software Basics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-team"><i class="fa fa-check"></i>Author Team</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="02-vectormapping.html"><a href="02-vectormapping.html"><i class="fa fa-check"></i><b>1</b> Vector Data Mapping</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#required-packages"><i class="fa fa-check"></i><b>1.1</b> Required Packages</a></li>
+<li class="chapter" data-level="1.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#political-boundaries"><i class="fa fa-check"></i><b>1.2</b> Political Boundaries</a></li>
+<li class="chapter" data-level="1.3" data-path="02-vectormapping.html"><a href="02-vectormapping.html#ground-based-data-sensor-locations"><i class="fa fa-check"></i><b>1.3</b> Ground-based Data Sensor Locations</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#epa-particulate-matter-sensors"><i class="fa fa-check"></i><b>1.3.1</b> EPA Particulate Matter Sensors</a></li>
+<li class="chapter" data-level="1.3.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#weather-stations"><i class="fa fa-check"></i><b>1.3.2</b> Weather Stations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.4</b> Point Sources of Pollution</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="03-weatherdata.html"><a href="03-weatherdata.html"><i class="fa fa-check"></i><b>2</b> Data Prep &amp; Management</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="03-weatherdata.html"><a href="03-weatherdata.html#epa-pollution-data"><i class="fa fa-check"></i><b>2.1</b> EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="03-weatherdata.html"><a href="03-weatherdata.html#getting-started"><i class="fa fa-check"></i><b>2.1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.1.2" data-path="03-weatherdata.html"><a href="03-weatherdata.html#pm2.5-data-query"><i class="fa fa-check"></i><b>2.1.2</b> PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="03-weatherdata.html"><a href="03-weatherdata.html#faa-weather-data"><i class="fa fa-check"></i><b>2.2</b> FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="03-weatherdata.html"><a href="03-weatherdata.html#sample-query"><i class="fa fa-check"></i><b>2.2.1</b> Sample Query</a></li>
+<li class="chapter" data-level="2.2.2" data-path="03-weatherdata.html"><a href="03-weatherdata.html#finding-asos-sensors"><i class="fa fa-check"></i><b>2.2.2</b> Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="2.2.3" data-path="03-weatherdata.html"><a href="03-weatherdata.html#weather-data-query"><i class="fa fa-check"></i><b>2.2.3</b> Weather Data Query</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html"><i class="fa fa-check"></i><b>3</b> Point Sensors to Surfaces</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#loading-the-required-packages"><i class="fa fa-check"></i><b>3.2</b> Loading the Required Packages</a></li>
+<li class="chapter" data-level="3.3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>3.3</b> Read and Examine the Data</a></li>
+<li class="chapter" data-level="3.4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-wrangling"><i class="fa fa-check"></i><b>3.4</b> Data Wrangling</a></li>
+<li class="chapter" data-level="3.5" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>3.5</b> Creating a Spatial Object using sp</a></li>
+<li class="chapter" data-level="3.6" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-visualization-review"><i class="fa fa-check"></i><b>3.6</b> Data Visualization Review</a></li>
+<li class="chapter" data-level="3.7" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>3.7</b> Constructing a Kernal Density Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="06-interpmodels.html"><a href="06-interpmodels.html"><i class="fa fa-check"></i><b>4</b> Interpolation Models</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="06-interpmodels.html"><a href="06-interpmodels.html#example-interpolating-average-temperature-across-the-21-county-study-area."><i class="fa fa-check"></i><b>4.1</b> Example: Interpolating Average Temperature across the 21-county study area.</a></li>
+<li class="chapter" data-level="4.2" data-path="06-interpmodels.html"><a href="06-interpmodels.html#wrangling-data"><i class="fa fa-check"></i><b>4.2</b> Wrangling Data</a></li>
+<li class="chapter" data-level="4.3" data-path="06-interpmodels.html"><a href="06-interpmodels.html#exploring-the-null-model"><i class="fa fa-check"></i><b>4.3</b> Exploring the Null Model</a></li>
+<li class="chapter" data-level="4.4" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-1-voronoi-model"><i class="fa fa-check"></i><b>4.4</b> Model 1: Voronoi Model</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="06-interpmodels.html"><a href="06-interpmodels.html#validating-the-voronoi-model"><i class="fa fa-check"></i><b>4.4.1</b> Validating the Voronoi Model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-2-nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>4.5</b> Model 2: Nearest Neighbor Interpolation</a></li>
+<li class="chapter" data-level="4.6" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-3-idw-interpolation-using-baseline-parameters"><i class="fa fa-check"></i><b>4.6</b> Model 3: IDW Interpolation using baseline parameters</a></li>
+<li class="chapter" data-level="4.7" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-4-optimized-idw-interpolation"><i class="fa fa-check"></i><b>4.7</b> Model 4: Optimized IDW Interpolation</a></li>
+<li class="chapter" data-level="4.8" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-5-thin-plate-spline-model"><i class="fa fa-check"></i><b>4.8</b> Model 5: Thin Plate Spline Model</a></li>
+<li class="chapter" data-level="4.9" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-6-ordinary-kriging"><i class="fa fa-check"></i><b>4.9</b> Model 6: Ordinary Kriging</a></li>
+<li class="chapter" data-level="4.10" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-7-blending-all-models"><i class="fa fa-check"></i><b>4.10</b> Model 7: Blending all models</a></li>
+<li class="chapter" data-level="4.11" data-path="06-interpmodels.html"><a href="06-interpmodels.html#conclusion"><i class="fa fa-check"></i><b>4.11</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html"><i class="fa fa-check"></i><b>5</b> Merging Satellite and Point Sensor Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#generate-rasters"><i class="fa fa-check"></i><b>5.1</b> Generate Rasters</a></li>
+<li class="chapter" data-level="5.2" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#export-to-csv"><i class="fa fa-check"></i><b>5.2</b> Export to CSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
+<ul>
+<li class="chapter" data-level="5.3" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.3</b> Overview</a></li>
+<li class="chapter" data-level="5.4" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup"><i class="fa fa-check"></i><b>5.4</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.4.1</b> Input/Output</a></li>
+<li class="chapter" data-level="5.4.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.4.2</b> Load Libraries</a></li>
+<li class="chapter" data-level="5.4.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.4.3</b> Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i><b>5.5</b> Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="5.6" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i><b>5.6</b> More Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
+<ul>
+<li class="chapter" data-level="5.7" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.7</b> Overview</a></li>
+<li class="chapter" data-level="5.8" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup"><i class="fa fa-check"></i><b>5.8</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.8.1</b> Input/Output</a></li>
+<li class="chapter" data-level="5.8.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.8.2</b> Load Libraries</a></li>
+<li class="chapter" data-level="5.8.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.8.3</b> Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.9</b> Data Manipulation</a></li>
+<li class="chapter" data-level="5.10" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i><b>5.10</b> Making Point Data Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
+<ul>
+<li class="chapter" data-level="5.11" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.11</b> Overview</a></li>
+<li class="chapter" data-level="5.12" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup"><i class="fa fa-check"></i><b>5.12</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.12.1</b> Input/Output</a></li>
+<li class="chapter" data-level="5.12.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.12.2</b> Load Libraries</a></li>
+<li class="chapter" data-level="5.12.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.12.3</b> Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i><b>5.13</b> Inspecting Data</a></li>
+<li class="chapter" data-level="5.14" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.14</b> Data Manipulation</a></li>
+<li class="chapter" data-level="5.15" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i><b>5.15</b> Plotting Grid Map</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html"><i class="fa fa-check"></i>Appendix F: Roads Data</a>
+<ul>
+<li class="chapter" data-level="5.16" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.16</b> Overview</a></li>
+<li class="chapter" data-level="5.17" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup"><i class="fa fa-check"></i><b>5.17</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="5.17.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.17.1</b> Input/Output</a></li>
+<li class="chapter" data-level="5.17.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.17.2</b> Load Libraries</a></li>
+<li class="chapter" data-level="5.17.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.17.3</b> Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.18" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.18</b> Data Manipulation</a>
+<ul>
+<li class="chapter" data-level="5.18.1" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i><b>5.18.1</b> Prelimnary Work</a></li>
+<li class="chapter" data-level="5.18.2" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i><b>5.18.2</b> Primary Roads</a></li>
+<li class="chapter" data-level="5.18.3" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i><b>5.18.3</b> Secondary Roads</a></li>
+<li class="chapter" data-level="5.18.4" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i><b>5.18.4</b> Motorway</a></li>
+</ul></li>
+<li class="chapter" data-level="5.19" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i><b>5.19</b> Outputting Data</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><span style='color: #982568; font-size:42px'>OpenAirQ Toolit
+</style></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-f-roads-data" class="section level1 unnumbered">
+<h1>Appendix F: Roads Data</h1>
+<div id="overview" class="section level2" number="5.16">
+<h2><span class="header-section-number">5.16</span> Overview</h2>
+<p>Transportation system is a significant source of air pollution, and roads are without doubt the most important component of transportation system. The ability to manipulate roads data is therefore of critical importance. In this tutorial, we will take a look at the major roads in several large Midwest counties, and we will introduce other techniques, such as how to handle data with physical units, along the way. Our objectives are to:</p>
+<ul>
+<li>perform spatial data manipulation using common functions such as <code>st_intersection</code> and <code>st_join</code></li>
+<li>learn to work with data of type “units”</li>
+<li>summarize data by groups and output results</li>
+</ul>
+</div>
+<div id="environment-setup" class="section level2" number="5.17">
+<h2><span class="header-section-number">5.17</span> Environment Setup</h2>
+<div id="inputoutput" class="section level3" number="5.17.1">
+<h3><span class="header-section-number">5.17.1</span> Input/Output</h3>
+<p>Our input includes the shapefile of several large counties in the Midwest, a grid data file, and the shapefile of the major roads in Illinois, Indiana, Wisconsin, and Michigan. The files can be found here. <strong>Insert Link!</strong></p>
+<p>Our output is a shapefile that records the lengths of primary raods, secondary roads, and motorways in each 1 km  km grid.</p>
+</div>
+<div id="load-libraries" class="section level3" number="5.17.2">
+<h3><span class="header-section-number">5.17.2</span> Load Libraries</h3>
+<p>We start by loading the following packages:</p>
+<ul>
+<li><code>raster</code>: to manipulate and analyze raster data</li>
+<li><code>tidyverse</code>: to perform simple statistical analyses</li>
+<li><code>sf</code>: to conduct basic spatial data manipulation</li>
+<li><code>velox</code>: to manipulate raster data in time efficient manner</li>
+<li><code>units</code>: to handle numeric values with physical measurement units</li>
+</ul>
+<p>It should be mentioned here that the “velox” package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found <a href="https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages">here</a>.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="F-Roads_Data.html#cb256-1" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
+<span id="cb256-2"><a href="F-Roads_Data.html#cb256-2" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb256-3"><a href="F-Roads_Data.html#cb256-3" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
+<span id="cb256-4"><a href="F-Roads_Data.html#cb256-4" aria-hidden="true"></a><span class="kw">library</span>(velox)</span>
+<span id="cb256-5"><a href="F-Roads_Data.html#cb256-5" aria-hidden="true"></a><span class="kw">library</span>(units)</span></code></pre></div>
+</div>
+<div id="load-data" class="section level3" number="5.17.3">
+<h3><span class="header-section-number">5.17.3</span> Load Data</h3>
+<p>With the packages ready, we now load the data needed for this tutorial - <code>roads</code> is the shapefile for the major roads in Illinois, Indiana, Wisconsin, and Michigan, <code>km.grid</code> is the grid data, and <code>counties</code> is the shapefile for 21 large counties in the Midwest. All of the data can be loaded using the <code>st_read</code> function.</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="F-Roads_Data.html#cb257-1" aria-hidden="true"></a>roads &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/4StateMajorRoads&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `4StateMajorRoads&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/4StateMajorRoads&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 261863 features and 11 fields
+## geometry type:  LINESTRING
+## dimension:      XY
+## bbox:           xmin: -92.87577 ymin: 36.97244 xmax: -82.41341 ymax: 47.47978
+## CRS:            4326</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="F-Roads_Data.html#cb259-1" aria-hidden="true"></a>km.grid &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/Km_Grid&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `Km_Grid&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/Km_Grid&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 29903 features and 1 field
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## CRS:            4326</code></pre>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="F-Roads_Data.html#cb261-1" aria-hidden="true"></a>counties &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `LargeAreaCounties&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/LargeAreaCounties&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 21 features and 8 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -88.77879 ymin: 40.73641 xmax: -86.46629 ymax: 43.21831
+## CRS:            4326</code></pre>
+</div>
+</div>
+<div id="data-manipulation" class="section level2" number="5.18">
+<h2><span class="header-section-number">5.18</span> Data Manipulation</h2>
+<div id="prelimnary-work" class="section level3" number="5.18.1">
+<h3><span class="header-section-number">5.18.1</span> Prelimnary Work</h3>
+<p>First, we create a new field in <code>km.grid</code> called <code>DATA</code>. This field is defined as a sequence of positive integers. Basically, we are assigning a unqie ID number of each features in <code>km.grid</code>. It might be puzzling at this time what function the <code>DATA</code> field serves, but it will make sense later when we perform spatial joins.</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="F-Roads_Data.html#cb263-1" aria-hidden="true"></a>km.grid<span class="op">$</span>DATA &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.grid<span class="op">$</span>DATA)) </span></code></pre></div>
+<p>Our next step is to take the spatial intersection of <code>roads</code> and <code>km.grid</code>. To accomplish this, we simply call the <code>st_intersection</code> function, which does exactly what its name suggests.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="F-Roads_Data.html#cb264-1" aria-hidden="true"></a>roads.intersection &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(roads, km.grid)</span></code></pre></div>
+<p>To get the length of the roads, we use the <code>st_length</code> function. The geometry of raods is of the type <code>lingstring</code>, whose length is easily computed by the <code>st_length</code>function. We then store the output (i.e. the lengths of roads) in the <code>sf</code> object <code>roads.intersection</code> by creating a new field called <code>length</code>.</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="F-Roads_Data.html#cb265-1" aria-hidden="true"></a>roads.intersection<span class="op">$</span>length &lt;-<span class="st"> </span><span class="kw">st_length</span>(roads.intersection)</span></code></pre></div>
+<p>Now, let’s pause for a second and inspect the <code>DATA</code> field of <code>roads.intersection</code>. Recall that we created the <code>DATA</code> field as an identifier of the grid.</p>
+<p>Other than that the values of <code>DATA</code> is right-skewed, the summary statistics do not tell us much useful information. However, it is nevertheless a good habit to inspect your data from time to time so that you are aware of what data you are working with.</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="F-Roads_Data.html#cb266-1" aria-hidden="true"></a><span class="kw">summary</span>(roads.intersection<span class="op">$</span>DATA)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       3    5545   10895   10140   13279   29903</code></pre>
+</div>
+<div id="primary-roads" class="section level3" number="5.18.2">
+<h3><span class="header-section-number">5.18.2</span> Primary Roads</h3>
+<p>Next, we want to take a look at all roads that are in the class “primary” or “primary_link.” More technically, we would like to extract all features of <code>roads.intersection</code> that has value “primary” or “primary_link” in the field <code>fclass</code>. To achieve this, we take advantage of the <code>which</code> function, which returns the positions of all features that satisfy the criterion. Then we simply bond <code>pri.1</code> and <code>pri.2</code> into a new vector, and this new vector <code>pri.id</code> has the positions of all the features that we want.</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="F-Roads_Data.html#cb268-1" aria-hidden="true"></a>pri<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">which</span>(roads.intersection<span class="op">$</span>fclass <span class="op">==</span><span class="st"> &quot;primary&quot;</span>)</span>
+<span id="cb268-2"><a href="F-Roads_Data.html#cb268-2" aria-hidden="true"></a>pri<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">which</span>(roads.intersection<span class="op">$</span>fclass <span class="op">==</span><span class="st"> &quot;primary_link&quot;</span>)</span>
+<span id="cb268-3"><a href="F-Roads_Data.html#cb268-3" aria-hidden="true"></a>pri.id &lt;-<span class="st"> </span><span class="kw">c</span>(pri<span class="fl">.1</span>, pri<span class="fl">.2</span>)</span></code></pre></div>
+<p>To get the roads that are classified as either “primary” or primary_link", we simply use the <code>pri.id</code> we defined above to subset <code>roads.intersection</code>. It should be noted that there are many ways to extract the features that we want from <code>roads.intersection</code>. The method we use here is one of the most straightforward ones, but there are many alternatives, some of which are potentially better than the one shown here. In most cases, deciding which method to use is simply a matter of personal preference.</p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="F-Roads_Data.html#cb269-1" aria-hidden="true"></a>primary.int &lt;-<span class="st"> </span>roads.intersection[pri.id,]</span></code></pre></div>
+<p>It is now a time to do a spatial join, which can be done using the <code>st_join</code> function. In plain English, we basically combine the <code>sf</code> objects <code>km.grid</code> and <code>primary.int</code> into a new <code>sf</code> object called <code>primary.merged</code>.</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="F-Roads_Data.html#cb270-1" aria-hidden="true"></a>primary.merged &lt;-<span class="st"> </span><span class="kw">st_join</span>(km.grid, primary.int)</span></code></pre></div>
+<p>Now, let’s take a look at <code>primary</code>. This is just an <code>sf</code> object with 14 fields and 68769 features.</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="F-Roads_Data.html#cb271-1" aria-hidden="true"></a>primary.merged</span></code></pre></div>
+<pre><code>## Simple feature collection with 68769 features and 14 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## CRS:            4326
+## First 10 features:
+##     DATA.x   osm_id code  fclass             name   ref oneway maxspeed layer bridge tunnel
+## 1        1     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 2        2     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 3        3 21662145 5113 primary State Highway 67 WI 67      B        0     0      F      F
+## 3.1      3 21662145 5113 primary State Highway 67 WI 67      B        0     0      F      F
+## 4        4     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 5        5     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 6        6     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 7        7     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 8        8     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+## 9        9     &lt;NA&gt;   NA    &lt;NA&gt;             &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;       NA    NA   &lt;NA&gt;   &lt;NA&gt;
+##                                                                                path DATA.y       length
+## 1                                                                              &lt;NA&gt;     NA       NA [m]
+## 2                                                                              &lt;NA&gt;     NA       NA [m]
+## 3   /Users/isaackamber/Downloads/wisconsin-latest-free.shp/gis_osm_roads_free_1.shp      3 930.0061 [m]
+## 3.1 /Users/isaackamber/Downloads/wisconsin-latest-free.shp/gis_osm_roads_free_1.shp     57 756.1883 [m]
+## 4                                                                              &lt;NA&gt;     NA       NA [m]
+## 5                                                                              &lt;NA&gt;     NA       NA [m]
+## 6                                                                              &lt;NA&gt;     NA       NA [m]
+## 7                                                                              &lt;NA&gt;     NA       NA [m]
+## 8                                                                              &lt;NA&gt;     NA       NA [m]
+## 9                                                                              &lt;NA&gt;     NA       NA [m]
+##                           geometry
+## 1   POLYGON ((-88.53387 43.1943...
+## 2   POLYGON ((-88.52207 43.1943...
+## 3   POLYGON ((-88.51027 43.1943...
+## 3.1 POLYGON ((-88.51027 43.1943...
+## 4   POLYGON ((-88.49847 43.1943...
+## 5   POLYGON ((-88.48667 43.1943...
+## 6   POLYGON ((-88.47487 43.1943...
+## 7   POLYGON ((-88.46307 43.1943...
+## 8   POLYGON ((-88.45127 43.1943...
+## 9   POLYGON ((-88.43947 43.1943...</code></pre>
+<p>The next step is to aggregate the lengths of the roads. Recall that we created the <code>DATA</code> field in <code>km.grid</code> at the beginning of this tutorial as a unique identifier of the grid. Now, we group the data by <code>DATA.x</code> (notice the name of the field changed after the spatial join), and we summarize the data using the <code>sum</code> function. We store the result of the this summation into the field <code>length</code>.</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="F-Roads_Data.html#cb273-1" aria-hidden="true"></a>primary.roadlengths &lt;-<span class="st"> </span>primary.merged <span class="op">%&gt;%</span></span>
+<span id="cb273-2"><a href="F-Roads_Data.html#cb273-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(DATA.x) <span class="op">%&gt;%</span></span>
+<span id="cb273-3"><a href="F-Roads_Data.html#cb273-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">length =</span> <span class="kw">sum</span>(length))</span></code></pre></div>
+<p>What we have obtained above is the total length of “primary” and “primary_link” roads in each grid. The new <code>sf</code> object, grouped by grids, is named <code>primary.roadlengths</code>. Let’s take a quick look at what information it contains.</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="F-Roads_Data.html#cb274-1" aria-hidden="true"></a>primary.roadlengths</span></code></pre></div>
+<pre><code>## Simple feature collection with 29903 features and 2 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## CRS:            4326
+## # A tibble: 29,903 x 3
+##    DATA.x   length                                                                                     geometry
+##     &lt;int&gt;      [m]                                                                                &lt;POLYGON [°]&gt;
+##  1      1       NA ((-88.53387 43.19439, -88.52207 43.19439, -88.52207 43.18606, -88.53387 43.18606, -88.533...
+##  2      2       NA ((-88.52207 43.19439, -88.51027 43.19439, -88.51027 43.18606, -88.52207 43.18606, -88.522...
+##  3      3 1686.194 ((-88.51027 43.19439, -88.49847 43.19439, -88.49847 43.18606, -88.51027 43.18606, -88.510...
+##  4      4       NA ((-88.49847 43.19439, -88.48667 43.19439, -88.48667 43.18606, -88.49847 43.18606, -88.498...
+##  5      5       NA ((-88.48667 43.19439, -88.47487 43.19439, -88.47487 43.18606, -88.48667 43.18606, -88.486...
+##  6      6       NA ((-88.47487 43.19439, -88.46307 43.19439, -88.46307 43.18606, -88.47487 43.18606, -88.474...
+##  7      7       NA ((-88.46307 43.19439, -88.45127 43.19439, -88.45127 43.18606, -88.46307 43.18606, -88.463...
+##  8      8       NA ((-88.45127 43.19439, -88.43947 43.19439, -88.43947 43.18606, -88.45127 43.18606, -88.451...
+##  9      9       NA ((-88.43947 43.19439, -88.42767 43.19439, -88.42767 43.18606, -88.43947 43.18606, -88.439...
+## 10     10       NA ((-88.42767 43.19439, -88.41587 43.19439, -88.41587 43.18606, -88.42767 43.18606, -88.427...
+## # … with 29,893 more rows</code></pre>
+<p>We see that only certain features has numeric values in the field <code>length</code>, which makes perfect sense as roads only cross a few grids. It would be quite strange if we see every feature as a large numeric value in the field <code>length</code> - that would suggest that the entire land is covered with roads, which is the case in the real world.</p>
+<p>The next thing we want to deal with is the unit. Note that the values in the field <code>length</code> is of the type “units” i.e. a numeric value with a physical measurement unit. The original unit of <code>length</code> is a little complicated. We will simplify things by just assigning it the unit “meter”.</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="F-Roads_Data.html#cb276-1" aria-hidden="true"></a><span class="kw">units</span>(primary.roadlengths<span class="op">$</span>length) &lt;-<span class="st"> </span><span class="kw">with</span>(ud_units, m)</span></code></pre></div>
+<p>What we want to do is to replace all missing values in <code>length</code> with “0 meter.” To achieve that, we first create a variable with value 0 and then assign it the unit “meter.” This newly created <code>x0</code> is what will replace the missing values.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="F-Roads_Data.html#cb277-1" aria-hidden="true"></a>x0 &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb277-2"><a href="F-Roads_Data.html#cb277-2" aria-hidden="true"></a><span class="kw">units</span>(x0) &lt;-<span class="st"> </span><span class="kw">with</span>(ud_units, m)</span></code></pre></div>
+<p>We use the <code>which</code> function to return the positions of all missing values, and on those exact position, we replace the value with <code>x0</code>. Hence, all missing values now read “0 meter.”</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="F-Roads_Data.html#cb278-1" aria-hidden="true"></a>primary.roadlengths[<span class="kw">which</span>(<span class="kw">is.na</span>(primary.roadlengths<span class="op">$</span>length)),<span class="dv">2</span>] &lt;-<span class="st"> </span>x0</span></code></pre></div>
+<p>As always, it is critical that we inspect our data from time to time. If we print out <code>primary.roadlengths</code>, we see that all missing values have indeed by replaced by “0 meter.”</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="F-Roads_Data.html#cb279-1" aria-hidden="true"></a>primary.roadlengths</span></code></pre></div>
+<pre><code>## Simple feature collection with 29903 features and 2 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## CRS:            4326
+## # A tibble: 29,903 x 3
+##    DATA.x   length                                                                                     geometry
+##     &lt;int&gt;      [m]                                                                                &lt;POLYGON [°]&gt;
+##  1      1    0.000 ((-88.53387 43.19439, -88.52207 43.19439, -88.52207 43.18606, -88.53387 43.18606, -88.533...
+##  2      2    0.000 ((-88.52207 43.19439, -88.51027 43.19439, -88.51027 43.18606, -88.52207 43.18606, -88.522...
+##  3      3 1686.194 ((-88.51027 43.19439, -88.49847 43.19439, -88.49847 43.18606, -88.51027 43.18606, -88.510...
+##  4      4    0.000 ((-88.49847 43.19439, -88.48667 43.19439, -88.48667 43.18606, -88.49847 43.18606, -88.498...
+##  5      5    0.000 ((-88.48667 43.19439, -88.47487 43.19439, -88.47487 43.18606, -88.48667 43.18606, -88.486...
+##  6      6    0.000 ((-88.47487 43.19439, -88.46307 43.19439, -88.46307 43.18606, -88.47487 43.18606, -88.474...
+##  7      7    0.000 ((-88.46307 43.19439, -88.45127 43.19439, -88.45127 43.18606, -88.46307 43.18606, -88.463...
+##  8      8    0.000 ((-88.45127 43.19439, -88.43947 43.19439, -88.43947 43.18606, -88.45127 43.18606, -88.451...
+##  9      9    0.000 ((-88.43947 43.19439, -88.42767 43.19439, -88.42767 43.18606, -88.43947 43.18606, -88.439...
+## 10     10    0.000 ((-88.42767 43.19439, -88.41587 43.19439, -88.41587 43.18606, -88.42767 43.18606, -88.427...
+## # … with 29,893 more rows</code></pre>
+</div>
+<div id="secondary-roads" class="section level3" number="5.18.3">
+<h3><span class="header-section-number">5.18.3</span> Secondary Roads</h3>
+<p>From this point on, things start to get a little repetitive. We, in this section, repeat lots of code from the last section. The only difference is that we now want to extract the information - basically the lengths of the roads - of all roads that are classified as “secondary” or “secondary_link.” For illustrative purposes, we show all the code below, but we shall not comment much on the code as it is almost identical to the code in the last section.</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="F-Roads_Data.html#cb281-1" aria-hidden="true"></a>sec<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">which</span>(roads.intersection<span class="op">$</span>fclass <span class="op">==</span><span class="st"> &quot;secondary&quot;</span>)</span>
+<span id="cb281-2"><a href="F-Roads_Data.html#cb281-2" aria-hidden="true"></a>sec<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">which</span>(roads.intersection<span class="op">$</span>fclass <span class="op">==</span><span class="st"> &quot;secondary_link&quot;</span>)</span>
+<span id="cb281-3"><a href="F-Roads_Data.html#cb281-3" aria-hidden="true"></a>sec.id &lt;-<span class="st"> </span><span class="kw">c</span>(sec<span class="fl">.1</span>, sec<span class="fl">.2</span>)</span>
+<span id="cb281-4"><a href="F-Roads_Data.html#cb281-4" aria-hidden="true"></a></span>
+<span id="cb281-5"><a href="F-Roads_Data.html#cb281-5" aria-hidden="true"></a>secondary.int &lt;-<span class="st"> </span>roads.intersection[sec.id,]</span>
+<span id="cb281-6"><a href="F-Roads_Data.html#cb281-6" aria-hidden="true"></a></span>
+<span id="cb281-7"><a href="F-Roads_Data.html#cb281-7" aria-hidden="true"></a>secondary.merged &lt;-<span class="st"> </span><span class="kw">st_join</span>(km.grid, secondary.int)</span>
+<span id="cb281-8"><a href="F-Roads_Data.html#cb281-8" aria-hidden="true"></a></span>
+<span id="cb281-9"><a href="F-Roads_Data.html#cb281-9" aria-hidden="true"></a>secondary.roadlengths =<span class="st"> </span>secondary.merged <span class="op">%&gt;%</span></span>
+<span id="cb281-10"><a href="F-Roads_Data.html#cb281-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(DATA.x) <span class="op">%&gt;%</span></span>
+<span id="cb281-11"><a href="F-Roads_Data.html#cb281-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">length =</span> <span class="kw">sum</span>(length))</span>
+<span id="cb281-12"><a href="F-Roads_Data.html#cb281-12" aria-hidden="true"></a></span>
+<span id="cb281-13"><a href="F-Roads_Data.html#cb281-13" aria-hidden="true"></a>secondary.roadlengths[<span class="kw">which</span>(<span class="kw">is.na</span>(secondary.roadlengths<span class="op">$</span>length)),<span class="dv">2</span>] &lt;-<span class="st"> </span>x0</span></code></pre></div>
+<p>We inspect <code>secondary.roadlengths</code>, and it looks fine in terms of both data format and data value.</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="F-Roads_Data.html#cb282-1" aria-hidden="true"></a>secondary.roadlengths</span></code></pre></div>
+<pre><code>## Simple feature collection with 29903 features and 2 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## CRS:            4326
+## # A tibble: 29,903 x 3
+##    DATA.x   length                                                                                     geometry
+##     &lt;int&gt;      [m]                                                                                &lt;POLYGON [°]&gt;
+##  1      1    0.000 ((-88.53387 43.19439, -88.52207 43.19439, -88.52207 43.18606, -88.53387 43.18606, -88.533...
+##  2      2    0.000 ((-88.52207 43.19439, -88.51027 43.19439, -88.51027 43.18606, -88.52207 43.18606, -88.522...
+##  3      3    0.000 ((-88.51027 43.19439, -88.49847 43.19439, -88.49847 43.18606, -88.51027 43.18606, -88.510...
+##  4      4    0.000 ((-88.49847 43.19439, -88.48667 43.19439, -88.48667 43.18606, -88.49847 43.18606, -88.498...
+##  5      5    0.000 ((-88.48667 43.19439, -88.47487 43.19439, -88.47487 43.18606, -88.48667 43.18606, -88.486...
+##  6      6    0.000 ((-88.47487 43.19439, -88.46307 43.19439, -88.46307 43.18606, -88.47487 43.18606, -88.474...
+##  7      7 1853.511 ((-88.46307 43.19439, -88.45127 43.19439, -88.45127 43.18606, -88.46307 43.18606, -88.463...
+##  8      8    0.000 ((-88.45127 43.19439, -88.43947 43.19439, -88.43947 43.18606, -88.45127 43.18606, -88.451...
+##  9      9    0.000 ((-88.43947 43.19439, -88.42767 43.19439, -88.42767 43.18606, -88.43947 43.18606, -88.439...
+## 10     10    0.000 ((-88.42767 43.19439, -88.41587 43.19439, -88.41587 43.18606, -88.42767 43.18606, -88.427...
+## # … with 29,893 more rows</code></pre>
+</div>
+<div id="motorway" class="section level3" number="5.18.4">
+<h3><span class="header-section-number">5.18.4</span> Motorway</h3>
+<p>The code in this section is exactly the same as in the last two section. We include the code here for the sake of completeness, but you should feel free to skip this section.</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="F-Roads_Data.html#cb284-1" aria-hidden="true"></a>mot<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">which</span>(roads.intersection<span class="op">$</span>fclass <span class="op">==</span><span class="st"> &quot;motorway&quot;</span>)</span>
+<span id="cb284-2"><a href="F-Roads_Data.html#cb284-2" aria-hidden="true"></a>mot<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">which</span>(roads.intersection<span class="op">$</span>fclass <span class="op">==</span><span class="st"> &quot;motorway_link&quot;</span>)</span>
+<span id="cb284-3"><a href="F-Roads_Data.html#cb284-3" aria-hidden="true"></a>mot.id &lt;-<span class="st"> </span><span class="kw">c</span>(mot<span class="fl">.1</span>, mot<span class="fl">.2</span>)</span>
+<span id="cb284-4"><a href="F-Roads_Data.html#cb284-4" aria-hidden="true"></a></span>
+<span id="cb284-5"><a href="F-Roads_Data.html#cb284-5" aria-hidden="true"></a>motorway.int &lt;-<span class="st"> </span>roads.intersection[mot.id,]</span>
+<span id="cb284-6"><a href="F-Roads_Data.html#cb284-6" aria-hidden="true"></a></span>
+<span id="cb284-7"><a href="F-Roads_Data.html#cb284-7" aria-hidden="true"></a>motorway.merged &lt;-<span class="st"> </span><span class="kw">st_join</span>(km.grid, motorway.int)</span>
+<span id="cb284-8"><a href="F-Roads_Data.html#cb284-8" aria-hidden="true"></a></span>
+<span id="cb284-9"><a href="F-Roads_Data.html#cb284-9" aria-hidden="true"></a>motorway.roadlengths =<span class="st"> </span>motorway.merged <span class="op">%&gt;%</span></span>
+<span id="cb284-10"><a href="F-Roads_Data.html#cb284-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(DATA.x) <span class="op">%&gt;%</span></span>
+<span id="cb284-11"><a href="F-Roads_Data.html#cb284-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">length =</span> <span class="kw">sum</span>(length))</span>
+<span id="cb284-12"><a href="F-Roads_Data.html#cb284-12" aria-hidden="true"></a></span>
+<span id="cb284-13"><a href="F-Roads_Data.html#cb284-13" aria-hidden="true"></a>motorway.roadlengths[<span class="kw">which</span>(<span class="kw">is.na</span>(motorway.roadlengths<span class="op">$</span>length)),<span class="dv">2</span>] &lt;-<span class="st"> </span>x0</span></code></pre></div>
+<p>Before we proceed, we take a galnce at <code>motorway.roadlengths</code>.</p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="F-Roads_Data.html#cb285-1" aria-hidden="true"></a>motorway.roadlengths</span></code></pre></div>
+<pre><code>## Simple feature collection with 29903 features and 2 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## CRS:            4326
+## # A tibble: 29,903 x 3
+##    DATA.x length                                                                                     geometry
+##     &lt;int&gt;    [m]                                                                                &lt;POLYGON [°]&gt;
+##  1      1      0 ((-88.53387 43.19439, -88.52207 43.19439, -88.52207 43.18606, -88.53387 43.18606, -88.533...
+##  2      2      0 ((-88.52207 43.19439, -88.51027 43.19439, -88.51027 43.18606, -88.52207 43.18606, -88.522...
+##  3      3      0 ((-88.51027 43.19439, -88.49847 43.19439, -88.49847 43.18606, -88.51027 43.18606, -88.510...
+##  4      4      0 ((-88.49847 43.19439, -88.48667 43.19439, -88.48667 43.18606, -88.49847 43.18606, -88.498...
+##  5      5      0 ((-88.48667 43.19439, -88.47487 43.19439, -88.47487 43.18606, -88.48667 43.18606, -88.486...
+##  6      6      0 ((-88.47487 43.19439, -88.46307 43.19439, -88.46307 43.18606, -88.47487 43.18606, -88.474...
+##  7      7      0 ((-88.46307 43.19439, -88.45127 43.19439, -88.45127 43.18606, -88.46307 43.18606, -88.463...
+##  8      8      0 ((-88.45127 43.19439, -88.43947 43.19439, -88.43947 43.18606, -88.45127 43.18606, -88.451...
+##  9      9      0 ((-88.43947 43.19439, -88.42767 43.19439, -88.42767 43.18606, -88.43947 43.18606, -88.439...
+## 10     10      0 ((-88.42767 43.19439, -88.41587 43.19439, -88.41587 43.18606, -88.42767 43.18606, -88.427...
+## # … with 29,893 more rows</code></pre>
+</div>
+</div>
+<div id="outputting-data" class="section level2" number="5.19">
+<h2><span class="header-section-number">5.19</span> Outputting Data</h2>
+<p>We now enter the last section of this tutorial, where we would like to save all the work we have done so far. This is not difficult - we just create three fields in <code>km.grid</code> (<code>primary</code>, <code>secondary</code>, and <code>motorway</code>), where we store the lengths of the roads.</p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="F-Roads_Data.html#cb287-1" aria-hidden="true"></a>km.grid<span class="op">$</span>primary &lt;-<span class="st"> </span>primary.roadlengths<span class="op">$</span>length</span>
+<span id="cb287-2"><a href="F-Roads_Data.html#cb287-2" aria-hidden="true"></a>km.grid<span class="op">$</span>secondary &lt;-<span class="st"> </span>secondary.roadlengths<span class="op">$</span>length</span>
+<span id="cb287-3"><a href="F-Roads_Data.html#cb287-3" aria-hidden="true"></a>km.grid<span class="op">$</span>motorway &lt;-<span class="st"> </span>motorway.roadlengths<span class="op">$</span>length</span></code></pre></div>
+<p>Then, we output a new shapefile with the modified <code>km.grid</code> using the <code>st_write</code> function.</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="F-Roads_Data.html#cb288-1" aria-hidden="true"></a><span class="kw">st_write</span>(km.grid, <span class="st">&quot;Road_Grid.shp&quot;</span>)</span></code></pre></div>
+<p>This concludes our tutorial. In this exercise, we showed how roads data can be handled. Of course, some of the techniques introduced here can be applied in many other instances. The brief introduction on dealing with data of the type “units” should be particularly helpful if you have not been previously exposed to this data type. You should feel free to explore more on your own and apply what you have learned to your own research.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C-Elevation_Data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+---
+title: "<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit</style>"
+author: "Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : `r Sys.Date()`"
+output: bookdown::gitbook
+documentclass: book
+---
+
+# Introduction {-}
+This toolkit provides and **introduction to GIS and spatial data analysis** for air quality analysis applications, allowing researchers, policymakers, analysts, and practicioners to gain data-driven air quality insights in their local community. 
+
+## Software Basics {-}
+Tutorials assume that R and RStudio is already downloaded on your device. Luckily, this toolkit is compatible with Windows, macOS, and Linux systems. Basic familiarity in R is required for these toolkits. You should know how to change the working directory, install new packages, library packages, and comfortably navigate between folders on your computer. Additionally, an internet connection will be required for some tutorials.
+
+If you are new to R, we recommend the following <a href="https://learn.datacamp.com/courses/free-introduction-to-r">intro-level tutorials</a> provided through <a href="https://rspatial.org/intr/1-introduction.html">installation guides</a>. You can also refer to this <a href="https://datacarpentry.org/r-socialsci/">R for Social Scientists</a> tutorial developed by Data Carpentry for a refresher.
+
+Before we begin, install the following packages for data wrangling and spatial data analysis.
+
+* `sf`
+* `sp`
+* `tmap`
+* `dplyr`
+
+## Author Team {-}
+This toolkit was developed for the [Partnership for Healthy Cities](https://partnershipforhealthycities.bloomberg.org/) by Marynia Kolak, Isaac Kamber, Lorenz Menendez, Haowen Shang, Yuming Liu, and Jizhou Wang at the [Center for Spatial Data Science](https://spatial.uchicago.edu/) at the University of Chicago with support from [Bloomberg Philantropies](https://www.bloomberg.org/).
+
+## Acknowledgements {-}
+This research was supported by TBD, add any legal discliamers or other sponsor verbiage here.
+
+***
+

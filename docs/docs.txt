@@ -1,7 +1,0 @@
-docs
-
-This directory forms the root of the Bookdown website. Place completed markdown files here. Make sure to follow bookdown naming convention, as shown below.
-
-<chapter_number>-<title>.Rmd
-
-Example: 01-interpoaltion.Rmd

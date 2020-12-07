@@ -1,0 +1,2173 @@
+---
+title: "<span style='color: #982568; font-size:42px'>OpenAirQ Toolit</style>"
+author: "Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : `r Sys.Date()`"
+output: bookdown::gitbook
+documentclass: book
+---
+
+# Introduction {-}
+This toolkit provides and **introduction to GIS and spatial data analysis** for air quality analysis applications, allowing researchers, policymakers, analysts, and practicioners to gain data-driven air quality insights in their local community. 
+
+## Software Basics {-}
+Tutorials assume that R and RStudio is already downloaded on your device. Luckily, this toolkit is compatible with Windows, macOS, and Linux systems. Basic familiarity in R is required for these toolkits. You should know how to change the working directory, install new packages, library packages, and comfortably navigate between folders on your computer. Additionally, an internet connection will be required for some tutorials.
+
+If you are new to R, we recommend the following <a href="https://learn.datacamp.com/courses/free-introduction-to-r">intro-level tutorials</a> provided through <a href="https://rspatial.org/intr/1-introduction.html">installation guides</a>. You can also refer to this <a href="https://datacarpentry.org/r-socialsci/">R for Social Scientists</a> tutorial developed by Data Carpentry for a refresher.
+
+Before we begin, install the following packages for data wrangling and spatial data analysis.
+* `sf`
+* `sp`
+* `tmap`
+* `dplyr`
+
+## Author Team {-}
+This toolkit was developed for the [Partnership for Healthy Cities](https://partnershipforhealthycities.bloomberg.org/) by Marynia Kolak, Isaac Kamber, Lorenz Menendez, Haowen Shang, Yuming Liu, and Jizhou Wang at the [Center for Spatial Data Science](https://spatial.uchicago.edu/) at the University of Chicago with support from [Bloomberg Philantropies](https://www.bloomberg.org/).
+
+## Acknowledgements {-}
+This research was supported by TBD, add any legal discliamers or other sponsor verbiage here.
+
+***
+
+
+<!--chapter:end:index.Rmd-->
+
+# Vector Data Mapping
+
+## Required Packages
+* `tmap`: Flexible thematic mapping 
+* `sf`: Spatial vector data manipulation 
+* `dplyr`: `data.frame` manipulation
+
+```{r, include = FALSE}
+library(tmap)
+library(sf)
+library(dplyr)
+```
+
+`tmap` will be set to interactive mode for this tutorial.
+```{r}
+tmap_mode('view')
+```
+
+
+## Political Boundaries
+Air quality modeling occured over the Chicago metropolitan area. This geography consist of 21 individual counties within the states of Illinois, Indiana, and Wisconsin. 
+
+**Read in County Boundaries**
+```{r}
+counties = sf::st_read('./data/LargeAreaCounties/LargeAreaCounties.shp')
+```
+
+**Plot with `tmap`**
+```{r}
+tm_shape(counties) +
+        tm_borders() +
+        tm_text("COUNTYNAME", size = 0.7, along.lines = TRUE) +
+        tm_fill(col = "STATE", alpha = 0.5)
+```
+
+Air modeling data, however, is collected at a larger spatial scale to account for region-wide effects that could affect the 21 country study area. Four midwestern states (Illinois, Indiana, Michigan, and Wisconsin) were chosen as a data collection area.
+
+```{r}
+states = sf::st_read('./data/FourStates/FourStates.shp')
+```
+
+```{r}
+tm_shape(states) +
+        tm_borders() +
+        tm_text("NAME", size = 0.8, auto.placement = TRUE) +
+        tm_fill(col = "NAME", alpha = 0.5) +
+        tm_shape(counties) +
+                tm_fill(col = "black", alpha = 0.25) + tm_borders(col = "black", alpha = 0.25)
+```
+
+```{r, include = FALSE}
+basemap = tm_shape(states) +
+        tm_borders() +
+        tm_text("NAME", size = 0.8, auto.placement = TRUE) +
+        tm_fill(col = "NAME", alpha = 0.5) +
+tm_shape(counties) +
+        tm_fill(col = "black", alpha = 0.25) + tm_borders(col = "black", alpha = 0.25)
+```
+
+
+## Ground-based Data Sensor Locations
+
+### EPA Particulate Matter Sensors
+Over 127 PM2.5 pollution monitoring stations are located across the four state data collection area. The map below describes the distribution of these point locations. More information on the data collection methods and output data from each sensor will be discussed later on.
+
+```{r}
+sensors = sf::st_read('./data/PM25_4States_2014.2018_POINTLOCS.geojson') %>% dplyr::mutate(rec_duration = as.numeric(lastRec - firstRec))
+```
+
+```{r}
+basemap +
+tm_shape(sensors) +
+        tm_markers(shape = tmap_icons('https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/data/assets/EPA_logo.png?raw=true'))
+```
+
+### Weather Stations
+High temporal resolution weather data was sourced from a large network of ground-based weather stations co-located at many airports. They provide data at regular one hour intervals on variables such as temperature, pressure, wind velocity, and wind direction. The map below describes the distribution of sensors in the four-state data collection area.
+
+```{r}
+asos = sf::st_read('./data/4States_ASOS_2018_Locations.geojson')
+```
+
+```{r}
+basemap +
+tm_shape(asos) +
+        tm_markers(shape = tmap_icons('https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/data/assets/airport_icon.png?raw=true'))
+```
+
+## Point Sources of Pollution
+The EPA National Emissions Inventory (NEI) dataset (2014) describes the location of large sources of pollution, such as powerplants, factories, and other industrial buildings.
+
+```{r}
+points.pollution = sf::st_read('./data/Point_Source_Emissions_4States_2014.geojson')
+```
+
+```{r}
+basemap +
+tm_shape(points.pollution) +
+        tm_markers()
+```
+
+
+<!--chapter:end:02-vectormapping.Rmd-->
+
+# Data Prep & Management 
+
+This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.
+
+## EPA Pollution Data
+
+```{r, echo=FALSE, fig.cap="EPA Pollution Monitoring Site (EPA.gov)"}
+knitr::include_graphics("https://archive.epa.gov/pesticides/region4/sesd/pm25/web/jpg/air-monitoring-site.jpg")
+```
+
+EPA data was seamlessly imported into R using the **aqsr** package by [Joshua P. Keller](https://github.com/jpkeller) at Colorado State University. The package takes advanatge of the [EPA AQS DataMart API](https://aqs.epa.gov/aqsweb/documents/data_mart_welcome.html) to load data in R as data.frame objects with only a couple lines of code. It allows users to query for sensor data across multiple air quality variables, geographies, and timeframes. Let's get started by downloading the package.
+
+```{r download.epadata, message = FALSE, warning = FALSE}
+# devtools::install_github("jpkeller/aqsr")
+library(aqsr)
+```
+
+### Getting Started
+
+This section describes the process for querying EPA sensor data using the **aqsr** package. For more information on how each function works, please reference the package documentation. 
+
+#### Obtaining an API Key {-}
+For first time users of the AQS DataMart API, you must first register your email to recieve an API key. (Users who already have a DataMart API key, please skep to the next step). The API key is a required input for all querying functions in the **aqsr** package. Obtaining a key is made simple by calling the ```aqs_signup()``` function and inputting your own email address.
+
+```{r API.signup, eval = FALSE}
+aqs_signup('YourEmailHere@uchicago.edu')
+```
+
+Save your API key from the email confirmation for future reference. In case you don't recieve an email, verify that your email address was typed correctly, and check your spam folder. 
+
+#### Using your API Key in **aqsr**
+Setup your AQI key with the **aqr** package by using the ```create_user()``` function. This way, you won't have to keep typing your email and API key each time you query for data.
+
+```{r eval=FALSE}
+myuser = create_user(email = 'YourEmailHere@uchicago.edu', key = 'apikey123')
+```
+
+
+```{r API.details, include=FALSE}
+myuser = create_user('lmenendez@uchicago.edu', 'tealmouse67')
+```
+
+### PM2.5 Data Query
+This section describes how to query for PM2.5 concetration data from EPA pollution sensors. We are looking for at PM2.5 data Wisconsin, Illinois, and Indiana between 2014 and 2018 for our project. First, let's start small and query only for Illinois data for the first week of 2018.
+
+```{r}
+IL.data = aqs_dailyData_byState(aqs_user = myuser,    # Previously defined user emailand API key
+                                param = 88101,        # EPA AQS Parameter Code for PM2.5
+                                bdate = "20180101",   # Starting Date (Jan 1st ,2018)
+                                edate = "20180107",   # Ending Date (Jan 7th, 2018)
+                                state = "17")         # State FIPS Code for Illinois
+```
+
+```{r echo=FALSE, }
+knitr::kable(IL.data[1:5, 1:10])
+```
+
+The outputted data frame includes many fields regarding the PM2.5 observation, including spatial data for the sensor's location. We will focus on these details later on in our data wrangling process. The next code chunk describes how to query for PM2.5 data across our three states and four years. 
+
+```{r, eval = FALSE}
+library(dplyr)
+
+# List of States to Iterate Through
+states = c("17", "18", "55")
+
+# Matrix of Start Dates and End Dates to Iterate Through
+dates = matrix(c("20140101", "20141231", "20150101", "20151231", "20160101", "20161231", "20170101", "20171231", "20180101", "20181231"), ncol = 2, byrow = TRUE)
+
+# Leveraging apply functions to iterate through both states and dates
+full.data = lapply(states, function(x){
+                
+                mapply(aqs_dailyData_byState, 
+                       bdate = dates[,1], 
+                       edate = dates[,2], 
+                       MoreArgs = list(aqs_user = myuser, 
+                                       param = 88101,
+                                       state = x),
+                       SIMPLIFY = FALSE
+                       
+                ) %>% 
+                        do.call("rbind", .)
+        }) %>% 
+                do.call("rbind", .)
+
+```
+
+***
+
+## FAA Weather Data
+
+```{r, echo=FALSE, fig.cap="An ASOS Observation Station in Elko, NV. (Wikimedia Commons)"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg/1280px-2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg")
+```
+
+FAA weather data gathered from the [Automated Surface Observing System (ASOS)](https://en.wikipedia.org/wiki/Automated_airport_weather_station) can be imported using the **riem** package. This package, created by [ROpenSci](https://ropensci.org/), queries weather data from the [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/ASOS/), an online portal for international ASOS data maintained by Iowa State University. First, let's load the package.
+
+```{r download.riem}
+# devtools::install_github('ropensci/riem')
+library(riem, quietly = TRUE)
+```
+
+### Sample Query
+Below is an R code snippet that performs the simplest weather data query possible in the **riem** package. It specifies a particular weather station using an airport code and a date range to query for. The output is a tibble table of raw ASOS weather data. The code snippet below extracts sensor data at the San Francisco International Airport.
+
+``` {r simple.riem.query}
+SFO.weather = riem_measures(station = 'KSFO', date_start = "2014-01-01", date_end = '2014-01-02')
+```
+
+```{r echo=FALSE}
+knitr::kable(SFO.weather[1:5, c(1,2,5,6,7, 8)])
+knitr::kable(head(SFO.weather)[c('station', 'valid', 'tmpf', 'dwpf', 'alti', 'vsby')])
+```
+
+The outputted table shows weather data for a 24-hour period on January 1st, 2014 at the San Francisco International Airport. The `valid` column species when each weather report was generated, typically at 1-hour intervals. The `tmpf` and `dwpf` columns give the ambient air temperature and dew point in Fahrenheit (ºF). Other important variables in our project include air pressure (`alti`), measured in inches of mercury (in.Hg), and visibility (`vsby`) in miles. For more information on all available varibles, see Iowa State's [Documentation](https://mesonet.agron.iastate.edu/request/download.phtml).
+
+Next, we will apply this function at a large scare across multiple sensors and timescales.
+
+
+### Finding ASOS Sensors
+The FAA collects weather data at hourly intervals for each meteorological station, with some stations  providing half-hour intervals. Even querying for short periods of time can yield large amounts of data. To optimise performance, we want to only query data from stations in our study area.
+
+#### Finding Sensors by State {-}
+In our project, we focus on certain counties in Illinois, Indiana, and Wisconsin, so we are interested in finding the sensors within that study area. The first step is to query the locations of all weather stations in the three states using the **riem** package. In the example below, we query for sensors in the Illinois ASOS sensor network. 
+
+```{r IL.query}
+IL.stations = riem_stations(network = 'IL_ASOS')
+```
+
+```{r echo=FALSE}
+knitr::kable(head(IL.stations))
+```
+
+To query for data across multiple states, we are going the apply the `riem_stations` function to a list of weather station networks, as shown below.
+
+```{r IL.IN.WI.query, message = FALSE}
+networks = list('IL_ASOS', 'IN_ASOS', 'WI_ASOS')
+
+library(dplyr, quietly = TRUE)
+station.locs = lapply(networks, riem::riem_stations) %>% 
+        do.call(rbind, .) # Creates a single data table as output
+
+
+```
+
+Note: You can find a list of state abbreviations by typing `state.abb` in your R console. 
+
+#### Converting Latitude and Longitude Coordinates to Spatial Data {-}
+The data tables returned by the **riem** package must be converted to spatial data to determine which sensors are located in the study area. Since the lon/lat coordinates are already provided, the data table is easily converted to a spatial `sf` object.
+
+```{r csv.to.spatial}
+station.locs.sf = sf::st_as_sf(station.locs, coords = c("lon", "lat"), crs = 4326)
+
+# Plot stations and study area boundaries to verify that the correct sensors were selected
+plot(station.locs.sf$geometry)
+plot(sf::st_read('https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson', quiet = TRUE)$geometry, border = 'red', add = TRUE)
+```
+
+We plot to results to verify that our query and data conversion process worked correctly. For reference, the boundaires of the study area is outlined in red. 
+
+
+#### Selecting Sensors within our Study Area {-}
+Next, we perform a spatial join to only keep the points located within the boundaries of our study area polygons. The spatial join is completed by the **sf** package, as shown below. For more information regarding spatial joins and spatial predicates, please see [this](https://gisgeography.com/spatial-join/) helpful blog post by GISgeography.com.
+
+```{r sensor.join, message = FALSE}
+
+# Loading study area boundaries
+study.area = sf::st_read('https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson', quiet = TRUE)
+
+study.sensors = sf::st_join(station.locs.sf, study.area, left = FALSE)
+
+# Verify Spatial Join by Plotting
+plot(study.area$geometry, border = 'red')
+plot(study.sensors$geometry, add = TRUE)
+title('Weather Stations Within the Study Area')
+
+```
+
+Now that we have a dataset of which weather stations we are interested in, we can query for the weather data associated with each station.
+
+### Weather Data Query
+Again we use the `lapply` function in base R to execute the `riem_measures` function on a list of sensor IDs. This allows us to iteratively query for weather data from each individual sensor in a list. In the code snippet below, we take the study sensors obtained previously and query for a single day's worth of weather data.
+
+```{r multi.locs.query, message=FALSE, warning=FALSE}
+library(dplyr, quietly = TRUE)
+
+weather.data = lapply(study.sensors$id, function(x){riem::riem_measures(x, date_start = "2014-01-01", date_end = "2014-01-02")}) %>% 
+        do.call(rbind, .) # Creates a single data table as output
+
+```
+
+```{r echo=FALSE}
+knitr::kable(weather.data[1:5, 1:5])
+```
+
+#### Querying Full Weather Dataset {-}
+Use caution when querying for a large amount of data. Data tables can easily become unwieldy after querying for a large number of weather stations across a wide time scale. The code snippet below downloads all ASOS weather data for sensors in our study area from January 1st 2014 to December 31st 2018, which is our study time period. It has approximately 4.8 Million records and takes 6-10 minutes to download.
+
+```{r large.query, eval = FALSE}
+weather.data = lapply(study.sensors$id, function(x){riem::riem_measures(x, date_start = "2014-01-01", date_end = "2018-12-31")}) %>% 
+        do.call(rbind, .) # Creates a single data table as output
+```
+
+<!--chapter:end:03-weatherdata.Rmd-->
+
+# Point Sensors to Surfaces
+
+## Introduction
+
+This chapter will introduce how to convert point sensors to surfaces. In it, we will work with the CSV file for the 2017 National Emissions Inventory, downloadable from the EPA's website [here](ftp://newftp.epa.gov/air/nei/2017/data_summaries/2017v1/2017neiApr_facility_process_byregions.zip). If you wish to follow along with this chapter, please download the dataset now. If you have a specific interest area and would like to skip the data wrangling in R, you can download state-specific and pollutant-specific summaries from the NEI website. 
+
+We will begin with a brief review of the basics of data wrangling and filter the relatively large CSV file to the considerably smaller subset of the data with which we are concerned. Then, we will reinforce the data visualization skills covered in a previous chapter by mapping out the point locations of emissions sources in our study area. Finally, we will transition into the process of creating a continuous surface in the form of a Kernal Density Estimation (KDE) of PM2.5 point emission source density in Cook County, Illinois. 
+
+
+By the end of this tutorial you will be able to: 
+
+* Understand and wrangle National Emissions Inventory data
+* Use the sp package in R
+* Generate a Kernal Density Estimation using real data
+
+
+## Loading the Required Packages
+
+To process our data and create a Kernal Density Estimation, we will need the following packages:
+
+* tidyverse (data wrangling)
+* sp (Spatial data manipulation/analysis)
+* rgdal (Spatial data)
+* tmap (Spatial data visualization)
+* spatialEco (Creating KDE)
+
+If you do not already have any of these packages installed, you will want to install them using `install.package("*PackageName*")`. Once they are installed, we are going to load the required packages:
+
+```{r, nei.xpackage.load, results='hide', warning=FALSE, message=FALSE}
+library(tidyverse)
+library(sp)
+library(rgdal)
+library(spatialEco)
+library(tmap)
+library(readr)
+```
+
+## Read and Examine the Data
+
+Now that we have loaded our required packages, we will now read in our National Emissions Inventory CSV. After unzipping the zipped folder downloaded from the EPA, you will have two files: "process_12345.csv" and "process678910.csv". For the purposes of this chapter, we will only need "process_12345.csv". This file is quite large, so beware that it may take 30 seconds to load.
+
+```{r, nei.load, warning=FALSE, message=FALSE}
+nei.data <- readr::read_csv("./data/process_12345.csv.zip")
+```
+
+Having successfully read our data into the R environment, let's take a second to examine it. 
+
+```{r, nei.examine, warning=FALSE, message=FALSE}
+nrow(nei.data)
+names(nei.data)
+```
+
+As we can see, the dataset is huge, with over 3 million observations and 53 attributes. None of the existing spatial data packages in R are well equipped to handle such a dataset of such size. Luckily, we are only interested in a small subset of the data -- PM2.5 emissions sources in Illinois, Michigan, Wisconsin, and Indiana. 
+
+## Data Wrangling
+
+As a reminder, this dataset contains data for many pollutants across the entire United States. Looking at the code snippet above, we can see that the tibble contains columns for state abbreviations and pollutant descriptions, two factors which we are interested in filtering. First, let's filter our tibble to only those observations within our state, Illinois. We are going to be using the `filter()` function from the dplyr package (included in the tidyverse). 
+
+```{r, nei.state.filter}
+state.abbr <- c("IL") 
+
+state.nei <- nei.data %>%
+        filter(state %in% state.abbr)
+
+nrow(state.nei)
+```
+With that, we're already down to *just* 386,338 emissions sources. While we still have a ways to go with our filtering, this is certainly progress. Let's take a second to look back over what we just did. 
+
+The second line of this code is using the pipe (`%>%`) operator to *pipe* in the complete nei dataset into the filter function covered in an earlier chapter. 
+
+`%in%` is an infix operator that matches the items from the first vector (the complete list of state abbreviations for all point emissions sources) with those of the second (the state abbreviations for state of interest).
+
+This code is written this way to allow this code to be used for larger, multistate study areas. If you are interested in examining points from multiple states, simply add their abbreviations to the `state.abbr` vector. If you are only using one state, feel free to simplify the code to your liking. We are next going to filter our data down further to include only those points within Cook County, IL.
+
+
+```{r, nei.county.filter}
+county.names <- c("Cook")
+
+county.nei <- state.nei %>%
+        filter(county %in% county.names)
+
+nrow(county.nei)
+```
+
+
+Let's finish filtering our data by restricting our results to only those emissions sources emitting PM2.5. We will first examine the different labels for pollution descriptions using the `unique()` function. We will then filter our dataset for only those labels that seem related to PM2.5 using the same process as above. 
+
+
+```{r, nei.pm.filter}
+unique(county.nei$`pollutant desc`)
+
+pm25.names <- c("PM2.5 Filterable",  "PM2.5 Primary (Filt + Cond)")
+
+county.pm25 <- county.nei %>%
+        filter(`pollutant desc` %in% pm25.names)
+
+nrow(county.pm25)
+```
+
+Now, with a manageable number of observations in our area of interest, we are going to start looking at our data spatially. 
+
+## Creating a Spatial Object using sp 
+
+We first want to use our filtered tibble to create an sp Spatial Points object. 
+
+```{r, nei.sp.create}
+#Assign the proper coordinates 
+coordinates(county.pm25) <- county.pm25[,c("site longitude","site latitude")]
+
+#Assign the proper projection for this data source (EPSG 4326)
+proj4string(county.pm25) <- CRS("+init=epsg:4326")
+
+#Check data with basic plot
+plot(county.pm25)
+```
+
+With everything looking as it should, let's look back on what we just did. We initialized the Spatial Points object using the `coordinates()` function, assigning the proper longitude and latitude from the dataset. We then used the `proj4string()` function to assign the correct Coordinate Reference System (CRS) to our data. Be careful not to use the wrong projection (check your data source). If you need to transform the projection of your dataset, use the `spTransform()` function. Let's now briefly review data visualization with the tmap package using this point data.
+
+## Data Visualization Review
+
+Here, we will use the spatial data visualization skills learned in an earlier chapter to visualize the point locations of PM2.5 sources in Cook County. 
+
+```{r, nei.point.dataviz}
+#Read in Cook County Shapefile using sp's readOGR function
+cook.county <- readOGR("./data/CookCounty.geojson") 
+
+#Check projection
+proj4string(cook.county)
+
+#Create tmap plot
+tm_shape(cook.county) +
+  tm_borders() +
+  tm_shape(county.pm25) +
+  tm_dots()
+
+```
+
+This is clearly a very basic plot of the data. We can get a basic idea of where the point density may be highest, but we cannot tell much else about the data. Let's now create an interactive map with the dots colored and sized based off of the volume of emissions (self-reported) given off at each point location.
+
+```{r, nei.point.interactive.dataviz, warning=FALSE, message=FALSE}
+#Set tmap mode to view
+tmap_mode("view")
+
+tm_shape(cook.county) +
+  tm_borders() +
+  tm_shape(county.pm25) +
+  tm_bubbles(col  = "total emissions",
+             alpha = 0.3,
+             size = "total emissions",
+             style = "fisher")
+
+```
+
+Here, we used the `tmap_mode()` function to change the map style to interactive viewing and changed the arguments of the `tm_bubbles()` function to change the appearance of the point locations. Let's now construct a continuous surface Kernal Density Estimation from our point data.
+
+## Constructing a Kernal Density Estimation
+
+A Kernal Density Estimation (KDE) map at its most basic level is, as the name suggests, a means of representing the density of features over a given area. The term heatmap is often used interchangeably with KDE. Constructing a KDE gives us a continuous surface from discrete point data. This is quite useful as both an end product or an input to a model that requires continuous surface inputs. Each cell of the constructed raster is assigned a value based on the estimated density of ponits in that part of the map. This value can either be entirely unweighted (based solely on the number of points in an area) or weighted on a given variable (points with higher values for that variable will make an area appear denser). There are countless online resources available for learning more about the mathematics/history of KDE. 
+
+Let's now create our first KDE from the point data we've been using. We are going to be using the `sp.kde()` function from the spatialEco package, however there are several other R packages that achieve a more or less identical outcome. 
+
+```{r, nei.kde.unweighted, message=F, warning=F}
+#Construct KDE
+county.kde <- sp.kde(county.pm25, nr=500, nc=500)
+
+plot(county.kde)
+```
+
+We've now produced a continuous surface representing the density of PM2.5 emissions sources across Cook County. Let's look over the `sp.kde()` function in a little more detail. In addition to inputting our sp object, we also input values of 500 for the `nr` and `nc` arguments. These abbreviations are short for "number of rows" and "number of columns" respectively. The `sp.kde` function creates a grid on which to map the results of the KDE, and these arguments tell the function what the dimensions of this grid should be. Let's look at how changing these two arguments changes the appearance of our KDE map:
+
+```{r, nei.kde.resolution.changes, message=F, warning=F}
+#10x10 grid
+county.kde.10 <- sp.kde(county.pm25, nr=10, nc=10)
+plot(county.kde.10)
+
+#100x100 grid
+county.kde.100 <- sp.kde(county.pm25, nr=100, nc=100)
+plot(county.kde.100)
+
+#500x500 grid
+county.kde.500 <- sp.kde(county.pm25, nr=500, nc=500)
+plot(county.kde.500)
+
+```
+
+Note the changes in the plots as the resolution of the grid is increased. Let's now look at the `y` argument used to add a weight to the KDE. Let's say we wanted to weigh our KDE based on the amount of total emissions from individual sites. Here's how you would do that:
+
+```{r, nei.kde.weighted, message=F, warning=F}
+#Construct weighted KDE
+county.kde.weighted <- sp.kde(county.pm25, y=county.pm25$`total emissions`, nr=500, nc=500)
+
+plot(county.kde.weighted)
+```
+
+As you can see, weighing the KDE on the total emissions amount dramatically changes the map. These changes can be deemphasized/accentuated if you transform the variable weighing the data. 
+
+If you are interested in reading more about the arguments of this function check out its [R Documentation](https://www.rdocumentation.org/packages/spatialEco/versions/1.3-2/topics/sp.kde) page.
+
+
+
+
+
+
+
+
+
+
+
+<!--chapter:end:04-ToolkitPointsToSurfaces.Rmd-->
+
+# Interpolation Models
+
+This tutorial demonstrates how to compare common interpolation models empirically to select the one that seems most appropriate for a given spatial extent. It follows the steps provided in an R-Spatial [tutorial](https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data) on interpolating pollution vairables. Possible interpolation models are voronoi polygons, nearest neighbor interpolation, inverse distance weights (IDW), and finally kriging. The oprimal model is one with the lowest RMSE compared to all other models. The models are also evaluated against a "NULL Model", where the mean value is assigned in all grid cells.
+
+## Example: Interpolating Average Temperature across the 21-county study area.
+
+This section describes how an interpolation model was selected to interpolate average temperature from airport weather stations in the 21 county area.
+
+## Wrangling Data
+
+Reading in monthly temperature averages
+```{r message=FALSE, warning=FALSE}
+
+tmpf = readr::read_csv('./data/ASOS_tmpf_2014.2018.csv')
+head(tmpf)
+```
+
+Let's filter for August 2018 Data
+```{r}
+tmpf = dplyr::filter(tmpf, moyr == '2018-08')
+```
+
+Mapping the station values
+```{r}
+library(tmap)
+tmap_mode("view")
+counties = sf::st_read('./data/LargeAreaCounties/LargeAreaCounties.shp')
+sensors = sf::st_as_sf(tmpf, coords = c("longitude", "latitude"), crs = 4326)
+
+tm_shape(counties) +
+  tm_borders() +
+tm_shape(sensors) +
+  tm_dots(col = "tmpf", 
+          palette = "-RdBu", 
+          title = "Average August 2018 Temperature (ºF)", 
+          popup.vars = c("Temp" = "tmpf", 
+                         "Airport Code" = "site_num"))
+```
+
+
+## Exploring the Null Model
+This model follows the null hypothesis, that there's no variation in precipitation across space, by taking the mean precipitation and assigning that value across the entire area.
+```{r}
+RMSE <- function(observed, predicted) {
+  sqrt(mean((predicted - observed)^2, na.rm=TRUE))
+}
+
+null <- RMSE(mean(tmpf$tmpf), tmpf$tmpf)
+null
+
+```
+The Root Mean Swuare Error (RMSE) for the null model is 2.09.
+
+## Model 1: Voronoi Model
+This model takes sensor locations and generates a prediction area for that sensor. The 21 county area is divided into polygons representing areas closest to each sensor.
+
+```{r include=FALSE}
+library(raster)
+
+# Loading AOD raster for the 21 counties
+AOD.raster = raster::raster('./data/AOD_21Counties_MasterGrid/AOD_21Counties_MasterGrid.grd')
+
+# Create Blank Raster with same properties as AOD raster
+blank.raster = raster()
+crs(blank.raster) = sf::st_crs(AOD.raster)$proj4string
+extent(blank.raster) = extent(AOD.raster)
+res(blank.raster) = res(AOD.raster)
+crs(blank.raster) = st_crs(sensors)$proj4string
+
+
+# Replacing with NA Values
+values(blank.raster) = NA
+
+# Converting sf object to sp
+dsp = as_Spatial(sensors)
+IL = as_Spatial(counties)
+```
+
+Creating Voronoi Polygons
+
+```{r mesage=FALSE, warning = FALSE}
+library(dismo)
+v <- voronoi(dsp)
+
+tm_shape(v) +
+  tm_borders() +
+tm_shape(sensors) +
+  tm_dots(popup.vars = c("Temp" = "tmpf", 
+                         "Airport Code" = "site_num"))
+
+```
+
+Tenperature values can then be assigned to each voronoi polygon based on temperature readings from the sensor located in the given polygon.
+
+```{r message=FALSE, warning=FALSE}
+# Assigning values to polygons
+il <- aggregate(IL)
+vil <- raster::intersect(v, il)
+
+tm_shape(vil) +
+  tm_fill('tmpf', 
+          alpha = 0.5, 
+          palette = "-RdBu", 
+          title = "Average August 2018 Temperature (ºF)",
+          popup.vars = c("Temp" = "tmpf")) + 
+  tm_borders()
+```
+
+Rasterizing voronoi polygons
+
+```{r}
+r <- blank.raster
+vr <- rasterize(vil, r, 'tmpf')
+```
+
+### Validating the Voronoi Model
+We will use 5-fold cross-validation to determine the improvement compared to our baseline, the NULL model.
+
+```{r warning= FALSE, message = FALSE}
+set.seed(5132015)
+
+# Randomly partition the Dataset into 5 groups (1 through 5)
+kf <- kfold(nrow(dsp)) 
+
+# Initialize a vector of length 5
+vorrmse <- rep(NA, 5)
+
+# Validate
+for (k in 1:5) {
+  test <- dsp[kf == k, ] # Learn on group k
+  train <- dsp[kf != k, ] # Train on groups != k
+  v <- voronoi(train)
+  p1 <- raster::extract(v, test)$tmpf
+  vorrmse[k] <- RMSE(test$tmpf, p1) # Save the RMSE
+}
+
+print("RMSE for each of the five folds")
+vorrmse
+
+# Take the mean RMSE and get percentage improvement
+print("Mean RMSE")
+mean(vorrmse)
+print("Improvement over NULL model")
+1 - (mean(vorrmse) / null)
+```
+
+The RMSE for the Voronoi model is 1.33, which represents a 36% increase in accuracy from the null model. The percentage improvement metric will determine the most useful model to choose.
+
+## Model 2: Nearest Neighbor Interpolation
+The next model to test is a nearest neighbor interpolation. The interpolation takes into account the nearest 5 sensors when determining the temperature value at a given grid cell. The decay parameters is seto to zero.
+
+```{r warning = FALSE, message = FALSE}
+set.seed(5132015)
+library(gstat)
+gs <- gstat(formula=tmpf~1, locations=dsp, nmax=5, set=list(idp = 0))
+nn <- interpolate(r, gs)
+
+nnmsk <- mask(nn, vr)
+
+tm_shape(nnmsk) +
+  tm_raster(n = 5,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+Overall the interpolation yield provdes a similar estimate of temperature as the voronoi polygons. This is expected as voronoi polygons are a form of nearest neighbor interpolation. The differenc here is that this mode takes into account the temperature values at the five nearest sensors, not just one nearest sensor. 
+
+Cross validating the result using the `gstat` ```predict()``` function.
+
+```{r message = FALSE, warning = F}
+nnrmse <- rep(NA, 5)
+
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  gscv <- gstat(formula=tmpf~1, locations=train, nmax=5, set=list(idp = 0))
+  p2 <- predict(gscv, test)$var1.pred
+  nnrmse[k] <- RMSE(test$tmpf, p2)
+}
+
+print("RMSE for each of the five folds")
+nnrmse
+print("Mean RMSE")
+mean(nnrmse)
+print("Improvement over NULL model")
+1 - (mean(nnrmse) / null)
+
+```
+
+The average RMSE after 5-fold cross validation is 1.80. This model is 14% more accurate than the null model. This suggests that it might be a less effective estimate of temperature in our case. 
+
+## Model 3: IDW Interpolation using baseline parameters
+IDW stands for Inverse Distance Weighted interpolation. This model estimates temperature at a given cell by taking into account temperature values located at various nearby sensors and each sensor's straight line distance to the grid cell. Data from sensors located closer to the target grid cell are given more weight in the final estimate of temperature in that cell. This model is a logical outcropping of Tobler's first law of geography, "everything is related to everything else, but near things are more related than distant things."
+
+```{r warning = F, message = F}
+set.seed(5132015)
+library(gstat)
+gs <- gstat(formula=tmpf~1, locations=dsp)
+idw <- interpolate(r, gs)
+idwr <- mask(idw, vr)
+plot(idwr)
+
+tm_shape(idwr) +
+  tm_raster(n = 10,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+The IDW model creates a smoother temperature surface compared to voronoi polygons and nearest neighbor interpolations. Hard breaks between individual sensor regions is reduced to a minimum. However, IDW also introduced it's own distortion. The 'bullseye' effect occurs when a sensor value is significantly different than the rest, an artefact that is clearly visible around almost all snesor locations in our map.
+
+
+```{r warning = F, message = F}
+rmse <- rep(NA, 5)
+
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  gs <- gstat(formula=tmpf~1, locations=train)
+  p <- predict(gs, test)
+  rmse[k] <- RMSE(test$tmpf, p$var1.pred)
+}
+
+
+print("RMSE for each of the five folds")
+rmse
+print("Mean RMSE")
+mean(rmse)
+print("Improvement over NULL model")
+1 - (mean(rmse) / null)
+
+```
+
+The IDW model has an RMSE of 1.52, a 27% improvement over the null model. 
+
+## Model 4: Optimized IDW Interpolation
+IDW models are highly sensitive to two user defined parameters. 1) The maximum number of sensors to take into account and 2) a decay or friction of distance parameter. Since models are evaluated using RMSE, an optimization algorithm can be used to find an optimal number of sensors and decay parameter that minimizes RMSE. This optimization is performed below.
+
+```{r message = F, warning = F}
+f1 <- function(x, test, train) {
+  nmx <- x[1]
+  idp <- x[2]
+  if (nmx < 1) return(Inf)
+  if (idp < .001) return(Inf)
+  m <- gstat(formula=tmpf~1, locations=train, nmax=nmx, set=list(idp=idp))
+  p <- predict(m, newdata=test, debug.level=0)$var1.pred
+  RMSE(test$tmpf, p)
+}
+set.seed(20150518)
+i <- sample(nrow(dsp), 0.2 * nrow(dsp))
+tst <- dsp[i,]
+trn <- dsp[-i,]
+opt <- optim(c(8, .5), f1, test=tst, train=trn)
+opt
+```
+
+The optimal IDW interpolation can be gleaned from the `opt$par` variable. The number of sensors to consider should be ~4.90 while the decay parameter should be 8.44.
+
+Performing the IDW interpolation with these parameters yields the following results.
+
+```{r message = F, warning = F}
+m <- gstat::gstat(formula=tmpf~1, locations=dsp, nmax=opt$par[1], set=list(idp=opt$par[2]))
+idw <- interpolate(r, m)
+idw <- mask(idw, il)
+
+tm_shape(idw) +
+  tm_raster(n = 10,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+The output from this model is super interesting. It looks similar to the voronoi polygons, but as if someone took a paintbrush to the edges of each polygon and mixed the colors together. In scientific terms, it's as if someone took the voronoi polygons and added a thin gradient between each polygon. 
+
+Let's cross validate and get the RMSE
+```{r warning = F, message = F}
+idwrmse <- rep(NA, 5)
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  m <- gstat(formula=tmpf~1, locations=train, nmax=opt$par[1], set=list(idp=opt$par[2]))
+  p4 <- predict(m, test)$var1.pred
+  idwrmse[k] <- RMSE(test$tmpf, p4)
+}
+
+print("RMSE for each of the five folds")
+idwrmse
+print("Mean RMSE")
+mean(idwrmse)
+print("Improvement over NULL model")
+1 - (mean(idwrmse) / null)
+
+```
+
+The RMSE is 1.42, which represents an improvement of 32% over the null model.
+
+## Model 5: Thin Plate Spline Model
+Originally, a non-spatial interpolation method, this model seeks to "smooth" the temperature from each sensor across grid cells. It's name comes from this models ability to penalize non-smooth data, similar to how a thin but rigid sheets resists bending.
+
+```{r}
+library(fields)
+
+m <- Tps(coordinates(dsp), tmpf$tmpf)
+tps <- interpolate(r, m)
+tps <- mask(tps, idw)
+
+tm_shape(tps) +
+  tm_raster(n = 5,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+This model produces evently spaced temperature bands, as expected considering the rigidity of the model. Compared to other models, it might seem less correct or represnetative of the real-world. However, only RMSE will tell.
+
+
+```{r}
+tpsrmse <- rep(NA, 5)
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  m <- Tps(coordinates(train), train$tmpf)
+  p5 <- predict(m, coordinates(test))
+  tpsrmse[k] <- RMSE(test$tmpf, p5)
+}
+
+print("RMSE for each of the five folds")
+tpsrmse
+print("Mean RMSE")
+mean(tpsrmse)
+print("Improvement over NULL model")
+1 - (mean(tpsrmse) / null)
+```
+
+The RMSE for this model is 1.60, a 24% improvement over the null model. 
+
+## Model 6: Ordinary Kriging
+Kriging is a complex interpolation method that seeks to find the best linear predictor of intermediate values. In our spatial context, this means that it seeks
+
+The first step is to fit a variogram over the temperature data
+```{r}
+library(gstat)
+gs <- gstat(formula=tmpf~1, locations=dsp)
+v <- variogram(gs, width=20)
+head(v)
+plot(v)
+```
+
+We notice that there are only five points below the mean, which is very few points to properly fit a model to. But, let's continue to see what happens. Next we fit the variogram. This time, we use the ```autofitVarogram``` function from the ```automap``` package.
+
+```{r}
+fve = automap:::autofitVariogram(formula = tmpf~1, input_data = dsp)
+fve
+plot(fve)
+```
+The ```autofitVariogram``` function fitted a Gaussian variogram to our small sample of datapoints. 
+
+Executing an ordiary kriging model
+```{r message = F, warning = F}
+kp = krige(tmpf~1, dsp, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
+spplot(kp)
+```
+
+Plotting this on the 21 counties
+
+```{r}
+ok <- brick(kp)
+ok <- mask(ok, il)
+names(ok) <- c('prediction', 'variance')
+plot(ok)
+
+tm_shape(ok[[1]]) +
+  tm_raster(n = 5,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+Cross-Validating the Kriging Model
+
+```{r warning = F, message = F}
+set.seed(20150518)
+
+krigrmse = rep(NA, 5)
+
+for (i in 1:5) {
+  test <- dsp[kf == i,]
+  train <- dsp[kf != i, ]
+  fve = automap:::autofitVariogram(formula = tmpf~1, input_data = train)
+  kp = krige(tmpf~1, train, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
+  p6 = raster::extract(as(kp, 'RasterLayer'), test)
+  krigrmse[i] <-  RMSE(test$tmpf, p6)
+}
+
+print("RMSE for each of the five folds")
+krigrmse
+print("Mean RMSE")
+mean(krigrmse)
+print("Improvement over NULL model")
+1 - (mean(krigrmse) / null)
+
+```
+
+After 5 fold cross-validation, the RMSE is 1.80. This is a 14% improvement over the null model.
+
+## Model 7: Blending all models
+
+Next, we will attempt to created a blended model that takes a weighted average of the predicted values for each model, weighted by their RMSE. This ensures that the more accurate models have more influence on the blended model than the models with poor predictions.
+
+This code chunk re-runs each model, creating an ensemble model, while cross-validating the results.
+
+```{r message=FALSE, warning=FALSE}
+set.seed(20150518)
+
+  # Initialize rmse vectors
+  vorrmse <- nnrmse <- idwrmse <- krigrmse <- tpsrmse <- ensrmse <- rep(NA, 5)
+  
+for (i in 1:5) {
+
+  # Creating Test & Training Data
+  test <- dsp[kf == i, ] # Learn on group k
+  train <- dsp[kf != i, ] # Train on groups != k
+  
+  # Voronoi
+  v <- voronoi(train)
+  p1 <- raster::extract(v, test)$tmpf
+  vorrmse[i] <- RMSE(test$tmpf, p1) # Save the RMSE
+  
+  # Nearest Neighbbor
+  gscv <- gstat(formula=tmpf~1, locations=train, nmax=5, set=list(idp = 0))
+  p2 <- predict(gscv, test)$var1.pred
+  nnrmse[i] <- RMSE(test$tmpf, p2)
+  
+  # Optimized IDW
+  m <- gstat(formula=tmpf~1, locations=train, nmax=opt$par[1], set=list(idp=opt$par[2]))
+  p3 <- predict(m, test)$var1.pred
+  idwrmse[i] <- RMSE(test$tmpf, p3)
+  
+  # Thin Plate Spline
+  tpsm <- Tps(coordinates(train), train$tmpf)
+  p4 <- predict(tpsm, coordinates(test))[,1]
+  tpsrmse[i] <- RMSE(test$tmpf, p4)
+  
+  # Kriging
+  fve = automap:::autofitVariogram(formula = tmpf~1, input_data = train)
+  kp = krige(tmpf~1, test, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
+  p5 = raster::extract(as(kp, 'RasterLayer'), test)
+  krigrmse[i] <-  RMSE(test$tmpf, p5)
+  
+  # Weighting
+  w <- c(vorrmse[i], nnrmse[i], idwrmse[i], tpsrmse[i], krigrmse[i])
+  weights <- w / sum(w)
+  ensemble <- p1 * weights[1] + p2 * weights[2] + p3 * weights[3] + p4 * weights[4] + p5 * weights[5]
+  ensrmse[i] <-  RMSE(test$tmpf, ensemble)
+  
+  
+}
+
+print("RMSE for each of the five folds")
+ensrmse
+print("Mean RMSE")
+mean(ensrmse)
+print("Improvement over NULL model")
+1 - (mean(ensrmse) / null)
+
+```
+
+The RMSE is 1.45, representing a 31% improvement over the null model
+
+We can quickly see how this compared the RMSEs of the component models.
+```{r}
+# Voronoi
+1 - (mean(vorrmse) / null)
+
+# Nearest Neighbbor
+1 - (mean(nnrmse) / null)
+
+# Optimized IDW
+1 - (mean(idwrmse) / null)
+
+# Thin Plate Spline
+1 - (mean(tpsrmse) / null)
+
+# Kriging
+1 - (mean(krigrmse) / null)
+
+
+```
+
+We notice that the improvements of each model is highly variable depending on the model chosen. Kriging has the highest performance, with a 66% improvement over the null model.
+
+## Conclusion
+The highest performing model is the ordinary kriging interpolation, with a 65% improvement over the null model. The worst performance came from the nearest neighbor interpolation, with only 14% improvement. The Voronoi, Optimized IDW, and Thin Plate Spline were solidly in the middle of the pack with improvement between 23% and 36%. These values give us a great point estimate of each model's performance, however we made no effort to show that the differences in improvement (i.e. RMSE) are statistically significant. Selecting which model to use requires more sensor locations and some basic hypothesis testing. 
+
+<!--chapter:end:06-interpmodels.Rmd-->
+
+
+# Merging Satellite and Point Sensor Data
+
+There's a fundamental challenge in our project to merge AOD data and predictor variables because the data capture techniques are very different. The satellite-based AOD data is measured continuously across the surface of the earth on a 1km by 1km grid system. Meanwhile, sensor data is only captured locally at the sensor location. Therefore, a method to interpolate local sensor data to generate a continuous surface of data is required. 
+
+An 'Optimized' IDW interpolation was used to estimate sensor values across a 1km by 1km grid system. This method takes into account the sensor locations and value for each variable to estimate values in grid cells without a sensor based on a linear interpolation of nearby sensor values. The specific number of sensors to take into account and the distance decay power function were optimized by medinimizing the RMSE (Error). This method was adapted from an [RSpatial Tutorial](https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data) on IDW interpolation with pollution and weather data.
+
+To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named `sensor2raster`. The next sections demonstrate how to apply this package to sensor data.
+
+```{r message=FALSE, warning=FALSE}
+# devtools::install_local('../data/sensor2raster_0.04.tar.gz')
+library(sensor2raster, quietly = TRUE)
+```
+
+```{r include=FALSE}
+weather.data = readr::read_csv('./data/sensor2raster/2014_ASOS_Data.csv.gz')
+#AOD.grid = sensor2raster::read_raster('https://uchicago.box.com/shared/static/itoegqbp37lrmkdzqobvyx7dw2h61u0m.zip')
+AOD.grid = raster::raster('./data/AOD_21Counties_MasterGrid/AOD_21Counties_MasterGrid.grd')
+```
+
+## Generate Rasters
+Creating raster surfaces is easy using the `sensor2raster` function. This function takes the raw output from the `riem` or `aqsr` packages and identifies the sensor locations and data values to interpolate. The underlying IDW interpolation is performed by the `gstat` package. 
+
+The code chunk below demonstrates how to take ASOS weather data and convert it to a Raster format. The ``weather data`` variable is a data frame containing temperature data measured at airports in the Greater Chicago and Milwaukee Areas in 2018. We also pass the ``AOD.grid``, a RasterLayer object representing the grid cells where we want to predict temperature. These grid cells correspond exactly to the pixels of satellite AOD data.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, results = 'hide'}
+temp.rasters = sensor2raster(sensor.data = weather.data, # Input the raw data.frame from riem
+                        data.type = 'ASOS', # Specify data type ('ASOS' or 'EPA')
+                        reference.grid = AOD.grid, # Grid to interpolate over
+                        subvariable = 'tmpf') # Column name of variable to interpolate
+
+```
+
+
+```{r echo=FALSE, fig.height=12, fig.width=12, message=FALSE, warning=FALSE}
+library(dplyr)
+library(sf)
+library(sp)
+library(rasterVis)
+
+Lake.MI = st_read('./data/Lake_Michigan_Shoreline.geojson', quiet = T) %>% st_transform(4326) %>% as('Spatial')
+
+counties = st_read('./data/LargeAreaCounties/LargeAreaCounties.shp', quiet = T) %>% st_transform(4326)
+
+data = temp.rasters[[1]]
+
+names(data) = month.name
+levelplot(data %>% mask(counties),
+          par.settings = BuRdTheme,
+          at = seq(minValue(data) %>% min() - .1, maxValue(data) %>% max() + 2, by = 2),
+          main = 'Evolution of Monthly Average Temperature (ºF) in 2018 across the Chicago/Milwaukee Metro Areas' 
+          ) + layer(sp.polygons(Lake.MI, fill = 'cadetblue2', col = 'transparent')) + layer(sp.lines(as(counties, 'Spatial'), alpha = .5))
+```
+
+
+## Export to CSV
+While Raster data is helpful for spatial data analysis and geovisualizations, it is sometimes helpful to store the interpolation in a non-spatial format. The ```grid2csv``` function allows you to convert Raster data to CSV either cell-by-cell, or by aggregating to a vector geometry. 
+
+The exported data.frame is halfway between Long and Wide format due to the 3-dimensional nature of our data. The table below describes how these CSVs are structured in the cell-by-cell case.
+
+
+| Var_Name            | Raster.Cell | M1.2018 | M2.2018 | ... | M12.2018 |
+|---------------------|-------------|---------|---------|-----|----------|
+| Monthly_Temperature | 1           | 23      | 25      | ... | 20       |
+| Monthly_Temperature | 2           | 23      | 25      | ... | 20       |
+| ...                 | ...         | ...     | ...     | ... | ...      |
+| Monthly_Temperature | 100         | 10      | 15      | ... | 11       |
+
+The length of the table equals the number of cells in the RasterStack. Each cell is given a unique identifier stored in the `Raster.Cell` column. The `Var_Name` colums represent the variable of interest. When there are multiple variables, they are row binded together, giving a long table format. The rest of the columns represent the names given to the layers within each RasterStack. Im this case, each column represents a month and year combination. Additional time periods are appended column-wise to the table.
+
+The following table describes the outputted data frame from the monthly temperature Rasters generated earlier.
+
+```{r message=FALSE}
+temp.export = grid2csv(rasters = list(temp.rasters[[1]]), 
+         var.names = 'Monthly_Temperature')
+```
+```{r echo=FALSE}
+knitr::kable(head(temp.export))
+```
+
+The format of the table changes slightly when subsetting using a vecor object. A new column `sj_join` appears in the table, representing a unique allowing the table to be joined back to the origin `sf` object if needed. When subsetting by point features, the `Raster_Cell` column describes the cell that overlapped with each point feature. When subsettting by line or polygon features, the `Raster_Cell` column describes the cell that overlapped with the centroid of each geometry. 
+
+```{r message=FALSE, warning=FALSE}
+temp.export.sf = grid2csv(rasters = list(temp.rasters[[1]]), 
+         var.names = 'Monthly_Temperature', 
+         sf.obj = counties)
+
+```
+```{r echo=FALSE}
+knitr::kable(head(temp.export.sf)[,1:5])
+```
+
+The code chunk below demonstrates how to exploit the `sf_join` field to join the table data back to the spatial `sf` object. 
+
+```{r message=FALSE, warning=FALSE}
+# counties.join = counties %>% tibble::rowid_to_column() %>% dplyr::rename(sf_join = rowid)
+# 
+# counties.join = grid2csv(rasters = list(temp.rasters[[1]]), var.names = 'Monthly_Temperature', sf.obj = counties.join) %>% 
+#         left_join(counties.join) %>% 
+#         st_as_sf()
+```
+```{r echo=FALSE}
+# plot(counties.join['M1.2018'], main = "Average Temperature in January 2018 by County")
+```
+
+
+<!--chapter:end:09-sensor2raster.Rmd-->
+
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Appendix A: NDVI {-}
+
+## Overview
+
+In this tutorial, we will learn to deal with raster data. For illustrative purposes, we will take a look at the NDVI data (Normalized Difference Vegetation Index) of 21 large counties in the Midwest. Our objectives are to:
+
+* Visualize raster data using the "tmap" package
+* Learn the basic techniques of cropping and masking
+* Check and analyze summary statistics of raster data
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include the shapefile of 21 large counties in the Midwest and the quarterly data of NDVI. The files can be found here. **Insert Link!**
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `raster`: to manipulate and analyze raster data
+* `sf`: to conduct basic spatial data manipulation
+* `tamp`: to create spatial data visualization
+
+```{r A_package.setup, message = FALSE}
+library(raster)
+library(sf)
+library(tmap)
+```
+
+Since we are mainly analyzing raster data in this tutorial, we use the "raster" package heavily, which "implements basic and high-level functions for raster data and for vector data operations such as intersections." The detailed documentation can be found [here](https://cran.r-project.org/web/packages/raster/raster.pdf).
+
+### Load Data
+
+The data we are analyzing is the quarterly average of the Normalized Difference Vegetation Index for 21 large counties in the Midwest, from 2014 to 2018. It is stacked chronologically. Note that the original dataset is quite large (over 50 gigabytes), so we processed the data in advance. We can load the pre-processed data simply by running the command below. 
+
+```{r A_loading ndvi data}
+ndvi.quarterly <- stack("./data/NDVILargeAreaQuarterlyStack.tif")
+```
+
+(Remark: You may encounter trouble loading the data if you do not have the "rgdal" package installed!)
+
+It is a good idea to take a glance at our dataset before we proceed any further.
+
+```{r A_examining ndvi data}
+ndvi.quarterly
+```
+
+Also remember to load the shapfile of the 21 large counties. We will use it shortly when we start plotting. 
+
+```{r A_loading shapefile ndvi}
+counties <- st_read("./data/LargeAreaCounties")
+```
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+
+## Data manipulation and Plotting
+
+We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.
+
+```{r A_extracting ndvi data}
+this.qtr <- raster::subset(ndvi.quarterly, 19, drop = FALSE)
+```
+
+Thanks to the data processing done beforehand, we don't have much data manipulation to do. It is time for us to start making plots! We begin with the most basic raster map.
+
+```{r message=FALSE, eval = F}
+tm_shape(this.qtr) +
+  tm_raster() +
+  tm_layout(legend.outside = TRUE)
+```
+
+This plot gives an overview of the NDVI of the 21 large counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.
+
+Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers. 
+
+```{r fig.align='center', message = FALSE, eval = F}
+tm_shape(this.qtr) +
+  tm_raster(title = "NDVI") +
+  tm_shape(counties) +
+  tm_borders() +
+  tm_layout(legend.outside = TRUE, main.title = "NDVI - The 3rd Quarter of 2018")
+```
+
+With this nicer plot, it is possible to compare the NDVI of different counties. Those who are familiar with the geography of the Midwest would immediately recognize that Cook county seems to have a lower NDVI than other counties. It is not at all surprising since the City of Chicago is located in Cook County, and metropolitan areas tend to have less vegetation than rural areas.
+
+We can also make the plot interactive so that the readers can explore the plot more thoroughly.
+
+```{r A_interavtive ndvi, message = FALSE, warning = FALSE, eval = F}
+tmap_mode("view")
+
+tm_shape(this.qtr) +
+  tm_raster(title = "NDVI") +
+  tm_shape(counties) +
+  tm_borders() +
+  tm_layout(legend.outside = TRUE, main.title = "NDVI - the 3rd Quarter of 2018")
+```
+
+We can turn off the interactive mode by running the following code. 
+
+```{r A_Plot Mode ndvi, message = FALSE, warning = FALSE, eval = F}
+tmap_mode("plot")
+```
+
+Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset `this.qtr`. Notice that we use `raster::summary` here to specifiy that we want R to use the `summary` function from the "raster" package.
+
+```{r A_summary ndvi, message = FALSE, warning = FALSE}
+raster::summary(this.qtr)
+```
+
+## More Plotting
+
+Now that we have learned how to make a raster map, let's make more. In this section, we will place our focus on the NDVI of Cook County, IL - the home county of Chicago. First, we will extract the shape of Cook County.
+
+```{r A_Extract Cook County Shape ndvi}
+cook.county <- counties[counties$COUNTYNAME == "Cook", ]
+```
+
+Before we do anything else, we can plot the shape of Cook County that we just extracted to make sure we subsetted the dataset correctly. 
+
+```{r A_Plot Cook County Shape ndvi, fig.align='center'}
+plot(cook.county$geometry)
+```
+
+This is a very crude plot since it only shows the border of Cook County. Rest assured that our final product is much more visually pleasing than this!
+
+The following two lines of code crop and mask raster data to Cook County. Cropping and then masking accelerates the actions for large raster data. It probably does not matter in our case, since we are only looking at Cook County, and the volume of our data is rather small.
+
+```{r A_Crop and Mask ndvi}
+cook.ndvi <- raster::crop(this.qtr, cook.county)
+cook.ndvi <- raster::mask(cook.ndvi, cook.county)
+```
+
+Now we can plot a raster map for Cook County. The commands we use here are very similar to the ones we used before. 
+
+```{r A_Plot Cook County ndvi, fig.align='center', eval = F}
+tm_shape(cook.ndvi) +
+  tm_raster(title = "NDVI", palette = "Greens") +
+  tm_shape(cook.county) +
+  tm_borders() +
+  tm_layout(legend.outside = TRUE, main.title = "NDVI for Cook County:\nThe 3rd Quarter of 2018")
+```
+
+With this raster map, we are able to discern patterns of NDVI with Cook County. The middle-east part of Cook County, where the City of Chicago is located, is shown in a lighter green than other parts of the county, signaling a lower NDVI. The northern and southern parts of the county, which are mostly rural areas, are shown to have a higher NDVI, much as we would expect. 
+
+Before we conclude this tutorial, let's again take a look at the summary statistics.
+
+```{r}
+raster::summary(cook.ndvi)
+base::mean(na.omit(getValues(cook.ndvi))) 
+base::mean(na.omit(getValues(this.qtr))) 
+```
+
+The mean NDVI for Cook County is 0.52, while the mean for all 21 counties is 0.67. This is reasonable because NDVI tends to be lower in large cities, and Cook County happens to be at the center of the Chicago metropolitan area. Moreover, this is consistent with what we observe from the plots - Cook County is shown in a lighter green than other counties, which we have pointed out earlier in the tutorial. 
+
+This marks the end of our tutorial. Hopefully, now you feel comfortable dealing with raster data. Of course, there are many more techniques to be learned in order to conduct more sophisticated spatial analysis with raster data. There are abundant online resources that introduce more complicated tools to handle raster data, which you may want to explore on your own. 
+
+<!--chapter:end:A-NDVI.Rmd-->
+
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Appendix B: Point Emission Data {-}
+
+## Overview
+
+In this tutorial, we will demonstrate how to represent PM2.5 point emission data on maps. As an example, we will look at the PM2.5 data for four states - Illinois, Indiana, Wisconsin, and Michigan. The goal of this exercise is to create a point data map that provides a clear visualization of the point source of PM2.5 emission. To summarize, our objectives are to:
+
+* Gain famililarity with the pollution data from 2014 National Emissions Inventory
+* Perform simple data manipulation on the PM 2.5 data
+* Visualize PM 2.5 pollution using the "tmap" package
+
+## Environment Setup
+
+### Input/Output
+The files that will be used in this tutorial are the pollution data for Illinois, Indiana, Wisconsin, and Michigan as well as he shapefile of the four states. The files can be found here. **Insert Link!**
+
+### Load Libraries
+
+We start by loading the necessary packages - `tidyverse`, `sf`, and `tmap`: 
+
+* `tidyverse`: to conduct basic statistical analyses
+* `sf`: to perform simple spatial data manipulation. 
+* `tamp`: to create spatial data visualization
+
+```{r B_package.setup.points, message = FALSE}
+library(tidyverse)
+library(sf)
+library(tmap)
+```
+
+### Load Data
+
+Besides the packages, we also need to load our data, which can be done by running the commented-out code below. We call the data frame `pe1`. 
+
+```{r eval = FALSE, warning = FALSE, message = FALSE}
+pe1 <- read_csv("process_12345.csv")
+```
+
+Note that this file above is unfortunately too large to be uploaded to Github, so we will instead use a pre-processed data set:
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+fourstate.pe <- read_csv("./data/four_state.csv")
+```
+
+We also load the shapefile for the four states:
+
+```{r}
+fourstates <- st_read("./data/FourStates")
+```
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+
+## Data Manipulation
+
+Once we have our data and the packages ready, we will start the data manipulation process. Since we will only look at the data from Illinois, Indiana, Wisconsin, and Michigan, we can use the `filter` function to pick out only the four states that we are interested in, and we name the new data frame `fourstate.pe1`. This is accomplished by the commented-out code below.
+
+This dataset comes from 2014 National Emissions Inventory, which is "a comprehensive and detailed estimate of air emissions of criteria pollutants, criteria precursors, and hazardous air pollutants from air emissions sources." You can read more about this dataset on this [website](https://www.epa.gov/air-emissions-inventories/national-emissions-inventory-nei).
+
+```{r B_filtering_states, eval = FALSE}
+states.abbr <- c("IL", "IN", "WI", "MI")
+
+fourstate.pe <- pe1 %>%
+        filter(state %in% states.abbr)
+```
+
+(Remark: The lines of code above does not need to be run if the data file loaded is `four_state.csv`. They were written to clean the data from `process_12345.csv`.)
+
+Next, we turn our focus to the pollutant data. To familiarize ourselves with the variable `pollutant desc`, we use the `unique` function to examine all the unique values of this variable. 
+
+```{r B_inspecting PM 2.5}
+#Find pollutant names for pm2.5
+unique(fourstate.pe$`pollutant desc`)
+```
+
+We see that there are quite a number of different pollutants, but we are primarily interested in the PM2.5 data. Therefore, we use the `filter` function again to subset the data, retaining only those observations with the pollutant being "PM2.5 Filterable" or "PM2.5 Primary (Filt + Cond)".
+
+```{r C_filtering PM 2.5}
+pm25 <- c("PM2.5 Filterable",  "PM2.5 Primary (Filt + Cond)")
+
+#Filter for pm2.5
+fourstate.pm <- fourstate.pe %>%
+        filter(`pollutant desc` %in% pm25)
+```
+
+Now we will take care of the duplicates and missing values, both of which should be removed from our data. The following line of code eliminates any duplicated values in `eis facility id`.
+
+```{r C_eliminating duplicates}
+#remove duplicates
+fourstate.pm.final <- fourstate.pm[!duplicated(fourstate.pm$`eis facility id`),] 
+```
+
+The following line of code eliminates any missing values in `site latitude`. We call this cleaned data frame `fourstate.pm.final`.
+
+```{r C_eliminating missing values}
+#remove na coords 
+fourstate.pm.final <- fourstate.pm.final[!is.na(fourstate.pm.final$`site latitude`),] 
+```
+
+The last step in the data manipulation process is to turn our data points into a spatial object, which we can accomplish by using the `st_as_sf` function. Notice that we use the coordinate reference system 4326, which is the geodetic coordinate system for world. More information about coordinate reference systems can be found on this [website](https://epsg.io).
+
+```{r C_making spatial object}
+#Turn into sf object
+fourstate.pm.spatial <- st_as_sf(fourstate.pm.final, coords = c("site longitude", "site latitude"), crs = 4326)
+```
+
+## Making Point Data Maps
+
+```{r echo=FALSE, message = FALSE, warning = FALSE}
+tmap_mode("view")
+```
+
+Finally, we are ready to make some maps! The command for generating a point data map is actually quite easy. We just need to specify the shapefile that stores the shape of the states and the point data which we have turned into a spatial object earlier. We adjust the size of the dots to 0.01 so that the pattern of those points is discernible. 
+
+```{r C_making a map - tm_dots}
+tm_shape(fourstates) +
+        tm_borders() +
+        tm_shape(fourstate.pm.spatial) +
+        tm_dots(size = 0.01) 
+```
+
+The map above is neat, but it only conveys limited information. It is impossible, for example, to tell from the map how much PM2.5 emission each of these dots produces. 
+
+To improve the simple map above, we use the `tem_bubbles` function instead of `tm_dots`. Within `tm_bubbles`, we can choose how to classify the PM2.5 data by specifying the `style`. Some common choices of `style` include "fisher", "jenks", "quantile", etc. Customization of the color palette is also possible, and there are plenty of online tutorials on this topic. 
+
+```{r C_making a map - tm_bubbles}
+tm_shape(fourstates) +
+        tm_borders() +
+        tm_shape(fourstate.pm.spatial) +
+        tm_bubbles(col = "total emissions", size = 0.01,
+                   style = "fisher", palette = "Reds") 
+```
+
+As we can see, the map above is not only more aesthetically pleasing, but it also communicates more information regarding the quantity of PM2.5 that is produced by each site. Sites that generate more PM2.5 are shown in a darker red. With this map, we can identify those sites of heavy PM2.5 emission with great ease by zooming in.
+
+This concludes our tutorial. Following the simple steps above would allow you to create some simple point data maps, which are often a neat and easily interpretable visualization of the spatial data that we seek to analyze. 
+
+<!--chapter:end:B-Point_Emission_Data.Rmd-->
+
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Appendix C: Elevation Data {-}
+
+## Overview
+
+The goal of this tutorial is to introduce the packages and techniques that are commonly utilized to manipulate raster data and create grid cells. We will use the elevation data of several larges counties in the Midwest as an example, and special emphasis will be placed on introducing the functionalities of the "velox" package. In short, our objectives are to:
+
+* Learn the features of the "velox" package
+* Inspect the elevation data of several large counties in the Midwest
+* Output a new shapefile that contains the elevation data for each grid
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include a shapefile of several large counties in the Midwest, a grid data file, and a raster file that contains the elevation data which is the focus of this tutorial. The files can be found here. **Insert Link!**
+
+Our output is a new shapefile in which we write the the elevation data for each grid.
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `sf`: to conduct basic spatial data manipulation
+* `tidyverse`: to perform simple statistical analyses
+* `raster`: to manipulate and analyze raster data
+* `gstat`: to conduct geostatistical modeling and simulation
+* `tamp`: to create spatial data visualization
+* `velox`: to manipulate raster data in time efficient manner
+
+The only package that is worth special mention the "velox," which has excellent performance in fast raster data manipulation. Unfortunately, this package is no longer available. For the lack of substitutes, however, we will still utilize the "velox" package in this tutorial. 
+
+To install "velox" from archive, we can run the following code.
+
+```{r C_Install velox, eval = FALSE}
+library(devtools)
+devtools::install_github("https://github.com/hunzikp/velox")
+```
+
+(Note, you may have to install an installer, such as Xcode, in order to compile the package locally. Some helpful information can be found [here](https://support.rstudio.com/hc/en-us/articles/200486508-Building-Testing-and-Distributing-Packages).)
+
+```{r C_setup, message = F}
+library(sf)
+library(tidyverse)
+library(raster)
+library(gstat)
+library(tmap)
+library(velox)
+```
+
+### Load Data
+
+Loading data is the next step. We load the "grid" data (in kilometers), which is named `km.grid`, the shapefile of large counties, which is named `lac`, and also the elevation data, which is named `lac.elevation`.
+
+```{r C_loading data, warning = F}
+km.grid <- st_read("./data/Km_Grid")
+lac <- st_read("./data/LargeAreaCounties")
+lac.elevation <- raster("./data/lac.elevation.grd")
+```
+
+The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+
+## Inspecting Data
+
+Before we proceed any further, let's check the resolution of our elevation data first. The resolution is shown in degrees because that is the unit of CRS.
+
+It is worth pointing out that the resolution of the original raster data file is finer than what is shown below. Unfortunately, because Github only supports data files that are less than 100 MB, we downsampled the raster data to decrease its size. In other words, we decreased the resolution of the raster data by applying the `aggregate` function in the "raster" package. The good news is that the current resolution (after the downsampling) is sufficient for our purposes. 
+
+```{r C_Resolution}
+raster::res(lac.elevation)
+```
+
+We can now plot a raster map, as shown below.
+
+```{r C_Elevation raster map, warning = F, message = F, fig.align='center', eval = T}
+tm_shape(lac.elevation) +
+  tm_raster(alpha = .5) +
+  tm_shape(lac) +
+  tm_borders() +
+  tm_layout(legend.outside = TRUE, 
+            main.title = "Elevation of Large Counties in Midwest", 
+            main.title.size = 1.2)
+```
+
+## Data Manipulation
+
+Raster data manipulation is where the "velox" packages really shines as it contains a large number of functions that you will find useful in handling raster data. For example, `aggregate` allows users to aggregate a VeloxRaster object to a lower resolution. Another function, `crop`, as its name suggests, lets you crop a VeloxRaster function. If you want to rasterize a set of polygons, then you can use `rasterize`. There are many more functions that are of interest in raster data manipulation, but it is impossible to list all of them here. Detailed documentation about this package can be found [here](https://rdrr.io/cran/velox/api/), and you should feel free to explore it at your own pace. In our tutorial, we will mainly be using `velox` and `extract`.
+
+First, we call the `velox` function to convert `lac.elevation` into a VeloxRaster object. Then we extract the mean value of each grid (km $\times$ km), and we name it `km.elecation.vx`. Note that "velox" is indeed good at **fast** raster data manipulation - running the two lines of code takes very little time.
+
+```{r C_Velox, eval = T}
+elevation.vx <- velox(lac.elevation)
+km.elevation.vx <- elevation.vx$extract(km.grid, fun = mean)
+```
+
+```{r Data structure, eval = T}
+head(km.elevation.vx)
+```
+
+Let's pause for a second and examine the object `km.elevation.vx`. As we would expect, it is just a list of the averages of each grid cell. 
+
+Next, we join this elevation data with `km.grid`, which we loaded earlier but haven't touched at all. 
+
+```{r C_Join, eval = T}
+km.grid$Elevation <- as.numeric(km.elevation.vx) 
+```
+
+## Plotting Grid Map
+
+With the data ready, we can now plot a graph. 
+
+```{r C_plotting, fig.align='center', eval = T}
+tm_shape(km.grid) +
+  tm_fill("Elevation") +
+  tm_layout(legend.outside = TRUE, main.title = "Elevation of Large Counties in Midwest", main.title.size = 1.2)
+```
+
+We now have a nice grid map - we have successfully accomplished the goal of this tutorial. To save the results of all this work, we can use `st_write` to output a new shapefile.
+
+```{r eval = F}
+st_write(km.grid, "Elevation_Grid.shp")
+```
+
+This is the end of the tutorial. The example of the elevation data is not extraordinarily exciting on its own. It is only used to demonstrate the techniques to create grid cells from raster data. The "velox" introduced in this tutorial is sadly no longer available. However, we still recommend trying out this package as its ability to perform fast raster processing is unmatched. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--chapter:end:C-Elevation_Data.Rmd-->
+
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+# Appendix D: Land Cover Data {-}
+
+## Overview
+
+In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. To be clear, our objective are to:
+
+* Conduct data manipulation using "for loops"
+* Calculate percentages of low, mid, and high intensity development for each grid
+* Write new variables into the existing grid data file
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include a raster dataset of land cover that is stored in `rds.` format, the shapefile of several large counties in the Midwwest, and a grid data file. The files can be found here. **Insert Link!**
+
+Our output is a `csv` file that records the percentages of low, mid, and high intensity development for each grid. We will also insert that information into the grid data file. 
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `tidyverse`: to perform simple statistical analyses
+* `sf`: to conduct basic spatial data manipulation
+* `velox`: to manipulate raster data in time efficient manner
+* `raster`: to manipulate and analyze raster data
+
+It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
+
+```{r D.packages, message = F, warning = F}
+library(tidyverse)
+library(sf)
+library(velox)
+library(raster)
+```
+
+### Load Data
+
+Next, we load relevant data - `lc` is the land cover data in the raster form, `lac` is the shapefile of several large counties in the Midwest, and `km.grid` is the grid data that defines the grid cells. 
+
+```{r D.data}
+lc <- readRDS(file = "./data/lc.tif.rds")
+lac <- st_read("./data/LargeAreaCounties")
+km.grid <- st_read("./data/Km_Grid")
+```
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+
+## Data Manipulation
+
+With the data at hand, it is natural for us to begin the data cleaning process. In this tutorial, unfortunately, the data manipulation is a little messy. We will use "for loops" quite extensively in order to produce our final product. Before we get into the more complicated parts, however, let's first convert `lc` into a VeloxRaster object. 
+
+```{r D.VeloxRaster object}
+lc.vx <- velox(lc)
+```
+
+Now that `lc.vx` is a VeloxRaster object as we desired, we can extract values in each grid cell, and we call the new dataset `km.lc`
+
+```{r D.extract}
+km.lc <- lc.vx$extract(km.grid)
+```
+
+We would like to get rid of all the missing values, which can be done using the `map` function. The `map` function applies a function - in this case, the `na.omit` function - to each element of a vector. Note that `map` is a higher-order function which exist in many programming languages, and it is such an important one that it deserves an entire tutorial by itself. What we do here is the most straightforward application of this function.
+
+```{r D.rid.missing.values}
+km.lc <- map(km.lc, na.omit)
+```
+
+Next, to facilitate better data manipulation, we convert `km.lc` first into a data table and then into a dataframe. Data tables are essentially dataframes with extra features. In general, it is faster to handle data tables than dataframes if we have large datasets, and the syntax for data tables is also cleaner. For our purposes, however, it is not critical to understand the technical details since we will convert data tables to dataframes and then only deal with dataframes. 
+
+```{r D.data.table.frame}
+km.freq <- map(km.lc, table)
+
+for(i in 1:length(km.freq)) {
+  km.freq[[i]] <- as.data.frame(km.freq[[i]])
+}
+```
+
+In converting the data table into dataframe, we used "for loop." Now, we will again use "for loop" to unfactor the classification labels. In other words, we will convert each column of `km.freq` first into characters and then into numbers. We then reassign the numbers back to their original positions in the dataframe `km.freq`. By looping through the entire dataframe, we thus successfully "unfactor" the labels. 
+
+```{r D.unfactor}
+for(i in 1:length(km.freq)) {
+  km.freq[[i]][,1] <- as.numeric(as.character((km.freq[[i]][,1])))
+  km.freq[[i]][,2] <- as.numeric(as.character((km.freq[[i]][,2])))
+}
+```
+
+We then create a new data matrix called `developed`. In this matrix, each grid cell is given a row and is assigned a number for the percentages of low/mid/high intensity development. The columns are named "low," "mid," and "high." This is achieved by creating a vector containing all three strings and then assigning it to the "colnames" of `developed`. Eventually, we will write this matrix into a csv file and output it. 
+
+```{r D.new.matrix}
+developed <- matrix(nrow = length(km.freq), ncol = 3)
+colnames(developed) <- c("low", "mid", "high")
+```
+
+Now we enter the most complicated part of the data manipulation - we want to fill our data matrix. The logic here might be a little complex, and it might be particularly confusing to those who have little experience with programming. For this reason, we will describe what is being done in detail. 
+
+First, we will use "for loop" again to loop over the entire dataframe, and in each loop, we will go through three "if" statements. First, we check if any values in the first column are equal to `582`, which is the code for low intensity development. If yes, we use the `which` function to return the position of this value and store it in a variable called `low`. Using `low`, we are able to locate the values in the dataframe. We then extract the value and assign it to the variable `numlow`. If no values are found to be equal to `582`, we do nothing and assign the value `0` to `numlow`. 
+
+The next two "if" statements accomplish the same tasks, and we just change the variable names to indicate whether we are looking for low, mid, or high intensity development. Note that `583` is the code for mid intensity development, and `584` is the code for high intensity development.
+
+After going through the three "if" statements, the last step is to calculate the percentages of low, mid, and high intensity development. This is just simple algebra. The only thing worth mentioning is that we are dividing by the approximate area of the grid, which is 1000. This is not exact, but this level of precision is sufficient for our purpose. 
+
+The paragraphs above should give a clear picture of what the code chunk below intends to accomplish. It might still appear puzzling for some of the readers who are not experienced in coding. Please be assured that it is normal. It just takes a little practice to fully understand the technical details that may seem formidable at first glance. 
+
+```{r D.filL.matrix}
+for(i in 1:length(km.freq)) {
+  if(any((km.freq[[i]][,1] == 582))) {
+  low <- which((km.freq[[i]][,1] == 582))
+  numlow <- km.freq[[i]][,2][((low))]
+  } else(
+    numlow <- 0
+  )
+  if(any((km.freq[[i]][,1] == 583))) {
+    mid <- which((km.freq[[i]][,1] == 583))
+    nummid <- km.freq[[i]][,2][((mid))]
+  } else(
+    nummid <- 0
+  )
+  if(any((km.freq[[i]][,1] == 584))) {
+    high <- which((km.freq[[i]][,1] == 584))
+    numhigh <- km.freq[[i]][,2][((high))]
+  } else{
+    numhigh <- 0
+  }
+  
+  developed[i,1] <- numlow / 1000 
+  developed[i,2] <- nummid / 1000
+  developed[i,3] <- numhigh / 1000
+}
+```
+
+## Data Output
+
+After all the data manipulation, it is time to prepare our output. The good news is that R makes it pretty easy to write csv files - the simple `write.csv` function does the job perfectly.
+
+```{r D.output.csv, eval = F}
+write.csv(developed, "developedlc.csv") 
+```
+
+We also want to modify our `km.grid` data a little bit by adding the percentages of low, mid, and high intensity development to our existing data. This is done by the four lines of code below.
+
+```{r modify.km.grid}
+km.grid$DATA <- seq(1:nrow(km.grid))
+km.grid$low <- developed[,1]
+km.grid$mid <- developed[,2]
+km.grid$high <- developed[,3]
+```
+
+To see whether we have added the data successfully, we can just type `km.grid` and inspect the results. 
+
+```{r inspection}
+km.grid
+```
+
+As we see, we have indeed successfully modified `km.grid`, which now stores the percentages of land development of different levels of intensity. 
+
+This tutorial ends here. In this tutorial, we walked through how to extract information from raster data and how to construct dataframes for our own purposes. Working directly with dataframes is sometimes not so straightforward and requires a little bit of programming skills beyond the basics of R. However, how to build a dataframe from scratch and output it as a csv file is an important skill to have, and it will be rewarding in the long term. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--chapter:end:D-Land_Cover.Rmd-->
+
+# Appendix E: Temperature {-}
+
+## Load the Packages
+
+We can use the "Packages" set-up on the right hand side to install the packages, or we could just run the code `install.packages('name', dependencies=TRUE, repos='http://cran.rstudio.com/')` from the Console to install new packages.
+
+Spatial analysis in R requires multiple libraries. Package installation is done with the following syntax: `install.packages(“sp”)`. Some of these take additional time for installation, depending on your system. The following list is comprehensive for this tutorial, as well as much spatial analysis.
+
+```{r packages,include=FALSE}
+library(sp) #spatial data wrangling & analysis
+library(rgdal) #spatial data wrangling & analysis
+library(rgeos) #spatial data wrangling & analysis
+library(leaflet) #modern data visualizations
+library(raster) #spatial data wrangling & analysis
+library(gstat) #spatial data wrangling & analysis
+library(tmap) #modern data visualizations
+library(tidyverse) # data wrangling
+```
+
+## Import Data
+
+We can read the monthly NOAA data using the following lines:
+
+```{r data}
+noaa.monthly <- read.csv("NOAA_master_monthly_final.csv")
+glimpse(noaa.monthly)
+```
+
+## Data Wrangling
+
+We use the following code to select minimum monthly temperatures from the data:
+
+```{r min}
+temp.monthly.min <- noaa.monthly %>%
+  dplyr::select(contains("min_mo"))
+```
+
+Then, for example, we isolate the data for Summer 2015.
+
+```{r summer}
+temp.monthly.min <- noaa.monthly %>%
+  dplyr::select(contains("min_mo"))
+```
+
+We get the average minumum low temperature over the summer.
+
+```{r meanlow}
+sum.mintemp.2015 <- temp.monthly.min %>%
+  dplyr:: select(`X2015_6_temp_min_mo`:`X2015_8_temp_min_mo`)
+
+sum.mintemp.2015 <- rowSums(sum.mintemp.2015, na.rm = TRUE)
+```
+
+## Merge Temperature data to Sensors
+
+We use the following code to select sensor coordinates and other information. 
+
+```{r sensor}
+sensor.info <- noaa.monthly %>%
+  dplyr::select(STATION:elevation)
+
+#Combine the sensor info with the sensor readings
+sensor.temp.min <- cbind(sensor.info, sum.mintemp.2015)
+tail(sensor.temp.min)
+
+#Remove the 0s because 0 from the previous line, the NAs are now 0s
+sensor.temp.min[sensor.temp.min==0] <- NA
+complete.temp.min <- na.omit(sensor.temp.min)
+
+glimpse(complete.temp.min)
+```
+
+## Ploting the Results
+
+Now we set the longtitude and latitude and the projection.
+
+```{r lon/lat}
+#Set lat/lon
+coordinates(complete.temp.min) <- complete.temp.min[,c("long", "lat")]
+#Set projection to WSG84
+proj4string(complete.temp.min) <- CRS("+init=epsg:4326")
+```
+
+Then we import the map of Chicago Community Areas.
+
+```{r}
+chi.map <- readOGR("Chicago")
+
+chi.map <- spTransform(chi.map, CRS("+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84
+                                    +towgs84=0,0,0"))
+```
+
+## Creating a Variogram
+
+A variogram would be used to show the variance between different sensors. The variogram is defined as the variance of the difference between field values at two locations ({\displaystyle \mathbf {s} _{1}}{\mathbf  {s}}_{1} and {\displaystyle \mathbf {s} _{2}}{\displaystyle \mathbf {s} _{2}}, note change of notation from {\displaystyle M}M to {\displaystyle \mathbf {s} }\mathbf {s}  and {\displaystyle f}f to {\displaystyle Z}Z) across realizations of the field.
+
+```{r}
+sum.mintmp.vgm <- variogram(complete.temp.min$sum.mintemp.2015 ~ 1, complete.temp.min)
+plot(sum.mintmp.vgm)
+```
+
+```{r}
+sum.fit <- fit.variogram(sum.mintmp.vgm, model=vgm("Sph"))
+plot(sum.mintmp.vgm, sum.fit)
+```
+
+## Visualization
+
+We firstly generate a prediction surface grid. Then we fit the grid with the map of Chicago.
+
+```{r}
+pt2grid <- function(ptframe,n) {
+  bb <- bbox(ptframe)  
+  ptcrs <- proj4string(ptframe)  
+  xrange <- abs(bb[1,1] - bb[1,2])  
+  yrange <- abs(bb[2,1] - bb[2,2])  
+  cs <- c(xrange/n,yrange/n)  
+  cc <- bb[,1] + (cs/2)  
+  dc <- c(n,n)  
+  x1 <- GridTopology(cellcentre.offset=cc,cellsize=cs,cells.dim=dc)  
+  x2 <- SpatialGrid(grid=x1,proj4string=CRS(ptcrs))
+  return(x2)
+}
+
+chi.grid <- pt2grid((chi.map),100)
+```
+
+In statistics, originally in geostatistics, kriging or Gaussian process regression is a method of interpolation for which the interpolated values are modeled by a Gaussian process governed by prior covariances. In this case, kriging gives the best linear unbiased prediction of the intermediate values.
+
+```{r}
+sum.kriged <- krige(complete.temp.min$sum.mintemp.2015 ~ 1, complete.temp.min, chi.grid, model = sum.fit)
+plot(sum.kriged)
+```
+
+Then we finish the visualization by ploting the average low temperature for Chicago.
+```{r}
+chi.sum.kriged <- sum.kriged[chi.map,]
+plot(chi.sum.kriged)
+title(main = "Average Low Temperature (F) Summer 2015", outer = FALSE)
+```
+
+<!--chapter:end:E-Temperature.Rmd-->
+
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Appendix F: Roads Data {-}
+
+## Overview
+
+Transportation system is a significant source of air pollution, and roads are without doubt the most important component of transportation system. The ability to manipulate roads data is therefore of critical importance. In this tutorial, we will take a look at the major roads in several large Midwest counties, and we will introduce other techniques, such as how to handle data with physical units, along the way. Our objectives are to:
+
+* perform spatial data manipulation using common functions such as `st_intersection` and `st_join`
+* learn to work with data of type "units"
+* summarize data by groups and output results
+
+## Environment Setup
+
+### Input/Output
+
+Our input includes the shapefile of several large counties in the Midwest, a grid data file, and the shapefile of the major roads in Illinois, Indiana, Wisconsin, and Michigan. The files can be found here. **Insert Link!**
+
+Our output is a shapefile that records the lengths of primary raods, secondary roads, and motorways in each 1 km \times 1 km grid. 
+
+### Load Libraries
+
+We start by loading the following packages:
+
+* `raster`: to manipulate and analyze raster data
+* `tidyverse`: to perform simple statistical analyses
+* `sf`: to conduct basic spatial data manipulation
+* `velox`: to manipulate raster data in time efficient manner
+* `units`: to handle numeric values with physical measurement units
+
+It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
+
+```{r F.library, message = F, warning = F}
+library(raster)
+library(tidyverse)
+library(sf)
+library(velox)
+library(units)
+```
+
+### Load Data
+
+With the packages ready, we now load the data needed for this tutorial - `roads` is the shapefile for the major roads in Illinois, Indiana, Wisconsin, and Michigan, `km.grid` is the grid data, and `counties` is the shapefile for 21 large counties in the Midwest. All of the data can be loaded using the `st_read` function.  
+
+```{r F.load.data}
+roads <- st_read("./data/4StateMajorRoads")
+km.grid <- st_read("./data/Km_Grid")
+counties <- st_read("./data/LargeAreaCounties")
+```
+
+## Data Manipulation
+
+### Prelimnary Work
+
+First, we create a new field in `km.grid` called `DATA`. This field is defined as a sequence of positive integers. Basically, we are assigning a unqie ID number of each features in `km.grid`. It might be puzzling at this time what function the `DATA` field serves, but it will make sense later when we perform spatial joins. 
+
+```{r F.DATA.seq}
+km.grid$DATA <- seq(1:length(km.grid$DATA)) 
+```
+
+Our next step is to take the spatial intersection of `roads` and `km.grid`. To accomplish this, we simply call the `st_intersection` function, which does exactly what its name suggests.
+
+```{r F.intersection, warning = F, message = F}
+roads.intersection <- st_intersection(roads, km.grid)
+```
+
+To get the length of the roads, we use the `st_length` function. The geometry of raods is of the type `lingstring`, whose length is easily computed by the `st_length`function. We then store the output (i.e. the lengths of roads) in the `sf` object `roads.intersection` by creating a new field called `length`.
+
+```{r F.length, warning = F, message = F}
+roads.intersection$length <- st_length(roads.intersection)
+```
+
+Now, let's pause for a second and inspect the `DATA` field of `roads.intersection`. Recall that we created the `DATA` field as an identifier of the grid. 
+
+Other than that the values of `DATA` is right-skewed, the summary statistics do not tell us much useful information. However, it is nevertheless a good habit to inspect your data from time to time so that you are aware of what data you are working with. 
+
+```{r F.summary.roads}
+summary(roads.intersection$DATA)
+```
+
+### Primary Roads
+
+Next, we want to take a look at all roads that are in the class "primary" or "primary_link." More technically, we would like to extract all features of `roads.intersection` that has value "primary" or "primary_link" in the field `fclass`. To achieve this, we take advantage of the `which` function, which returns the positions of all features that satisfy the criterion. Then we simply bond `pri.1` and `pri.2` into a new vector, and this new vector `pri.id` has the positions of all the features that we want.
+
+```{r F.primary.selection}
+pri.1 <- which(roads.intersection$fclass == "primary")
+pri.2 <- which(roads.intersection$fclass == "primary_link")
+pri.id <- c(pri.1, pri.2)
+```
+
+To get the roads that are classified as either "primary" or primary_link", we simply use the `pri.id` we defined above to subset `roads.intersection`. It should be noted that there are many ways to extract the features that we want from `roads.intersection`. The method we use here is one of the most straightforward ones, but there are many alternatives, some of which are potentially better than the one shown here. In most cases, deciding which method to use is simply a matter of personal preference. 
+
+```{r F.subset.primary}
+primary.int <- roads.intersection[pri.id,]
+```
+
+It is now a time to do a spatial join, which can be done using the `st_join` function. In plain English, we basically combine the `sf` objects `km.grid` and `primary.int` into a new `sf` object called `primary.merged`.
+
+```{r F.primary.merge, warning = F, message = F}
+primary.merged <- st_join(km.grid, primary.int)
+```
+
+Now, let's take a look at `primary`. This is just an `sf` object with 14 fields and 68769 features.
+
+```{r F.primary.inspect}
+primary.merged
+```
+
+The next step is to aggregate the lengths of the roads. Recall that we created the `DATA` field in `km.grid` at the beginning of this tutorial as a unique identifier of the grid. Now, we group the data by `DATA.x` (notice the name of the field changed after the spatial join), and we summarize the data using the `sum` function. We store the result of the this summation into the field `length`. 
+
+```{r F.primary.summarize, warning = F, message = F}
+primary.roadlengths <- primary.merged %>%
+  group_by(DATA.x) %>%
+  summarize(length = sum(length))
+```
+
+What we have obtained above is the total length of "primary" and "primary_link" roads in each grid. The new `sf` object, grouped by grids, is named `primary.roadlengths`. Let's take a quick look at what information it contains. 
+
+```{r F.primary.result, message = F, warning =F}
+primary.roadlengths
+```
+
+We see that only certain features has numeric values in the field `length`, which makes perfect sense as roads only cross a few grids. It would be quite strange if we see every feature as a large numeric value in the field `length` - that would suggest that the entire land is covered with roads, which is the case in the real world. 
+
+The next thing we want to deal with is the unit. Note that the values in the field `length` is of the type "units" i.e. a numeric value with a physical measurement unit. The original unit of `length` is a little complicated. We will simplify things by just assigning it the unit "meter".  
+
+```{r F.units.1}
+units(primary.roadlengths$length) <- with(ud_units, m)
+```
+
+What we want to do is to replace all missing values in `length` with "0 meter." To achieve that, we first create a variable with value 0 and then assign it the unit "meter." This newly created `x0` is what will replace the missing values. 
+
+```{r F.units.2}
+x0 <- 0
+units(x0) <- with(ud_units, m)
+```
+
+We use the `which` function to return the positions of all missing values, and on those exact position, we replace the value with `x0`. Hence, all missing values now read "0 meter."
+
+```{r F.units.3}
+primary.roadlengths[which(is.na(primary.roadlengths$length)),2] <- x0
+```
+
+As always, it is critical that we inspect our data from time to time. If we print out `primary.roadlengths`, we see that all missing values have indeed by replaced by "0 meter."
+
+```{r F.units.4}
+primary.roadlengths
+```
+
+### Secondary Roads
+
+From this point on, things start to get a little repetitive. We, in this section, repeat lots of code from the last section. The only difference is that we now want to extract the information - basically the lengths of the roads - of all roads that are classified as "secondary" or "secondary_link." For illustrative purposes, we show all the code below, but we shall not comment much on the code as it is almost identical to the code in the last section. 
+
+```{r warning = F, message = F}
+sec.1 <- which(roads.intersection$fclass == "secondary")
+sec.2 <- which(roads.intersection$fclass == "secondary_link")
+sec.id <- c(sec.1, sec.2)
+
+secondary.int <- roads.intersection[sec.id,]
+
+secondary.merged <- st_join(km.grid, secondary.int)
+
+secondary.roadlengths = secondary.merged %>%
+  group_by(DATA.x) %>%
+  summarize(length = sum(length))
+
+secondary.roadlengths[which(is.na(secondary.roadlengths$length)),2] <- x0
+```
+
+We inspect `secondary.roadlengths`, and it looks fine in terms of both data format and data value. 
+
+```{r F.secondary.inspect}
+secondary.roadlengths
+```
+
+### Motorway
+
+The code in this section is exactly the same as in the last two section. We include the code here for the sake of completeness, but you should feel free to skip this section. 
+
+```{r warning = F, message = F}
+mot.1 <- which(roads.intersection$fclass == "motorway")
+mot.2 <- which(roads.intersection$fclass == "motorway_link")
+mot.id <- c(mot.1, mot.2)
+
+motorway.int <- roads.intersection[mot.id,]
+
+motorway.merged <- st_join(km.grid, motorway.int)
+
+motorway.roadlengths = motorway.merged %>%
+  group_by(DATA.x) %>%
+  summarize(length = sum(length))
+
+motorway.roadlengths[which(is.na(motorway.roadlengths$length)),2] <- x0
+```
+
+Before we proceed, we take a galnce at `motorway.roadlengths`.
+
+```{r F.motorway.inspect}
+motorway.roadlengths
+```
+
+## Outputting Data
+
+We now enter the last section of this tutorial, where we would like to save all the work we have done so far. This is not difficult - we just create three fields in `km.grid` (`primary`, `secondary`, and `motorway`), where we store the lengths of the roads.
+
+```{r F.store.length}
+km.grid$primary <- primary.roadlengths$length
+km.grid$secondary <- secondary.roadlengths$length
+km.grid$motorway <- motorway.roadlengths$length
+```
+
+Then, we output a new shapefile with the modified `km.grid` using the `st_write` function. 
+
+```{r F.write, eval = F}
+st_write(km.grid, "Road_Grid.shp")
+```
+
+This concludes our tutorial. In this exercise, we showed how roads data can be handled. Of course, some of the techniques introduced here can be applied in many other instances. The brief introduction on dealing with data of the type "units" should be  particularly helpful if you have not been previously exposed to this data type. You should feel free to explore more on your own and apply what you have learned to your own research. 
+
+
+
+
+
+
+
+
+<!--chapter:end:F-Roads_Data.Rmd-->
+

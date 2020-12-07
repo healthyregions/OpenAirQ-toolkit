@@ -1,0 +1,145 @@
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Appendix C: Elevation Data {-}
+
+## Overview
+
+The goal of this tutorial is to introduce the packages and techniques that are commonly utilized to manipulate raster data and create grid cells. We will use the elevation data of several larges counties in the Midwest as an example, and special emphasis will be placed on introducing the functionalities of the "velox" package. In short, our objectives are to:
+
+* Learn the features of the "velox" package
+* Inspect the elevation data of several large counties in the Midwest
+* Output a new shapefile that contains the elevation data for each grid
+
+## Environment Setup
+
+### Input/Output
+
+Our inputs include a shapefile of several large counties in the Midwest, a grid data file, and a raster file that contains the elevation data which is the focus of this tutorial. The files can be found here. **Insert Link!**
+
+Our output is a new shapefile in which we write the the elevation data for each grid.
+
+### Load Libraries
+
+We will use the following packages in this tutorial:
+
+* `sf`: to conduct basic spatial data manipulation
+* `tidyverse`: to perform simple statistical analyses
+* `raster`: to manipulate and analyze raster data
+* `gstat`: to conduct geostatistical modeling and simulation
+* `tamp`: to create spatial data visualization
+* `velox`: to manipulate raster data in time efficient manner
+
+The only package that is worth special mention the "velox," which has excellent performance in fast raster data manipulation. Unfortunately, this package is no longer available. For the lack of substitutes, however, we will still utilize the "velox" package in this tutorial. 
+
+To install "velox" from archive, we can run the following code.
+
+```{r C_Install velox, eval = FALSE}
+library(devtools)
+devtools::install_github("https://github.com/hunzikp/velox")
+```
+
+(Note, you may have to install an installer, such as Xcode, in order to compile the package locally. Some helpful information can be found [here](https://support.rstudio.com/hc/en-us/articles/200486508-Building-Testing-and-Distributing-Packages).)
+
+```{r C_setup, message = F}
+library(sf)
+library(tidyverse)
+library(raster)
+library(gstat)
+library(tmap)
+library(velox)
+```
+
+### Load Data
+
+Loading data is the next step. We load the "grid" data (in kilometers), which is named `km.grid`, the shapefile of large counties, which is named `lac`, and also the elevation data, which is named `lac.elevation`.
+
+```{r C_loading data, warning = F}
+km.grid <- st_read("./data/Km_Grid")
+lac <- st_read("./data/LargeAreaCounties")
+lac.elevation <- raster("./data/lac.elevation.grd")
+```
+
+The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
+
+For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+
+## Inspecting Data
+
+Before we proceed any further, let's check the resolution of our elevation data first. The resolution is shown in degrees because that is the unit of CRS.
+
+It is worth pointing out that the resolution of the original raster data file is finer than what is shown below. Unfortunately, because Github only supports data files that are less than 100 MB, we downsampled the raster data to decrease its size. In other words, we decreased the resolution of the raster data by applying the `aggregate` function in the "raster" package. The good news is that the current resolution (after the downsampling) is sufficient for our purposes. 
+
+```{r C_Resolution}
+raster::res(lac.elevation)
+```
+
+We can now plot a raster map, as shown below.
+
+```{r C_Elevation raster map, warning = F, message = F, fig.align='center', eval = T}
+tm_shape(lac.elevation) +
+  tm_raster(alpha = .5) +
+  tm_shape(lac) +
+  tm_borders() +
+  tm_layout(legend.outside = TRUE, 
+            main.title = "Elevation of Large Counties in Midwest", 
+            main.title.size = 1.2)
+```
+
+## Data Manipulation
+
+Raster data manipulation is where the "velox" packages really shines as it contains a large number of functions that you will find useful in handling raster data. For example, `aggregate` allows users to aggregate a VeloxRaster object to a lower resolution. Another function, `crop`, as its name suggests, lets you crop a VeloxRaster function. If you want to rasterize a set of polygons, then you can use `rasterize`. There are many more functions that are of interest in raster data manipulation, but it is impossible to list all of them here. Detailed documentation about this package can be found [here](https://rdrr.io/cran/velox/api/), and you should feel free to explore it at your own pace. In our tutorial, we will mainly be using `velox` and `extract`.
+
+First, we call the `velox` function to convert `lac.elevation` into a VeloxRaster object. Then we extract the mean value of each grid (km $\times$ km), and we name it `km.elecation.vx`. Note that "velox" is indeed good at **fast** raster data manipulation - running the two lines of code takes very little time.
+
+```{r C_Velox, eval = T}
+elevation.vx <- velox(lac.elevation)
+km.elevation.vx <- elevation.vx$extract(km.grid, fun = mean)
+```
+
+```{r Data structure, eval = T}
+head(km.elevation.vx)
+```
+
+Let's pause for a second and examine the object `km.elevation.vx`. As we would expect, it is just a list of the averages of each grid cell. 
+
+Next, we join this elevation data with `km.grid`, which we loaded earlier but haven't touched at all. 
+
+```{r C_Join, eval = T}
+km.grid$Elevation <- as.numeric(km.elevation.vx) 
+```
+
+## Plotting Grid Map
+
+With the data ready, we can now plot a graph. 
+
+```{r C_plotting, fig.align='center', eval = T}
+tm_shape(km.grid) +
+  tm_fill("Elevation") +
+  tm_layout(legend.outside = TRUE, main.title = "Elevation of Large Counties in Midwest", main.title.size = 1.2)
+```
+
+We now have a nice grid map - we have successfully accomplished the goal of this tutorial. To save the results of all this work, we can use `st_write` to output a new shapefile.
+
+```{r eval = F}
+st_write(km.grid, "Elevation_Grid.shp")
+```
+
+This is the end of the tutorial. The example of the elevation data is not extraordinarily exciting on its own. It is only used to demonstrate the techniques to create grid cells from raster data. The "velox" introduced in this tutorial is sadly no longer available. However, we still recommend trying out this package as its ability to perform fast raster processing is unmatched. 
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,201 @@
+# Data Prep & Management 
+
+This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.
+
+## EPA Pollution Data
+
+```{r, echo=FALSE, fig.cap="EPA Pollution Monitoring Site (EPA.gov)"}
+knitr::include_graphics("https://archive.epa.gov/pesticides/region4/sesd/pm25/web/jpg/air-monitoring-site.jpg")
+```
+
+EPA data was seamlessly imported into R using the **aqsr** package by [Joshua P. Keller](https://github.com/jpkeller) at Colorado State University. The package takes advanatge of the [EPA AQS DataMart API](https://aqs.epa.gov/aqsweb/documents/data_mart_welcome.html) to load data in R as data.frame objects with only a couple lines of code. It allows users to query for sensor data across multiple air quality variables, geographies, and timeframes. Let's get started by downloading the package.
+
+```{r download.epadata, message = FALSE, warning = FALSE}
+# devtools::install_github("jpkeller/aqsr")
+library(aqsr)
+```
+
+### Getting Started
+
+This section describes the process for querying EPA sensor data using the **aqsr** package. For more information on how each function works, please reference the package documentation. 
+
+#### Obtaining an API Key {-}
+For first time users of the AQS DataMart API, you must first register your email to recieve an API key. (Users who already have a DataMart API key, please skep to the next step). The API key is a required input for all querying functions in the **aqsr** package. Obtaining a key is made simple by calling the ```aqs_signup()``` function and inputting your own email address.
+
+```{r API.signup, eval = FALSE}
+aqs_signup('YourEmailHere@uchicago.edu')
+```
+
+Save your API key from the email confirmation for future reference. In case you don't recieve an email, verify that your email address was typed correctly, and check your spam folder. 
+
+#### Using your API Key in **aqsr**
+Setup your AQI key with the **aqr** package by using the ```create_user()``` function. This way, you won't have to keep typing your email and API key each time you query for data.
+
+```{r eval=FALSE}
+myuser = create_user(email = 'YourEmailHere@uchicago.edu', key = 'apikey123')
+```
+
+
+```{r API.details, include=FALSE}
+myuser = create_user('lmenendez@uchicago.edu', 'tealmouse67')
+```
+
+### PM2.5 Data Query
+This section describes how to query for PM2.5 concetration data from EPA pollution sensors. We are looking for at PM2.5 data Wisconsin, Illinois, and Indiana between 2014 and 2018 for our project. First, let's start small and query only for Illinois data for the first week of 2018.
+
+```{r}
+IL.data = aqs_dailyData_byState(aqs_user = myuser,    # Previously defined user emailand API key
+                                param = 88101,        # EPA AQS Parameter Code for PM2.5
+                                bdate = "20180101",   # Starting Date (Jan 1st ,2018)
+                                edate = "20180107",   # Ending Date (Jan 7th, 2018)
+                                state = "17")         # State FIPS Code for Illinois
+```
+
+```{r echo=FALSE, }
+knitr::kable(IL.data[1:5, 1:10])
+```
+
+The outputted data frame includes many fields regarding the PM2.5 observation, including spatial data for the sensor's location. We will focus on these details later on in our data wrangling process. The next code chunk describes how to query for PM2.5 data across our three states and four years. 
+
+```{r, eval = FALSE}
+library(dplyr)
+
+# List of States to Iterate Through
+states = c("17", "18", "55")
+
+# Matrix of Start Dates and End Dates to Iterate Through
+dates = matrix(c("20140101", "20141231", "20150101", "20151231", "20160101", "20161231", "20170101", "20171231", "20180101", "20181231"), ncol = 2, byrow = TRUE)
+
+# Leveraging apply functions to iterate through both states and dates
+full.data = lapply(states, function(x){
+                
+                mapply(aqs_dailyData_byState, 
+                       bdate = dates[,1], 
+                       edate = dates[,2], 
+                       MoreArgs = list(aqs_user = myuser, 
+                                       param = 88101,
+                                       state = x),
+                       SIMPLIFY = FALSE
+                       
+                ) %>% 
+                        do.call("rbind", .)
+        }) %>% 
+                do.call("rbind", .)
+
+```
+
+***
+
+## FAA Weather Data
+
+```{r, echo=FALSE, fig.cap="An ASOS Observation Station in Elko, NV. (Wikimedia Commons)"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg/1280px-2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg")
+```
+
+FAA weather data gathered from the [Automated Surface Observing System (ASOS)](https://en.wikipedia.org/wiki/Automated_airport_weather_station) can be imported using the **riem** package. This package, created by [ROpenSci](https://ropensci.org/), queries weather data from the [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/ASOS/), an online portal for international ASOS data maintained by Iowa State University. First, let's load the package.
+
+```{r download.riem}
+# devtools::install_github('ropensci/riem')
+library(riem, quietly = TRUE)
+```
+
+### Sample Query
+Below is an R code snippet that performs the simplest weather data query possible in the **riem** package. It specifies a particular weather station using an airport code and a date range to query for. The output is a tibble table of raw ASOS weather data. The code snippet below extracts sensor data at the San Francisco International Airport.
+
+``` {r simple.riem.query}
+SFO.weather = riem_measures(station = 'KSFO', date_start = "2014-01-01", date_end = '2014-01-02')
+```
+
+```{r echo=FALSE}
+knitr::kable(SFO.weather[1:5, c(1,2,5,6,7, 8)])
+knitr::kable(head(SFO.weather)[c('station', 'valid', 'tmpf', 'dwpf', 'alti', 'vsby')])
+```
+
+The outputted table shows weather data for a 24-hour period on January 1st, 2014 at the San Francisco International Airport. The `valid` column species when each weather report was generated, typically at 1-hour intervals. The `tmpf` and `dwpf` columns give the ambient air temperature and dew point in Fahrenheit (ºF). Other important variables in our project include air pressure (`alti`), measured in inches of mercury (in.Hg), and visibility (`vsby`) in miles. For more information on all available varibles, see Iowa State's [Documentation](https://mesonet.agron.iastate.edu/request/download.phtml).
+
+Next, we will apply this function at a large scare across multiple sensors and timescales.
+
+
+### Finding ASOS Sensors
+The FAA collects weather data at hourly intervals for each meteorological station, with some stations  providing half-hour intervals. Even querying for short periods of time can yield large amounts of data. To optimise performance, we want to only query data from stations in our study area.
+
+#### Finding Sensors by State {-}
+In our project, we focus on certain counties in Illinois, Indiana, and Wisconsin, so we are interested in finding the sensors within that study area. The first step is to query the locations of all weather stations in the three states using the **riem** package. In the example below, we query for sensors in the Illinois ASOS sensor network. 
+
+```{r IL.query}
+IL.stations = riem_stations(network = 'IL_ASOS')
+```
+
+```{r echo=FALSE}
+knitr::kable(head(IL.stations))
+```
+
+To query for data across multiple states, we are going the apply the `riem_stations` function to a list of weather station networks, as shown below.
+
+```{r IL.IN.WI.query, message = FALSE}
+networks = list('IL_ASOS', 'IN_ASOS', 'WI_ASOS')
+
+library(dplyr, quietly = TRUE)
+station.locs = lapply(networks, riem::riem_stations) %>% 
+        do.call(rbind, .) # Creates a single data table as output
+
+
+```
+
+Note: You can find a list of state abbreviations by typing `state.abb` in your R console. 
+
+#### Converting Latitude and Longitude Coordinates to Spatial Data {-}
+The data tables returned by the **riem** package must be converted to spatial data to determine which sensors are located in the study area. Since the lon/lat coordinates are already provided, the data table is easily converted to a spatial `sf` object.
+
+```{r csv.to.spatial}
+station.locs.sf = sf::st_as_sf(station.locs, coords = c("lon", "lat"), crs = 4326)
+
+# Plot stations and study area boundaries to verify that the correct sensors were selected
+plot(station.locs.sf$geometry)
+plot(sf::st_read('https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson', quiet = TRUE)$geometry, border = 'red', add = TRUE)
+```
+
+We plot to results to verify that our query and data conversion process worked correctly. For reference, the boundaires of the study area is outlined in red. 
+
+
+#### Selecting Sensors within our Study Area {-}
+Next, we perform a spatial join to only keep the points located within the boundaries of our study area polygons. The spatial join is completed by the **sf** package, as shown below. For more information regarding spatial joins and spatial predicates, please see [this](https://gisgeography.com/spatial-join/) helpful blog post by GISgeography.com.
+
+```{r sensor.join, message = FALSE}
+
+# Loading study area boundaries
+study.area = sf::st_read('https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson', quiet = TRUE)
+
+study.sensors = sf::st_join(station.locs.sf, study.area, left = FALSE)
+
+# Verify Spatial Join by Plotting
+plot(study.area$geometry, border = 'red')
+plot(study.sensors$geometry, add = TRUE)
+title('Weather Stations Within the Study Area')
+
+```
+
+Now that we have a dataset of which weather stations we are interested in, we can query for the weather data associated with each station.
+
+### Weather Data Query
+Again we use the `lapply` function in base R to execute the `riem_measures` function on a list of sensor IDs. This allows us to iteratively query for weather data from each individual sensor in a list. In the code snippet below, we take the study sensors obtained previously and query for a single day's worth of weather data.
+
+```{r multi.locs.query, message=FALSE, warning=FALSE}
+library(dplyr, quietly = TRUE)
+
+weather.data = lapply(study.sensors$id, function(x){riem::riem_measures(x, date_start = "2014-01-01", date_end = "2014-01-02")}) %>% 
+        do.call(rbind, .) # Creates a single data table as output
+
+```
+
+```{r echo=FALSE}
+knitr::kable(weather.data[1:5, 1:5])
+```
+
+#### Querying Full Weather Dataset {-}
+Use caution when querying for a large amount of data. Data tables can easily become unwieldy after querying for a large number of weather stations across a wide time scale. The code snippet below downloads all ASOS weather data for sensors in our study area from January 1st 2014 to December 31st 2018, which is our study time period. It has approximately 4.8 Million records and takes 6-10 minutes to download.
+
+```{r large.query, eval = FALSE}
+weather.data = lapply(study.sensors$id, function(x){riem::riem_measures(x, date_start = "2014-01-01", date_end = "2018-12-31")}) %>% 
+        do.call(rbind, .) # Creates a single data table as output
+```

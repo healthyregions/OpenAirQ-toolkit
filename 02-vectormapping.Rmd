@@ -1,0 +1,101 @@
+# Vector Data Mapping
+
+## Required Packages
+* `tmap`: Flexible thematic mapping 
+* `sf`: Spatial vector data manipulation 
+* `dplyr`: `data.frame` manipulation
+
+```{r, include = FALSE}
+library(tmap)
+library(sf)
+library(dplyr)
+```
+
+`tmap` will be set to interactive mode for this tutorial.
+```{r}
+tmap_mode('view')
+```
+
+
+## Political Boundaries
+Air quality modeling occured over the Chicago metropolitan area. This geography consist of 21 individual counties within the states of Illinois, Indiana, and Wisconsin. 
+
+**Read in County Boundaries**
+```{r}
+counties = sf::st_read('./data/LargeAreaCounties/LargeAreaCounties.shp')
+```
+
+**Plot with `tmap`**
+```{r}
+tm_shape(counties) +
+        tm_borders() +
+        tm_text("COUNTYNAME", size = 0.7, along.lines = TRUE) +
+        tm_fill(col = "STATE", alpha = 0.5)
+```
+
+Air modeling data, however, is collected at a larger spatial scale to account for region-wide effects that could affect the 21 country study area. Four midwestern states (Illinois, Indiana, Michigan, and Wisconsin) were chosen as a data collection area.
+
+```{r}
+states = sf::st_read('./data/FourStates/FourStates.shp')
+```
+
+```{r}
+tm_shape(states) +
+        tm_borders() +
+        tm_text("NAME", size = 0.8, auto.placement = TRUE) +
+        tm_fill(col = "NAME", alpha = 0.5) +
+        tm_shape(counties) +
+                tm_fill(col = "black", alpha = 0.25) + tm_borders(col = "black", alpha = 0.25)
+```
+
+```{r, include = FALSE}
+basemap = tm_shape(states) +
+        tm_borders() +
+        tm_text("NAME", size = 0.8, auto.placement = TRUE) +
+        tm_fill(col = "NAME", alpha = 0.5) +
+tm_shape(counties) +
+        tm_fill(col = "black", alpha = 0.25) + tm_borders(col = "black", alpha = 0.25)
+```
+
+
+## Ground-based Data Sensor Locations
+
+### EPA Particulate Matter Sensors
+Over 127 PM2.5 pollution monitoring stations are located across the four state data collection area. The map below describes the distribution of these point locations. More information on the data collection methods and output data from each sensor will be discussed later on.
+
+```{r}
+sensors = sf::st_read('./data/PM25_4States_2014.2018_POINTLOCS.geojson') %>% dplyr::mutate(rec_duration = as.numeric(lastRec - firstRec))
+```
+
+```{r}
+basemap +
+tm_shape(sensors) +
+        tm_markers(shape = tmap_icons('https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/data/assets/EPA_logo.png?raw=true'))
+```
+
+### Weather Stations
+High temporal resolution weather data was sourced from a large network of ground-based weather stations co-located at many airports. They provide data at regular one hour intervals on variables such as temperature, pressure, wind velocity, and wind direction. The map below describes the distribution of sensors in the four-state data collection area.
+
+```{r}
+asos = sf::st_read('./data/4States_ASOS_2018_Locations.geojson')
+```
+
+```{r}
+basemap +
+tm_shape(asos) +
+        tm_markers(shape = tmap_icons('https://github.com/GeoDaCenter/OpenAirQ-toolkit/blob/master/data/assets/airport_icon.png?raw=true'))
+```
+
+## Point Sources of Pollution
+The EPA National Emissions Inventory (NEI) dataset (2014) describes the location of large sources of pollution, such as powerplants, factories, and other industrial buildings.
+
+```{r}
+points.pollution = sf::st_read('./data/Point_Source_Emissions_4States_2014.geojson')
+```
+
+```{r}
+basemap +
+tm_shape(points.pollution) +
+        tm_markers()
+```
+

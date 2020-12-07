@@ -1,0 +1,494 @@
+# Interpolation Models
+
+This tutorial demonstrates how to compare common interpolation models empirically to select the one that seems most appropriate for a given spatial extent. It follows the steps provided in an R-Spatial [tutorial](https://rspatial.org/raster/analysis/4-interpolation.html#calfornia-air-pollution-data) on interpolating pollution vairables. Possible interpolation models are voronoi polygons, nearest neighbor interpolation, inverse distance weights (IDW), and finally kriging. The oprimal model is one with the lowest RMSE compared to all other models. The models are also evaluated against a "NULL Model", where the mean value is assigned in all grid cells.
+
+## Example: Interpolating Average Temperature across the 21-county study area.
+
+This section describes how an interpolation model was selected to interpolate average temperature from airport weather stations in the 21 county area.
+
+## Wrangling Data
+
+Reading in monthly temperature averages
+```{r message=FALSE, warning=FALSE}
+
+tmpf = readr::read_csv('./data/ASOS_tmpf_2014.2018.csv')
+head(tmpf)
+```
+
+Let's filter for August 2018 Data
+```{r}
+tmpf = dplyr::filter(tmpf, moyr == '2018-08')
+```
+
+Mapping the station values
+```{r}
+library(tmap)
+tmap_mode("view")
+counties = sf::st_read('./data/LargeAreaCounties/LargeAreaCounties.shp')
+sensors = sf::st_as_sf(tmpf, coords = c("longitude", "latitude"), crs = 4326)
+
+tm_shape(counties) +
+  tm_borders() +
+tm_shape(sensors) +
+  tm_dots(col = "tmpf", 
+          palette = "-RdBu", 
+          title = "Average August 2018 Temperature (ºF)", 
+          popup.vars = c("Temp" = "tmpf", 
+                         "Airport Code" = "site_num"))
+```
+
+
+## Exploring the Null Model
+This model follows the null hypothesis, that there's no variation in precipitation across space, by taking the mean precipitation and assigning that value across the entire area.
+```{r}
+RMSE <- function(observed, predicted) {
+  sqrt(mean((predicted - observed)^2, na.rm=TRUE))
+}
+
+null <- RMSE(mean(tmpf$tmpf), tmpf$tmpf)
+null
+
+```
+The Root Mean Swuare Error (RMSE) for the null model is 2.09.
+
+## Model 1: Voronoi Model
+This model takes sensor locations and generates a prediction area for that sensor. The 21 county area is divided into polygons representing areas closest to each sensor.
+
+```{r include=FALSE}
+library(raster)
+
+# Loading AOD raster for the 21 counties
+AOD.raster = raster::raster('./data/AOD_21Counties_MasterGrid/AOD_21Counties_MasterGrid.grd')
+
+# Create Blank Raster with same properties as AOD raster
+blank.raster = raster()
+crs(blank.raster) = sf::st_crs(AOD.raster)$proj4string
+extent(blank.raster) = extent(AOD.raster)
+res(blank.raster) = res(AOD.raster)
+crs(blank.raster) = st_crs(sensors)$proj4string
+
+
+# Replacing with NA Values
+values(blank.raster) = NA
+
+# Converting sf object to sp
+dsp = as_Spatial(sensors)
+IL = as_Spatial(counties)
+```
+
+Creating Voronoi Polygons
+
+```{r mesage=FALSE, warning = FALSE}
+library(dismo)
+v <- voronoi(dsp)
+
+tm_shape(v) +
+  tm_borders() +
+tm_shape(sensors) +
+  tm_dots(popup.vars = c("Temp" = "tmpf", 
+                         "Airport Code" = "site_num"))
+
+```
+
+Tenperature values can then be assigned to each voronoi polygon based on temperature readings from the sensor located in the given polygon.
+
+```{r message=FALSE, warning=FALSE}
+# Assigning values to polygons
+il <- aggregate(IL)
+vil <- raster::intersect(v, il)
+
+tm_shape(vil) +
+  tm_fill('tmpf', 
+          alpha = 0.5, 
+          palette = "-RdBu", 
+          title = "Average August 2018 Temperature (ºF)",
+          popup.vars = c("Temp" = "tmpf")) + 
+  tm_borders()
+```
+
+Rasterizing voronoi polygons
+
+```{r}
+r <- blank.raster
+vr <- rasterize(vil, r, 'tmpf')
+```
+
+### Validating the Voronoi Model
+We will use 5-fold cross-validation to determine the improvement compared to our baseline, the NULL model.
+
+```{r warning= FALSE, message = FALSE}
+set.seed(5132015)
+
+# Randomly partition the Dataset into 5 groups (1 through 5)
+kf <- kfold(nrow(dsp)) 
+
+# Initialize a vector of length 5
+vorrmse <- rep(NA, 5)
+
+# Validate
+for (k in 1:5) {
+  test <- dsp[kf == k, ] # Learn on group k
+  train <- dsp[kf != k, ] # Train on groups != k
+  v <- voronoi(train)
+  p1 <- raster::extract(v, test)$tmpf
+  vorrmse[k] <- RMSE(test$tmpf, p1) # Save the RMSE
+}
+
+print("RMSE for each of the five folds")
+vorrmse
+
+# Take the mean RMSE and get percentage improvement
+print("Mean RMSE")
+mean(vorrmse)
+print("Improvement over NULL model")
+1 - (mean(vorrmse) / null)
+```
+
+The RMSE for the Voronoi model is 1.33, which represents a 36% increase in accuracy from the null model. The percentage improvement metric will determine the most useful model to choose.
+
+## Model 2: Nearest Neighbor Interpolation
+The next model to test is a nearest neighbor interpolation. The interpolation takes into account the nearest 5 sensors when determining the temperature value at a given grid cell. The decay parameters is seto to zero.
+
+```{r warning = FALSE, message = FALSE}
+set.seed(5132015)
+library(gstat)
+gs <- gstat(formula=tmpf~1, locations=dsp, nmax=5, set=list(idp = 0))
+nn <- interpolate(r, gs)
+
+nnmsk <- mask(nn, vr)
+
+tm_shape(nnmsk) +
+  tm_raster(n = 5,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+Overall the interpolation yield provdes a similar estimate of temperature as the voronoi polygons. This is expected as voronoi polygons are a form of nearest neighbor interpolation. The differenc here is that this mode takes into account the temperature values at the five nearest sensors, not just one nearest sensor. 
+
+Cross validating the result using the `gstat` ```predict()``` function.
+
+```{r message = FALSE, warning = F}
+nnrmse <- rep(NA, 5)
+
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  gscv <- gstat(formula=tmpf~1, locations=train, nmax=5, set=list(idp = 0))
+  p2 <- predict(gscv, test)$var1.pred
+  nnrmse[k] <- RMSE(test$tmpf, p2)
+}
+
+print("RMSE for each of the five folds")
+nnrmse
+print("Mean RMSE")
+mean(nnrmse)
+print("Improvement over NULL model")
+1 - (mean(nnrmse) / null)
+
+```
+
+The average RMSE after 5-fold cross validation is 1.80. This model is 14% more accurate than the null model. This suggests that it might be a less effective estimate of temperature in our case. 
+
+## Model 3: IDW Interpolation using baseline parameters
+IDW stands for Inverse Distance Weighted interpolation. This model estimates temperature at a given cell by taking into account temperature values located at various nearby sensors and each sensor's straight line distance to the grid cell. Data from sensors located closer to the target grid cell are given more weight in the final estimate of temperature in that cell. This model is a logical outcropping of Tobler's first law of geography, "everything is related to everything else, but near things are more related than distant things."
+
+```{r warning = F, message = F}
+set.seed(5132015)
+library(gstat)
+gs <- gstat(formula=tmpf~1, locations=dsp)
+idw <- interpolate(r, gs)
+idwr <- mask(idw, vr)
+plot(idwr)
+
+tm_shape(idwr) +
+  tm_raster(n = 10,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+The IDW model creates a smoother temperature surface compared to voronoi polygons and nearest neighbor interpolations. Hard breaks between individual sensor regions is reduced to a minimum. However, IDW also introduced it's own distortion. The 'bullseye' effect occurs when a sensor value is significantly different than the rest, an artefact that is clearly visible around almost all snesor locations in our map.
+
+
+```{r warning = F, message = F}
+rmse <- rep(NA, 5)
+
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  gs <- gstat(formula=tmpf~1, locations=train)
+  p <- predict(gs, test)
+  rmse[k] <- RMSE(test$tmpf, p$var1.pred)
+}
+
+
+print("RMSE for each of the five folds")
+rmse
+print("Mean RMSE")
+mean(rmse)
+print("Improvement over NULL model")
+1 - (mean(rmse) / null)
+
+```
+
+The IDW model has an RMSE of 1.52, a 27% improvement over the null model. 
+
+## Model 4: Optimized IDW Interpolation
+IDW models are highly sensitive to two user defined parameters. 1) The maximum number of sensors to take into account and 2) a decay or friction of distance parameter. Since models are evaluated using RMSE, an optimization algorithm can be used to find an optimal number of sensors and decay parameter that minimizes RMSE. This optimization is performed below.
+
+```{r message = F, warning = F}
+f1 <- function(x, test, train) {
+  nmx <- x[1]
+  idp <- x[2]
+  if (nmx < 1) return(Inf)
+  if (idp < .001) return(Inf)
+  m <- gstat(formula=tmpf~1, locations=train, nmax=nmx, set=list(idp=idp))
+  p <- predict(m, newdata=test, debug.level=0)$var1.pred
+  RMSE(test$tmpf, p)
+}
+set.seed(20150518)
+i <- sample(nrow(dsp), 0.2 * nrow(dsp))
+tst <- dsp[i,]
+trn <- dsp[-i,]
+opt <- optim(c(8, .5), f1, test=tst, train=trn)
+opt
+```
+
+The optimal IDW interpolation can be gleaned from the `opt$par` variable. The number of sensors to consider should be ~4.90 while the decay parameter should be 8.44.
+
+Performing the IDW interpolation with these parameters yields the following results.
+
+```{r message = F, warning = F}
+m <- gstat::gstat(formula=tmpf~1, locations=dsp, nmax=opt$par[1], set=list(idp=opt$par[2]))
+idw <- interpolate(r, m)
+idw <- mask(idw, il)
+
+tm_shape(idw) +
+  tm_raster(n = 10,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+The output from this model is super interesting. It looks similar to the voronoi polygons, but as if someone took a paintbrush to the edges of each polygon and mixed the colors together. In scientific terms, it's as if someone took the voronoi polygons and added a thin gradient between each polygon. 
+
+Let's cross validate and get the RMSE
+```{r warning = F, message = F}
+idwrmse <- rep(NA, 5)
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  m <- gstat(formula=tmpf~1, locations=train, nmax=opt$par[1], set=list(idp=opt$par[2]))
+  p4 <- predict(m, test)$var1.pred
+  idwrmse[k] <- RMSE(test$tmpf, p4)
+}
+
+print("RMSE for each of the five folds")
+idwrmse
+print("Mean RMSE")
+mean(idwrmse)
+print("Improvement over NULL model")
+1 - (mean(idwrmse) / null)
+
+```
+
+The RMSE is 1.42, which represents an improvement of 32% over the null model.
+
+## Model 5: Thin Plate Spline Model
+Originally, a non-spatial interpolation method, this model seeks to "smooth" the temperature from each sensor across grid cells. It's name comes from this models ability to penalize non-smooth data, similar to how a thin but rigid sheets resists bending.
+
+```{r}
+library(fields)
+
+m <- Tps(coordinates(dsp), tmpf$tmpf)
+tps <- interpolate(r, m)
+tps <- mask(tps, idw)
+
+tm_shape(tps) +
+  tm_raster(n = 5,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+This model produces evently spaced temperature bands, as expected considering the rigidity of the model. Compared to other models, it might seem less correct or represnetative of the real-world. However, only RMSE will tell.
+
+
+```{r}
+tpsrmse <- rep(NA, 5)
+for (k in 1:5) {
+  test <- dsp[kf == k, ]
+  train <- dsp[kf != k, ]
+  m <- Tps(coordinates(train), train$tmpf)
+  p5 <- predict(m, coordinates(test))
+  tpsrmse[k] <- RMSE(test$tmpf, p5)
+}
+
+print("RMSE for each of the five folds")
+tpsrmse
+print("Mean RMSE")
+mean(tpsrmse)
+print("Improvement over NULL model")
+1 - (mean(tpsrmse) / null)
+```
+
+The RMSE for this model is 1.60, a 24% improvement over the null model. 
+
+## Model 6: Ordinary Kriging
+Kriging is a complex interpolation method that seeks to find the best linear predictor of intermediate values. In our spatial context, this means that it seeks
+
+The first step is to fit a variogram over the temperature data
+```{r}
+library(gstat)
+gs <- gstat(formula=tmpf~1, locations=dsp)
+v <- variogram(gs, width=20)
+head(v)
+plot(v)
+```
+
+We notice that there are only five points below the mean, which is very few points to properly fit a model to. But, let's continue to see what happens. Next we fit the variogram. This time, we use the ```autofitVarogram``` function from the ```automap``` package.
+
+```{r}
+fve = automap:::autofitVariogram(formula = tmpf~1, input_data = dsp)
+fve
+plot(fve)
+```
+The ```autofitVariogram``` function fitted a Gaussian variogram to our small sample of datapoints. 
+
+Executing an ordiary kriging model
+```{r message = F, warning = F}
+kp = krige(tmpf~1, dsp, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
+spplot(kp)
+```
+
+Plotting this on the 21 counties
+
+```{r}
+ok <- brick(kp)
+ok <- mask(ok, il)
+names(ok) <- c('prediction', 'variance')
+plot(ok)
+
+tm_shape(ok[[1]]) +
+  tm_raster(n = 5,
+            alpha = 0.5, 
+            palette = "-RdBu", 
+            title = "Average August 2018 Temperature (ºF)")
+```
+
+Cross-Validating the Kriging Model
+
+```{r warning = F, message = F}
+set.seed(20150518)
+
+krigrmse = rep(NA, 5)
+
+for (i in 1:5) {
+  test <- dsp[kf == i,]
+  train <- dsp[kf != i, ]
+  fve = automap:::autofitVariogram(formula = tmpf~1, input_data = train)
+  kp = krige(tmpf~1, train, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
+  p6 = raster::extract(as(kp, 'RasterLayer'), test)
+  krigrmse[i] <-  RMSE(test$tmpf, p6)
+}
+
+print("RMSE for each of the five folds")
+krigrmse
+print("Mean RMSE")
+mean(krigrmse)
+print("Improvement over NULL model")
+1 - (mean(krigrmse) / null)
+
+```
+
+After 5 fold cross-validation, the RMSE is 1.80. This is a 14% improvement over the null model.
+
+## Model 7: Blending all models
+
+Next, we will attempt to created a blended model that takes a weighted average of the predicted values for each model, weighted by their RMSE. This ensures that the more accurate models have more influence on the blended model than the models with poor predictions.
+
+This code chunk re-runs each model, creating an ensemble model, while cross-validating the results.
+
+```{r message=FALSE, warning=FALSE}
+set.seed(20150518)
+
+  # Initialize rmse vectors
+  vorrmse <- nnrmse <- idwrmse <- krigrmse <- tpsrmse <- ensrmse <- rep(NA, 5)
+  
+for (i in 1:5) {
+
+  # Creating Test & Training Data
+  test <- dsp[kf == i, ] # Learn on group k
+  train <- dsp[kf != i, ] # Train on groups != k
+  
+  # Voronoi
+  v <- voronoi(train)
+  p1 <- raster::extract(v, test)$tmpf
+  vorrmse[i] <- RMSE(test$tmpf, p1) # Save the RMSE
+  
+  # Nearest Neighbbor
+  gscv <- gstat(formula=tmpf~1, locations=train, nmax=5, set=list(idp = 0))
+  p2 <- predict(gscv, test)$var1.pred
+  nnrmse[i] <- RMSE(test$tmpf, p2)
+  
+  # Optimized IDW
+  m <- gstat(formula=tmpf~1, locations=train, nmax=opt$par[1], set=list(idp=opt$par[2]))
+  p3 <- predict(m, test)$var1.pred
+  idwrmse[i] <- RMSE(test$tmpf, p3)
+  
+  # Thin Plate Spline
+  tpsm <- Tps(coordinates(train), train$tmpf)
+  p4 <- predict(tpsm, coordinates(test))[,1]
+  tpsrmse[i] <- RMSE(test$tmpf, p4)
+  
+  # Kriging
+  fve = automap:::autofitVariogram(formula = tmpf~1, input_data = train)
+  kp = krige(tmpf~1, test, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
+  p5 = raster::extract(as(kp, 'RasterLayer'), test)
+  krigrmse[i] <-  RMSE(test$tmpf, p5)
+  
+  # Weighting
+  w <- c(vorrmse[i], nnrmse[i], idwrmse[i], tpsrmse[i], krigrmse[i])
+  weights <- w / sum(w)
+  ensemble <- p1 * weights[1] + p2 * weights[2] + p3 * weights[3] + p4 * weights[4] + p5 * weights[5]
+  ensrmse[i] <-  RMSE(test$tmpf, ensemble)
+  
+  
+}
+
+print("RMSE for each of the five folds")
+ensrmse
+print("Mean RMSE")
+mean(ensrmse)
+print("Improvement over NULL model")
+1 - (mean(ensrmse) / null)
+
+```
+
+The RMSE is 1.45, representing a 31% improvement over the null model
+
+We can quickly see how this compared the RMSEs of the component models.
+```{r}
+# Voronoi
+1 - (mean(vorrmse) / null)
+
+# Nearest Neighbbor
+1 - (mean(nnrmse) / null)
+
+# Optimized IDW
+1 - (mean(idwrmse) / null)
+
+# Thin Plate Spline
+1 - (mean(tpsrmse) / null)
+
+# Kriging
+1 - (mean(krigrmse) / null)
+
+
+```
+
+We notice that the improvements of each model is highly variable depending on the model chosen. Kriging has the highest performance, with a 66% improvement over the null model.
+
+## Conclusion
+The highest performing model is the ordinary kriging interpolation, with a 65% improvement over the null model. The worst performance came from the nearest neighbor interpolation, with only 14% improvement. The Voronoi, Optimized IDW, and Thin Plate Spline were solidly in the middle of the pack with improvement between 23% and 36%. These values give us a great point estimate of each model's performance, however we made no effort to show that the differences in improvement (i.e. RMSE) are statistically significant. Selecting which model to use requires more sensor locations and some basic hypothesis testing. 
