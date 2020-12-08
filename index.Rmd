@@ -1,12 +1,14 @@
 ---
 title: "<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit</style>"
-author: "Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : `r Sys.Date()`"
+author: "Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : `r Sys.Date()` using `R.version$version.string`"
 output: bookdown::gitbook
 documentclass: book
 ---
 
 # Introduction {-}
-This toolkit provides and **introduction to GIS and spatial data analysis** for air quality analysis applications, allowing researchers, policymakers, analysts, and practicioners to gain data-driven air quality insights in their local community. 
+This toolkit provides and **introduction to spatial data processing and analysis in R** for air quality analysis applications, allowing researchers, policymakers, analysts, and practicioners to gain data-driven air quality insights in their local community. After completing out tutorials, you will have the tools to replicate our analysis or perform similar analyses on a new geography of your choosing.
+
+This toolkit is divided into two sections. A first section detailing the air quality analyses done for the Chicagoland area, and a secondary appendix with tutorials on how to collect open-source air quality data from reputable government sources like the EPA and NASA. All data used in the tutorial is hosted on a GitHub repo named [OpenAirQ-toolkit](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data).
 
 ## Software Basics {-}
 Tutorials assume that R and RStudio is already downloaded on your device. Luckily, this toolkit is compatible with Windows, macOS, and Linux systems. Basic familiarity in R is required for these toolkits. You should know how to change the working directory, install new packages, library packages, and comfortably navigate between folders on your computer. Additionally, an internet connection will be required for some tutorials.

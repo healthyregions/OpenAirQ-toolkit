@@ -1,0 +1,26 @@
+
+This document tells how to setup and run the book down.
+
+Create the relevant tutorial markdown file. Make sure to create heading links by adding initials for your tutorial. Tutorials have some sections that are repeated across all of them and adding the initials makes sure heading is linked to the correct section. 
+
+Currently used initials are:
+
+Tutorial name - initials
+
+Calculate Minimum Distance Access Metric - CA 
+Downloading Community Contextual Data - CD
+Geocoding and Visualizing Point Data - GA
+Visualize Areal Data - Choropleth Mapping (a.k.a Thematic Maps) - TM
+__________________________________________________________________________________________
+
+Update _bookdown.yml to add the markdowns to website, variable to be updated 'rmd_files'
+Update _output.yml to change website style or style.css to add css settings.
+
+
+Then in R run:
+
+#setwd() (make sure your census key is installed)
+options(knitr.duplicate.label = "allow")
+bookdown::render_book("index.Rmd", "bookdown::gitbook")
+
+Check docs/Index.html for the book.
