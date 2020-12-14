@@ -17,13 +17,13 @@ Transportation system is a significant source of air pollution, and roads are wi
 
 ## Environment Setup
 
-### Input/Output
+### Input/Output {-}
 
 Our input includes the shapefile of several large counties in the Midwest, a grid data file, and the shapefile of the major roads in Illinois, Indiana, Wisconsin, and Michigan. The files can be found here. **Insert Link!**
 
 Our output is a shapefile that records the lengths of primary raods, secondary roads, and motorways in each 1 km \times 1 km grid. 
 
-### Load Libraries
+### Load Libraries {-}
 
 We start by loading the following packages:
 
@@ -43,7 +43,7 @@ library(velox)
 library(units)
 ```
 
-### Load Data
+### Load Data {-}
 
 With the packages ready, we now load the data needed for this tutorial - `roads` is the shapefile for the major roads in Illinois, Indiana, Wisconsin, and Michigan, `km.grid` is the grid data, and `counties` is the shapefile for 21 large counties in the Midwest. All of the data can be loaded using the `st_read` function.  
 
@@ -55,7 +55,7 @@ counties <- st_read("./data/LargeAreaCounties")
 
 ## Data Manipulation
 
-### Prelimnary Work
+### Prelimnary Work {-}
 
 First, we create a new field in `km.grid` called `DATA`. This field is defined as a sequence of positive integers. Basically, we are assigning a unqie ID number of each features in `km.grid`. It might be puzzling at this time what function the `DATA` field serves, but it will make sense later when we perform spatial joins. 
 
@@ -83,7 +83,7 @@ Other than that the values of `DATA` is right-skewed, the summary statistics do 
 summary(roads.intersection$DATA)
 ```
 
-### Primary Roads
+### Primary Roads {-}
 
 Next, we want to take a look at all roads that are in the class "primary" or "primary_link." More technically, we would like to extract all features of `roads.intersection` that has value "primary" or "primary_link" in the field `fclass`. To achieve this, we take advantage of the `which` function, which returns the positions of all features that satisfy the criterion. Then we simply bond `pri.1` and `pri.2` into a new vector, and this new vector `pri.id` has the positions of all the features that we want.
 
@@ -152,7 +152,7 @@ As always, it is critical that we inspect our data from time to time. If we prin
 primary.roadlengths
 ```
 
-### Secondary Roads
+### Secondary Roads {-}
 
 From this point on, things start to get a little repetitive. We, in this section, repeat lots of code from the last section. The only difference is that we now want to extract the information - basically the lengths of the roads - of all roads that are classified as "secondary" or "secondary_link." For illustrative purposes, we show all the code below, but we shall not comment much on the code as it is almost identical to the code in the last section. 
 
@@ -178,7 +178,7 @@ We inspect `secondary.roadlengths`, and it looks fine in terms of both data form
 secondary.roadlengths
 ```
 
-### Motorway
+### Motorway {-}
 
 The code in this section is exactly the same as in the last two section. We include the code here for the sake of completeness, but you should feel free to skip this section. 
 

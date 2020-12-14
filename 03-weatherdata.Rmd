@@ -1,4 +1,4 @@
-# Data Prep & Management 
+# Pollution & Weather
 
 This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.
 

@@ -8,7 +8,7 @@ An 'Optimized' IDW interpolation was used to estimate sensor values across a 1km
 To simplify implementation and replication, the entire workflow was coded in R and bundled into a packaged named `sensor2raster`. The next sections demonstrate how to apply this package to sensor data.
 
 ```{r message=FALSE, warning=FALSE}
-# devtools::install_local('../data/sensor2raster_0.04.tar.gz')
+# devtools::install_local('../data/sensor2raster_0.4.tar.gz')
 library(sensor2raster, quietly = TRUE)
 ```
 

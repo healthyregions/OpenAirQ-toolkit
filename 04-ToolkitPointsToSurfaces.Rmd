@@ -14,17 +14,17 @@ By the end of this tutorial you will be able to:
 * Generate a Kernal Density Estimation using real data
 
 
-## Loading the Required Packages
+## Environment Setup
 
 To process our data and create a Kernal Density Estimation, we will need the following packages:
 
-* tidyverse (data wrangling)
-* sp (Spatial data manipulation/analysis)
-* rgdal (Spatial data)
-* tmap (Spatial data visualization)
-* spatialEco (Creating KDE)
+* `tidyverse`, for data wrangling
+* `sp`, for spatial data manipulation and analysis
+* `rgdal`, for importing spatial data
+* `tmap`, for cartography and mapmaking in R
+* `spatialEco`, for Kernel Density Estimation
 
-If you do not already have any of these packages installed, you will want to install them using `install.package("*PackageName*")`. Once they are installed, we are going to load the required packages:
+If you do not already have any of these packages installed, you will want to install them using `install.package("*PackageName*")`. Once they are installed, we are going to library the required packages:
 
 ```{r, nei.xpackage.load, results='hide', warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -43,9 +43,10 @@ Now that we have loaded our required packages, we will now read in our National 
 nei.data <- readr::read_csv("./data/process_12345.csv.zip")
 ```
 
+
 Having successfully read our data into the R environment, let's take a second to examine it. 
 
-```{r, nei.examine, warning=FALSE, message=FALSE}
+```{r, nei.examine, warning=FALSE, message=FALSE, attr.output='style="max-height: 100px;"'}
 nrow(nei.data)
 names(nei.data)
 ```
@@ -86,7 +87,7 @@ nrow(county.nei)
 Let's finish filtering our data by restricting our results to only those emissions sources emitting PM2.5. We will first examine the different labels for pollution descriptions using the `unique()` function. We will then filter our dataset for only those labels that seem related to PM2.5 using the same process as above. 
 
 
-```{r, nei.pm.filter}
+```{r, nei.pm.filter, attr.output='style="max-height: 100px;"'}
 unique(county.nei$`pollutant desc`)
 
 pm25.names <- c("PM2.5 Filterable",  "PM2.5 Primary (Filt + Cond)")
@@ -120,7 +121,7 @@ With everything looking as it should, let's look back on what we just did. We in
 
 Here, we will use the spatial data visualization skills learned in an earlier chapter to visualize the point locations of PM2.5 sources in Cook County. 
 
-```{r, nei.point.dataviz}
+```{r message=FALSE, warning=FALSE}
 #Read in Cook County Shapefile using sp's readOGR function
 cook.county <- readOGR("./data/CookCounty.geojson") 
 
@@ -134,6 +135,7 @@ tm_shape(cook.county) +
   tm_dots()
 
 ```
+
 
 This is clearly a very basic plot of the data. We can get a basic idea of where the point density may be highest, but we cannot tell much else about the data. Let's now create an interactive map with the dots colored and sized based off of the volume of emissions (self-reported) given off at each point location.
 
@@ -150,6 +152,7 @@ tm_shape(cook.county) +
              style = "fisher")
 
 ```
+
 
 Here, we used the `tmap_mode()` function to change the map style to interactive viewing and changed the arguments of the `tm_bubbles()` function to change the appearance of the point locations. Let's now construct a continuous surface Kernal Density Estimation from our point data.
 
@@ -196,7 +199,11 @@ As you can see, weighing the KDE on the total emissions amount dramatically chan
 
 If you are interested in reading more about the arguments of this function check out its [R Documentation](https://www.rdocumentation.org/packages/spatialEco/versions/1.3-2/topics/sp.kde) page.
 
+## Further Resources {-}
 
+You made it to the end of the first chapter, great job! If you would like to learn more about how to source these datsets, see appendix E. Additional resources describing the origin of these datasets is provided below. 
+
+*  (EXAMPLE RESOURCE) See the [EPA's air quality information page](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) for more information on air quality measuring in the United States.
 
 
 

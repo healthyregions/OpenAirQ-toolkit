@@ -8,13 +8,13 @@ This part will introduce you to the geographic boundaries of our air quality stu
 
 The follow packages must be installed on your computer before proceeding.
 
-* `tmap`: flexible thematic mapping 
-* `sf`: spatial vector data manipulation 
-* `dplyr`: `data.frame` manipulation
+* `tmap`, for flexible thematic mapping 
+* `sf`, for spatial vector data manipulation 
+* `dplyr`, for `data.frame` manipulation
 
 `tmap` will be set to interactive mode for this tutorial.
 
-Let's library the above packages. We also set `view` mode in `tmap` to create interactive and clickable maps.
+Let's library the above packages
 
 ```{r message=TRUE, warning=FALSE}
 library(tmap)

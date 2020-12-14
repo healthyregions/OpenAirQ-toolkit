@@ -17,10 +17,10 @@ In this tutorial, we will demonstrate how to represent PM2.5 point emission data
 
 ## Environment Setup
 
-### Input/Output
-The files that will be used in this tutorial are the pollution data for Illinois, Indiana, Wisconsin, and Michigan as well as he shapefile of the four states. The files can be found here. **Insert Link!**
+### Input/Output {-}
+The files that will be used in this tutorial are the pollution data for Illinois, Indiana, Wisconsin, and Michigan as well as he shapefile of the four states. The files are available for download on this project's [GitHub repo](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data).
 
-### Load Libraries
+### Load Libraries {-}
 
 We start by loading the necessary packages - `tidyverse`, `sf`, and `tmap`: 
 
@@ -34,7 +34,7 @@ library(sf)
 library(tmap)
 ```
 
-### Load Data
+### Load Data {-}
 
 Besides the packages, we also need to load our data, which can be done by running the commented-out code below. We call the data frame `pe1`. 
 
@@ -42,13 +42,17 @@ Besides the packages, we also need to load our data, which can be done by runnin
 pe1 <- read_csv("process_12345.csv")
 ```
 
+
 Note that this file above is unfortunately too large to be uploaded to Github, so we will instead use a pre-processed data set:
+
 
 ```{r echo = FALSE, warning = FALSE, message = FALSE}
 fourstate.pe <- read_csv("./data/four_state.csv")
 ```
 
+
 We also load the shapefile for the four states:
+
 
 ```{r}
 fourstates <- st_read("./data/FourStates")

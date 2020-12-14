@@ -4,12 +4,12 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Appendix A: NDVI | index.split</title>
+  <title>Appendix A: NDVI | OpenAirQ-Toolkit.utf8</title>
   <meta name="description" content="<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
 </style>" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Appendix A: NDVI | index.split" />
+  <meta property="og:title" content="Appendix A: NDVI | OpenAirQ-Toolkit.utf8" />
   <meta property="og:type" content="book" />
   
   
@@ -17,12 +17,12 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Appendix A: NDVI | index.split" />
+  <meta name="twitter:title" content="Appendix A: NDVI | OpenAirQ-Toolkit.utf8" />
   
   
   
 
-<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-08 using R.version$version.string" />
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-14 on R.Version()$version.string" />
 
 
 
@@ -31,9 +31,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="09-sensor2raster.html"/>
+<link rel="prev" href="A-weatherdata.html"/>
 <link rel="next" href="B-Point_Emission_Data.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,9 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -152,7 +154,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1" data-path="02-vectormapping.html"><a href="02-vectormapping.html"><i class="fa fa-check"></i><b>1</b> Vector Data Mapping</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#introduction-1"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
 <li class="chapter" data-level="1.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>1.2</b> Environment Setup</a></li>
 <li class="chapter" data-level="1.3" data-path="02-vectormapping.html"><a href="02-vectormapping.html#county-boundaries"><i class="fa fa-check"></i><b>1.3</b> County Boundaries</a></li>
 <li class="chapter" data-level="1.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#state-boundaries"><i class="fa fa-check"></i><b>1.4</b> State Boundaries</a></li>
@@ -161,7 +163,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.7</b> Point Sources of Pollution</a></li>
 <li class="chapter" data-level="" data-path="02-vectormapping.html"><a href="02-vectormapping.html#further-resources"><i class="fa fa-check"></i>Further Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="03-weatherdata.html"><a href="03-weatherdata.html"><i class="fa fa-check"></i><b>2</b> Data Prep &amp; Management</a>
+<li class="chapter" data-level="2" data-path="03-weatherdata.html"><a href="03-weatherdata.html"><i class="fa fa-check"></i><b>2</b> Pollution &amp; Weather</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="03-weatherdata.html"><a href="03-weatherdata.html#epa-pollution-data"><i class="fa fa-check"></i><b>2.1</b> EPA Pollution Data</a>
 <ul>
@@ -177,90 +179,107 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html"><i class="fa fa-check"></i><b>3</b> Point Sensors to Surfaces</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
-<li class="chapter" data-level="3.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#loading-the-required-packages"><i class="fa fa-check"></i><b>3.2</b> Loading the Required Packages</a></li>
+<li class="chapter" data-level="3.1" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#environment-setup-1"><i class="fa fa-check"></i><b>3.2</b> Environment Setup</a></li>
 <li class="chapter" data-level="3.3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>3.3</b> Read and Examine the Data</a></li>
 <li class="chapter" data-level="3.4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-wrangling"><i class="fa fa-check"></i><b>3.4</b> Data Wrangling</a></li>
 <li class="chapter" data-level="3.5" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>3.5</b> Creating a Spatial Object using sp</a></li>
 <li class="chapter" data-level="3.6" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-visualization-review"><i class="fa fa-check"></i><b>3.6</b> Data Visualization Review</a></li>
 <li class="chapter" data-level="3.7" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>3.7</b> Constructing a Kernal Density Estimation</a></li>
+<li class="chapter" data-level="" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#further-resources-1"><i class="fa fa-check"></i>Further Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="06-interpmodels.html"><a href="06-interpmodels.html"><i class="fa fa-check"></i><b>4</b> Interpolation Models</a>
+<li class="chapter" data-level="4" data-path="05-interpmodels.html"><a href="05-interpmodels.html"><i class="fa fa-check"></i><b>4</b> Interpolation Models</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="06-interpmodels.html"><a href="06-interpmodels.html#example-interpolating-average-temperature-across-the-21-county-study-area."><i class="fa fa-check"></i><b>4.1</b> Example: Interpolating Average Temperature across the 21-county study area.</a></li>
-<li class="chapter" data-level="4.2" data-path="06-interpmodels.html"><a href="06-interpmodels.html#wrangling-data"><i class="fa fa-check"></i><b>4.2</b> Wrangling Data</a></li>
-<li class="chapter" data-level="4.3" data-path="06-interpmodels.html"><a href="06-interpmodels.html#exploring-the-null-model"><i class="fa fa-check"></i><b>4.3</b> Exploring the Null Model</a></li>
-<li class="chapter" data-level="4.4" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-1-voronoi-model"><i class="fa fa-check"></i><b>4.4</b> Model 1: Voronoi Model</a>
+<li class="chapter" data-level="4.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="05-interpmodels.html"><a href="05-interpmodels.html#environment-setup-2"><i class="fa fa-check"></i><b>4.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="4.3" data-path="05-interpmodels.html"><a href="05-interpmodels.html#importing-temperature-sensor-data"><i class="fa fa-check"></i><b>4.3</b> Importing Temperature Sensor Data</a></li>
+<li class="chapter" data-level="4.4" data-path="05-interpmodels.html"><a href="05-interpmodels.html#interpolating-temperature"><i class="fa fa-check"></i><b>4.4</b> Interpolating Temperature</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="06-interpmodels.html"><a href="06-interpmodels.html#validating-the-voronoi-model"><i class="fa fa-check"></i><b>4.4.1</b> Validating the Voronoi Model</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#voronoi-tesselation"><i class="fa fa-check"></i>Voronoi Tesselation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#nearest-neighbor"><i class="fa fa-check"></i>Nearest Neighbor</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#inverse-distance-weighted"><i class="fa fa-check"></i>Inverse Distance Weighted</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#idw-optimiziation"><i class="fa fa-check"></i>IDW Optimiziation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#ordinary-kriging"><i class="fa fa-check"></i>Ordinary Kriging</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-2-nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>4.5</b> Model 2: Nearest Neighbor Interpolation</a></li>
-<li class="chapter" data-level="4.6" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-3-idw-interpolation-using-baseline-parameters"><i class="fa fa-check"></i><b>4.6</b> Model 3: IDW Interpolation using baseline parameters</a></li>
-<li class="chapter" data-level="4.7" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-4-optimized-idw-interpolation"><i class="fa fa-check"></i><b>4.7</b> Model 4: Optimized IDW Interpolation</a></li>
-<li class="chapter" data-level="4.8" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-5-thin-plate-spline-model"><i class="fa fa-check"></i><b>4.8</b> Model 5: Thin Plate Spline Model</a></li>
-<li class="chapter" data-level="4.9" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-6-ordinary-kriging"><i class="fa fa-check"></i><b>4.9</b> Model 6: Ordinary Kriging</a></li>
-<li class="chapter" data-level="4.10" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-7-blending-all-models"><i class="fa fa-check"></i><b>4.10</b> Model 7: Blending all models</a></li>
-<li class="chapter" data-level="4.11" data-path="06-interpmodels.html"><a href="06-interpmodels.html#conclusion"><i class="fa fa-check"></i><b>4.11</b> Conclusion</a></li>
+<li class="chapter" data-level="4.5" data-path="05-interpmodels.html"><a href="05-interpmodels.html#method-selection-criteria"><i class="fa fa-check"></i><b>4.5</b> Method Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#calculating-rmse"><i class="fa fa-check"></i><b>4.5.1</b> Calculating RMSE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html"><i class="fa fa-check"></i><b>5</b> Merging Satellite and Point Sensor Data</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#generate-rasters"><i class="fa fa-check"></i><b>5.1</b> Generate Rasters</a></li>
 <li class="chapter" data-level="5.2" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#export-to-csv"><i class="fa fa-check"></i><b>5.2</b> Export to CSV</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="A-weatherdata.html"><a href="A-weatherdata.html"><i class="fa fa-check"></i><b>6</b> Pollution &amp; Weather</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#epa-pollution-data-1"><i class="fa fa-check"></i><b>6.1</b> EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#getting-started-1"><i class="fa fa-check"></i><b>6.1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="6.1.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#pm2.5-data-query-1"><i class="fa fa-check"></i><b>6.1.2</b> PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#faa-weather-data-1"><i class="fa fa-check"></i><b>6.2</b> FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#sample-query-1"><i class="fa fa-check"></i><b>6.2.1</b> Sample Query</a></li>
+<li class="chapter" data-level="6.2.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#finding-asos-sensors-1"><i class="fa fa-check"></i><b>6.2.2</b> Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="6.2.3" data-path="A-weatherdata.html"><a href="A-weatherdata.html#weather-data-query-1"><i class="fa fa-check"></i><b>6.2.3</b> Weather Data Query</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
 <ul>
-<li class="chapter" data-level="5.3" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.3</b> Overview</a></li>
-<li class="chapter" data-level="5.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.4</b> Environment Setup</a>
+<li class="chapter" data-level="6.3" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>6.3</b> Overview</a></li>
+<li class="chapter" data-level="6.4" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup-3"><i class="fa fa-check"></i><b>6.4</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.4.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.4.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.4.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.4.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.4.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i>Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i><b>5.5</b> Data manipulation and Plotting</a></li>
-<li class="chapter" data-level="5.6" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i><b>5.6</b> More Plotting</a></li>
+<li class="chapter" data-level="6.5" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i><b>6.5</b> Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="6.6" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i><b>6.6</b> More Plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
 <ul>
-<li class="chapter" data-level="5.7" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.7</b> Overview</a></li>
-<li class="chapter" data-level="5.8" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.8</b> Environment Setup</a>
+<li class="chapter" data-level="6.7" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#overview-1"><i class="fa fa-check"></i><b>6.7</b> Overview</a></li>
+<li class="chapter" data-level="6.8" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#environment-setup-4"><i class="fa fa-check"></i><b>6.8</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.8.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.8.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.8.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.8.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.8.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.8.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#inputoutput-1"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-libraries-1"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-data-1"><i class="fa fa-check"></i>Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.9" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.9</b> Data Manipulation</a></li>
-<li class="chapter" data-level="5.10" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i><b>5.10</b> Making Point Data Maps</a></li>
+<li class="chapter" data-level="6.9" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>6.9</b> Data Manipulation</a></li>
+<li class="chapter" data-level="6.10" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i><b>6.10</b> Making Point Data Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
 <ul>
-<li class="chapter" data-level="5.11" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.11</b> Overview</a></li>
-<li class="chapter" data-level="5.12" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.12</b> Environment Setup</a>
+<li class="chapter" data-level="6.11" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#overview-2"><i class="fa fa-check"></i><b>6.11</b> Overview</a></li>
+<li class="chapter" data-level="6.12" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#environment-setup-5"><i class="fa fa-check"></i><b>6.12</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.12.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.12.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.12.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.12.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.12.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.12.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inputoutput-2"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-libraries-2"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="6.12.1" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-data-2"><i class="fa fa-check"></i><b>6.12.1</b> Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.13" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i><b>5.13</b> Inspecting Data</a></li>
-<li class="chapter" data-level="5.14" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.14</b> Data Manipulation</a></li>
-<li class="chapter" data-level="5.15" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i><b>5.15</b> Plotting Grid Map</a></li>
+<li class="chapter" data-level="6.13" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i><b>6.13</b> Inspecting Data</a></li>
+<li class="chapter" data-level="6.14" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#data-manipulation-1"><i class="fa fa-check"></i><b>6.14</b> Data Manipulation</a></li>
+<li class="chapter" data-level="6.15" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i><b>6.15</b> Plotting Grid Map</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html"><i class="fa fa-check"></i>Appendix F: Roads Data</a>
 <ul>
-<li class="chapter" data-level="5.16" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.16</b> Overview</a></li>
-<li class="chapter" data-level="5.17" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.17</b> Environment Setup</a>
+<li class="chapter" data-level="6.16" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#overview-3"><i class="fa fa-check"></i><b>6.16</b> Overview</a></li>
+<li class="chapter" data-level="6.17" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#environment-setup-6"><i class="fa fa-check"></i><b>6.17</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.17.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.17.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.17.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.17.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.17.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.17.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#inputoutput-3"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-libraries-3"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-data-3"><i class="fa fa-check"></i>Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.18" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.18</b> Data Manipulation</a>
+<li class="chapter" data-level="6.18" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-manipulation-2"><i class="fa fa-check"></i><b>6.18</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="5.18.1" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i><b>5.18.1</b> Prelimnary Work</a></li>
-<li class="chapter" data-level="5.18.2" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i><b>5.18.2</b> Primary Roads</a></li>
-<li class="chapter" data-level="5.18.3" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i><b>5.18.3</b> Secondary Roads</a></li>
-<li class="chapter" data-level="5.18.4" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i><b>5.18.4</b> Motorway</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i>Prelimnary Work</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i>Primary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i>Secondary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i>Motorway</a></li>
 </ul></li>
-<li class="chapter" data-level="5.19" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i><b>5.19</b> Outputting Data</a></li>
+<li class="chapter" data-level="6.19" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i><b>6.19</b> Outputting Data</a></li>
 </ul></li>
 </ul>
 
@@ -282,8 +301,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="appendix-a-ndvi" class="section level1 unnumbered">
 <h1>Appendix A: NDVI</h1>
-<div id="overview" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Overview</h2>
+<div id="overview" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Overview</h2>
 <p>In this tutorial, we will learn to deal with raster data. For illustrative purposes, we will take a look at the NDVI data (Normalized Difference Vegetation Index) of 21 large counties in the Midwest. Our objectives are to:</p>
 <ul>
 <li>Visualize raster data using the “tmap” package</li>
@@ -291,79 +310,79 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li>Check and analyze summary statistics of raster data</li>
 </ul>
 </div>
-<div id="environment-setup" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Environment Setup</h2>
-<div id="inputoutput" class="section level3" number="5.4.1">
-<h3><span class="header-section-number">5.4.1</span> Input/Output</h3>
-<p>Our inputs include the shapefile of 21 large counties in the Midwest and the quarterly data of NDVI. The files can be found here. <strong>Insert Link!</strong></p>
+<div id="environment-setup-3" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Environment Setup</h2>
+<div id="inputoutput" class="section level3 unnumbered">
+<h3>Input/Output</h3>
+<p>Our inputs include the shapefile of 21 large counties in the Midwest and the quarterly data of NDVI. The files are available for download on this project’s <a href="https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data">GitHub repo</a>.</p>
 </div>
-<div id="load-libraries" class="section level3" number="5.4.2">
-<h3><span class="header-section-number">5.4.2</span> Load Libraries</h3>
+<div id="load-libraries" class="section level3 unnumbered">
+<h3>Load Libraries</h3>
 <p>We will use the following packages in this tutorial:</p>
 <ul>
 <li><code>raster</code>: to manipulate and analyze raster data</li>
 <li><code>sf</code>: to conduct basic spatial data manipulation</li>
 <li><code>tamp</code>: to create spatial data visualization</li>
 </ul>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="A-NDVI.html#cb219-1" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
-<span id="cb219-2"><a href="A-NDVI.html#cb219-2" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
-<span id="cb219-3"><a href="A-NDVI.html#cb219-3" aria-hidden="true"></a><span class="kw">library</span>(tmap)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="A-NDVI.html#cb133-1" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
+<span id="cb133-2"><a href="A-NDVI.html#cb133-2" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
+<span id="cb133-3"><a href="A-NDVI.html#cb133-3" aria-hidden="true"></a><span class="kw">library</span>(tmap)</span></code></pre></div>
 <p>Since we are mainly analyzing raster data in this tutorial, we use the “raster” package heavily, which “implements basic and high-level functions for raster data and for vector data operations such as intersections.” The detailed documentation can be found <a href="https://cran.r-project.org/web/packages/raster/raster.pdf">here</a>.</p>
 </div>
-<div id="load-data" class="section level3" number="5.4.3">
-<h3><span class="header-section-number">5.4.3</span> Load Data</h3>
+<div id="load-data" class="section level3 unnumbered">
+<h3>Load Data</h3>
 <p>The data we are analyzing is the quarterly average of the Normalized Difference Vegetation Index for 21 large counties in the Midwest, from 2014 to 2018. It is stacked chronologically. Note that the original dataset is quite large (over 50 gigabytes), so we processed the data in advance. We can load the pre-processed data simply by running the command below.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="A-NDVI.html#cb220-1" aria-hidden="true"></a>ndvi.quarterly &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;./data/NDVILargeAreaQuarterlyStack.tif&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="A-NDVI.html#cb134-1" aria-hidden="true"></a>ndvi.quarterly &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;./data/NDVILargeAreaQuarterlyStack.tif&quot;</span>)</span></code></pre></div>
 <p>(Remark: You may encounter trouble loading the data if you do not have the “rgdal” package installed!)</p>
 <p>It is a good idea to take a glance at our dataset before we proceed any further.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="A-NDVI.html#cb221-1" aria-hidden="true"></a>ndvi.quarterly</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="A-NDVI.html#cb135-1" aria-hidden="true"></a>ndvi.quarterly</span></code></pre></div>
 <pre><code>## class      : RasterStack 
 ## dimensions : 1194, 784, 936096, 20  (nrow, ncol, ncell, nlayers)
 ## resolution : 0.00295, 0.00208  (x, y)
 ## extent     : -88.77872, -86.46592, 40.73568, 43.2192  (xmin, xmax, ymin, ymax)
-## crs        : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## crs        : +proj=longlat +datum=WGS84 +no_defs 
 ## names      : NDVILarge//rlyStack.1, NDVILarge//rlyStack.2, NDVILarge//rlyStack.3, NDVILarge//rlyStack.4, NDVILarge//rlyStack.5, NDVILarge//rlyStack.6, NDVILarge//rlyStack.7, NDVILarge//rlyStack.8, NDVILarge//rlyStack.9, NDVILarge//lyStack.10, NDVILarge//lyStack.11, NDVILarge//lyStack.12, NDVILarge//lyStack.13, NDVILarge//lyStack.14, NDVILarge//lyStack.15, ... 
 ## min values :            -0.1979000,            -0.1400464,            -0.1463546,            -0.1714621,            -0.1730933,            -0.1068576,            -0.1513947,            -0.1989500,            -0.1977000,            -0.1508639,            -0.1616515,            -0.1834559,            -0.1792000,            -0.1500082,            -0.1286048, ... 
 ## max values :             0.4057376,             0.8217609,             0.9162192,             0.7483148,             0.5150092,             0.8381958,             0.9147448,             0.8577355,             0.7820903,             0.8141744,             0.9077643,             0.8238385,             0.8000358,             0.8359118,             0.8964590, ...</code></pre>
 <p>Also remember to load the shapfile of the 21 large counties. We will use it shortly when we start plotting.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="A-NDVI.html#cb223-1" aria-hidden="true"></a>counties &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="A-NDVI.html#cb137-1" aria-hidden="true"></a>counties &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
 <pre><code>## Reading layer `LargeAreaCounties&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/LargeAreaCounties&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 21 features and 8 fields
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
 ## bbox:           xmin: -88.77879 ymin: 40.73641 xmax: -86.46629 ymax: 43.21831
-## CRS:            4326</code></pre>
+## geographic CRS: WGS 84</code></pre>
 <p>For more detailed description of the data, please refer to the main chapters of this tutorial book. <strong>Insert Link!</strong></p>
 </div>
 </div>
-<div id="data-manipulation-and-plotting" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Data manipulation and Plotting</h2>
+<div id="data-manipulation-and-plotting" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Data manipulation and Plotting</h2>
 <p>We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="A-NDVI.html#cb225-1" aria-hidden="true"></a>this.qtr &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">subset</span>(ndvi.quarterly, <span class="dv">19</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="A-NDVI.html#cb139-1" aria-hidden="true"></a>this.qtr &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">subset</span>(ndvi.quarterly, <span class="dv">19</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p>Thanks to the data processing done beforehand, we don’t have much data manipulation to do. It is time for us to start making plots! We begin with the most basic raster map.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="A-NDVI.html#cb226-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
-<span id="cb226-2"><a href="A-NDVI.html#cb226-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>() <span class="op">+</span></span>
-<span id="cb226-3"><a href="A-NDVI.html#cb226-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="A-NDVI.html#cb140-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb140-2"><a href="A-NDVI.html#cb140-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>() <span class="op">+</span></span>
+<span id="cb140-3"><a href="A-NDVI.html#cb140-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>This plot gives an overview of the NDVI of the 21 large counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.</p>
 <p>Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="A-NDVI.html#cb227-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
-<span id="cb227-2"><a href="A-NDVI.html#cb227-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
-<span id="cb227-3"><a href="A-NDVI.html#cb227-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
-<span id="cb227-4"><a href="A-NDVI.html#cb227-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
-<span id="cb227-5"><a href="A-NDVI.html#cb227-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="A-NDVI.html#cb141-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb141-2"><a href="A-NDVI.html#cb141-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
+<span id="cb141-3"><a href="A-NDVI.html#cb141-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
+<span id="cb141-4"><a href="A-NDVI.html#cb141-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb141-5"><a href="A-NDVI.html#cb141-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
 <p>With this nicer plot, it is possible to compare the NDVI of different counties. Those who are familiar with the geography of the Midwest would immediately recognize that Cook county seems to have a lower NDVI than other counties. It is not at all surprising since the City of Chicago is located in Cook County, and metropolitan areas tend to have less vegetation than rural areas.</p>
 <p>We can also make the plot interactive so that the readers can explore the plot more thoroughly.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="A-NDVI.html#cb228-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
-<span id="cb228-2"><a href="A-NDVI.html#cb228-2" aria-hidden="true"></a></span>
-<span id="cb228-3"><a href="A-NDVI.html#cb228-3" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
-<span id="cb228-4"><a href="A-NDVI.html#cb228-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
-<span id="cb228-5"><a href="A-NDVI.html#cb228-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
-<span id="cb228-6"><a href="A-NDVI.html#cb228-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
-<span id="cb228-7"><a href="A-NDVI.html#cb228-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - the 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="A-NDVI.html#cb142-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
+<span id="cb142-2"><a href="A-NDVI.html#cb142-2" aria-hidden="true"></a></span>
+<span id="cb142-3"><a href="A-NDVI.html#cb142-3" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb142-4"><a href="A-NDVI.html#cb142-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
+<span id="cb142-5"><a href="A-NDVI.html#cb142-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
+<span id="cb142-6"><a href="A-NDVI.html#cb142-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb142-7"><a href="A-NDVI.html#cb142-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - the 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
 <p>We can turn off the interactive mode by running the following code.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="A-NDVI.html#cb229-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="A-NDVI.html#cb143-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
 <p>Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset <code>this.qtr</code>. Notice that we use <code>raster::summary</code> here to specifiy that we want R to use the <code>summary</code> function from the “raster” package.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="A-NDVI.html#cb230-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(this.qtr)</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="A-NDVI.html#cb144-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(this.qtr)</span></code></pre></div>
 <pre><code>##         NDVILargeAreaQuarterlyStack.19
 ## Min.                     -9.315484e-02
 ## 1st Qu.                   6.263003e-01
@@ -372,26 +391,26 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ## Max.                      9.006166e-01
 ## NA&#39;s                      4.571800e+05</code></pre>
 </div>
-<div id="more-plotting" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> More Plotting</h2>
+<div id="more-plotting" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> More Plotting</h2>
 <p>Now that we have learned how to make a raster map, let’s make more. In this section, we will place our focus on the NDVI of Cook County, IL - the home county of Chicago. First, we will extract the shape of Cook County.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="A-NDVI.html#cb232-1" aria-hidden="true"></a>cook.county &lt;-<span class="st"> </span>counties[counties<span class="op">$</span>COUNTYNAME <span class="op">==</span><span class="st"> &quot;Cook&quot;</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="A-NDVI.html#cb146-1" aria-hidden="true"></a>cook.county &lt;-<span class="st"> </span>counties[counties<span class="op">$</span>COUNTYNAME <span class="op">==</span><span class="st"> &quot;Cook&quot;</span>, ]</span></code></pre></div>
 <p>Before we do anything else, we can plot the shape of Cook County that we just extracted to make sure we subsetted the dataset correctly.</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="A-NDVI.html#cb233-1" aria-hidden="true"></a><span class="kw">plot</span>(cook.county<span class="op">$</span>geometry)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="A-NDVI.html#cb147-1" aria-hidden="true"></a><span class="kw">plot</span>(cook.county<span class="op">$</span>geometry)</span></code></pre></div>
 <p><img src="OpenAirQ-Toolkit_files/figure-html/A_Plot%20Cook%20County%20Shape%20ndvi-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This is a very crude plot since it only shows the border of Cook County. Rest assured that our final product is much more visually pleasing than this!</p>
 <p>The following two lines of code crop and mask raster data to Cook County. Cropping and then masking accelerates the actions for large raster data. It probably does not matter in our case, since we are only looking at Cook County, and the volume of our data is rather small.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="A-NDVI.html#cb234-1" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">crop</span>(this.qtr, cook.county)</span>
-<span id="cb234-2"><a href="A-NDVI.html#cb234-2" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">mask</span>(cook.ndvi, cook.county)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="A-NDVI.html#cb148-1" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">crop</span>(this.qtr, cook.county)</span>
+<span id="cb148-2"><a href="A-NDVI.html#cb148-2" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">mask</span>(cook.ndvi, cook.county)</span></code></pre></div>
 <p>Now we can plot a raster map for Cook County. The commands we use here are very similar to the ones we used before.</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="A-NDVI.html#cb235-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(cook.ndvi) <span class="op">+</span></span>
-<span id="cb235-2"><a href="A-NDVI.html#cb235-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>) <span class="op">+</span></span>
-<span id="cb235-3"><a href="A-NDVI.html#cb235-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(cook.county) <span class="op">+</span></span>
-<span id="cb235-4"><a href="A-NDVI.html#cb235-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
-<span id="cb235-5"><a href="A-NDVI.html#cb235-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI for Cook County:</span><span class="ch">\n</span><span class="st">The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="A-NDVI.html#cb149-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(cook.ndvi) <span class="op">+</span></span>
+<span id="cb149-2"><a href="A-NDVI.html#cb149-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>) <span class="op">+</span></span>
+<span id="cb149-3"><a href="A-NDVI.html#cb149-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(cook.county) <span class="op">+</span></span>
+<span id="cb149-4"><a href="A-NDVI.html#cb149-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb149-5"><a href="A-NDVI.html#cb149-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI for Cook County:</span><span class="ch">\n</span><span class="st">The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
 <p>With this raster map, we are able to discern patterns of NDVI with Cook County. The middle-east part of Cook County, where the City of Chicago is located, is shown in a lighter green than other parts of the county, signaling a lower NDVI. The northern and southern parts of the county, which are mostly rural areas, are shown to have a higher NDVI, much as we would expect.</p>
 <p>Before we conclude this tutorial, let’s again take a look at the summary statistics.</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="A-NDVI.html#cb236-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(cook.ndvi)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="A-NDVI.html#cb150-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(cook.ndvi)</span></code></pre></div>
 <pre><code>##         NDVILargeAreaQuarterlyStack.19
 ## Min.                      2.923896e-02
 ## 1st Qu.                   3.955676e-01
@@ -399,9 +418,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ## 3rd Qu.                   6.440714e-01
 ## Max.                      8.844491e-01
 ## NA&#39;s                      3.973500e+04</code></pre>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="A-NDVI.html#cb238-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(cook.ndvi))) </span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="A-NDVI.html#cb152-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(cook.ndvi))) </span></code></pre></div>
 <pre><code>## [1] 0.5213509</code></pre>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="A-NDVI.html#cb240-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(this.qtr))) </span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="A-NDVI.html#cb154-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(this.qtr))) </span></code></pre></div>
 <pre><code>## [1] 0.6662209</code></pre>
 <p>The mean NDVI for Cook County is 0.52, while the mean for all 21 counties is 0.67. This is reasonable because NDVI tends to be lower in large cities, and Cook County happens to be at the center of the Chicago metropolitan area. Moreover, this is consistent with what we observe from the plots - Cook County is shown in a lighter green than other counties, which we have pointed out earlier in the tutorial.</p>
 <p>This marks the end of our tutorial. Hopefully, now you feel comfortable dealing with raster data. Of course, there are many more techniques to be learned in order to conduct more sophisticated spatial analysis with raster data. There are abundant online resources that introduce more complicated tools to handle raster data, which you may want to explore on your own.</p>
@@ -413,7 +432,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="09-sensor2raster.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="A-weatherdata.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="B-Point_Emission_Data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

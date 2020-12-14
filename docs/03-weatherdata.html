@@ -4,12 +4,12 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Data Prep &amp; Management | index.split</title>
+  <title>2 Pollution &amp; Weather | OpenAirQ-Toolkit.utf8</title>
   <meta name="description" content="<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
 </style>" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Data Prep &amp; Management | index.split" />
+  <meta property="og:title" content="2 Pollution &amp; Weather | OpenAirQ-Toolkit.utf8" />
   <meta property="og:type" content="book" />
   
   
@@ -17,12 +17,12 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Data Prep &amp; Management | index.split" />
+  <meta name="twitter:title" content="2 Pollution &amp; Weather | OpenAirQ-Toolkit.utf8" />
   
   
   
 
-<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-08 using R.version$version.string" />
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-14 on R.Version()$version.string" />
 
 
 
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="02-vectormapping.html"/>
 <link rel="next" href="04-ToolkitPointsToSurfaces.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,9 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -152,7 +154,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1" data-path="02-vectormapping.html"><a href="02-vectormapping.html"><i class="fa fa-check"></i><b>1</b> Vector Data Mapping</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#introduction-1"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
 <li class="chapter" data-level="1.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>1.2</b> Environment Setup</a></li>
 <li class="chapter" data-level="1.3" data-path="02-vectormapping.html"><a href="02-vectormapping.html#county-boundaries"><i class="fa fa-check"></i><b>1.3</b> County Boundaries</a></li>
 <li class="chapter" data-level="1.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#state-boundaries"><i class="fa fa-check"></i><b>1.4</b> State Boundaries</a></li>
@@ -161,7 +163,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.7</b> Point Sources of Pollution</a></li>
 <li class="chapter" data-level="" data-path="02-vectormapping.html"><a href="02-vectormapping.html#further-resources"><i class="fa fa-check"></i>Further Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="03-weatherdata.html"><a href="03-weatherdata.html"><i class="fa fa-check"></i><b>2</b> Data Prep &amp; Management</a>
+<li class="chapter" data-level="2" data-path="03-weatherdata.html"><a href="03-weatherdata.html"><i class="fa fa-check"></i><b>2</b> Pollution &amp; Weather</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="03-weatherdata.html"><a href="03-weatherdata.html#epa-pollution-data"><i class="fa fa-check"></i><b>2.1</b> EPA Pollution Data</a>
 <ul>
@@ -177,90 +179,107 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html"><i class="fa fa-check"></i><b>3</b> Point Sensors to Surfaces</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
-<li class="chapter" data-level="3.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#loading-the-required-packages"><i class="fa fa-check"></i><b>3.2</b> Loading the Required Packages</a></li>
+<li class="chapter" data-level="3.1" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#environment-setup-1"><i class="fa fa-check"></i><b>3.2</b> Environment Setup</a></li>
 <li class="chapter" data-level="3.3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>3.3</b> Read and Examine the Data</a></li>
 <li class="chapter" data-level="3.4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-wrangling"><i class="fa fa-check"></i><b>3.4</b> Data Wrangling</a></li>
 <li class="chapter" data-level="3.5" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>3.5</b> Creating a Spatial Object using sp</a></li>
 <li class="chapter" data-level="3.6" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-visualization-review"><i class="fa fa-check"></i><b>3.6</b> Data Visualization Review</a></li>
 <li class="chapter" data-level="3.7" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>3.7</b> Constructing a Kernal Density Estimation</a></li>
+<li class="chapter" data-level="" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#further-resources-1"><i class="fa fa-check"></i>Further Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="06-interpmodels.html"><a href="06-interpmodels.html"><i class="fa fa-check"></i><b>4</b> Interpolation Models</a>
+<li class="chapter" data-level="4" data-path="05-interpmodels.html"><a href="05-interpmodels.html"><i class="fa fa-check"></i><b>4</b> Interpolation Models</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="06-interpmodels.html"><a href="06-interpmodels.html#example-interpolating-average-temperature-across-the-21-county-study-area."><i class="fa fa-check"></i><b>4.1</b> Example: Interpolating Average Temperature across the 21-county study area.</a></li>
-<li class="chapter" data-level="4.2" data-path="06-interpmodels.html"><a href="06-interpmodels.html#wrangling-data"><i class="fa fa-check"></i><b>4.2</b> Wrangling Data</a></li>
-<li class="chapter" data-level="4.3" data-path="06-interpmodels.html"><a href="06-interpmodels.html#exploring-the-null-model"><i class="fa fa-check"></i><b>4.3</b> Exploring the Null Model</a></li>
-<li class="chapter" data-level="4.4" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-1-voronoi-model"><i class="fa fa-check"></i><b>4.4</b> Model 1: Voronoi Model</a>
+<li class="chapter" data-level="4.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="05-interpmodels.html"><a href="05-interpmodels.html#environment-setup-2"><i class="fa fa-check"></i><b>4.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="4.3" data-path="05-interpmodels.html"><a href="05-interpmodels.html#importing-temperature-sensor-data"><i class="fa fa-check"></i><b>4.3</b> Importing Temperature Sensor Data</a></li>
+<li class="chapter" data-level="4.4" data-path="05-interpmodels.html"><a href="05-interpmodels.html#interpolating-temperature"><i class="fa fa-check"></i><b>4.4</b> Interpolating Temperature</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="06-interpmodels.html"><a href="06-interpmodels.html#validating-the-voronoi-model"><i class="fa fa-check"></i><b>4.4.1</b> Validating the Voronoi Model</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#voronoi-tesselation"><i class="fa fa-check"></i>Voronoi Tesselation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#nearest-neighbor"><i class="fa fa-check"></i>Nearest Neighbor</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#inverse-distance-weighted"><i class="fa fa-check"></i>Inverse Distance Weighted</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#idw-optimiziation"><i class="fa fa-check"></i>IDW Optimiziation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#ordinary-kriging"><i class="fa fa-check"></i>Ordinary Kriging</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-2-nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>4.5</b> Model 2: Nearest Neighbor Interpolation</a></li>
-<li class="chapter" data-level="4.6" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-3-idw-interpolation-using-baseline-parameters"><i class="fa fa-check"></i><b>4.6</b> Model 3: IDW Interpolation using baseline parameters</a></li>
-<li class="chapter" data-level="4.7" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-4-optimized-idw-interpolation"><i class="fa fa-check"></i><b>4.7</b> Model 4: Optimized IDW Interpolation</a></li>
-<li class="chapter" data-level="4.8" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-5-thin-plate-spline-model"><i class="fa fa-check"></i><b>4.8</b> Model 5: Thin Plate Spline Model</a></li>
-<li class="chapter" data-level="4.9" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-6-ordinary-kriging"><i class="fa fa-check"></i><b>4.9</b> Model 6: Ordinary Kriging</a></li>
-<li class="chapter" data-level="4.10" data-path="06-interpmodels.html"><a href="06-interpmodels.html#model-7-blending-all-models"><i class="fa fa-check"></i><b>4.10</b> Model 7: Blending all models</a></li>
-<li class="chapter" data-level="4.11" data-path="06-interpmodels.html"><a href="06-interpmodels.html#conclusion"><i class="fa fa-check"></i><b>4.11</b> Conclusion</a></li>
+<li class="chapter" data-level="4.5" data-path="05-interpmodels.html"><a href="05-interpmodels.html#method-selection-criteria"><i class="fa fa-check"></i><b>4.5</b> Method Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#calculating-rmse"><i class="fa fa-check"></i><b>4.5.1</b> Calculating RMSE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html"><i class="fa fa-check"></i><b>5</b> Merging Satellite and Point Sensor Data</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#generate-rasters"><i class="fa fa-check"></i><b>5.1</b> Generate Rasters</a></li>
 <li class="chapter" data-level="5.2" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#export-to-csv"><i class="fa fa-check"></i><b>5.2</b> Export to CSV</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="A-weatherdata.html"><a href="A-weatherdata.html"><i class="fa fa-check"></i><b>6</b> Pollution &amp; Weather</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#epa-pollution-data-1"><i class="fa fa-check"></i><b>6.1</b> EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#getting-started-1"><i class="fa fa-check"></i><b>6.1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="6.1.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#pm2.5-data-query-1"><i class="fa fa-check"></i><b>6.1.2</b> PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#faa-weather-data-1"><i class="fa fa-check"></i><b>6.2</b> FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#sample-query-1"><i class="fa fa-check"></i><b>6.2.1</b> Sample Query</a></li>
+<li class="chapter" data-level="6.2.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#finding-asos-sensors-1"><i class="fa fa-check"></i><b>6.2.2</b> Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="6.2.3" data-path="A-weatherdata.html"><a href="A-weatherdata.html#weather-data-query-1"><i class="fa fa-check"></i><b>6.2.3</b> Weather Data Query</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
 <ul>
-<li class="chapter" data-level="5.3" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.3</b> Overview</a></li>
-<li class="chapter" data-level="5.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.4</b> Environment Setup</a>
+<li class="chapter" data-level="6.3" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>6.3</b> Overview</a></li>
+<li class="chapter" data-level="6.4" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup-3"><i class="fa fa-check"></i><b>6.4</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.4.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.4.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.4.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.4.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.4.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i>Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i><b>5.5</b> Data manipulation and Plotting</a></li>
-<li class="chapter" data-level="5.6" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i><b>5.6</b> More Plotting</a></li>
+<li class="chapter" data-level="6.5" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i><b>6.5</b> Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="6.6" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i><b>6.6</b> More Plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
 <ul>
-<li class="chapter" data-level="5.7" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.7</b> Overview</a></li>
-<li class="chapter" data-level="5.8" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.8</b> Environment Setup</a>
+<li class="chapter" data-level="6.7" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#overview-1"><i class="fa fa-check"></i><b>6.7</b> Overview</a></li>
+<li class="chapter" data-level="6.8" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#environment-setup-4"><i class="fa fa-check"></i><b>6.8</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.8.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.8.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.8.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.8.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.8.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.8.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#inputoutput-1"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-libraries-1"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-data-1"><i class="fa fa-check"></i>Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.9" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.9</b> Data Manipulation</a></li>
-<li class="chapter" data-level="5.10" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i><b>5.10</b> Making Point Data Maps</a></li>
+<li class="chapter" data-level="6.9" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>6.9</b> Data Manipulation</a></li>
+<li class="chapter" data-level="6.10" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i><b>6.10</b> Making Point Data Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
 <ul>
-<li class="chapter" data-level="5.11" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.11</b> Overview</a></li>
-<li class="chapter" data-level="5.12" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.12</b> Environment Setup</a>
+<li class="chapter" data-level="6.11" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#overview-2"><i class="fa fa-check"></i><b>6.11</b> Overview</a></li>
+<li class="chapter" data-level="6.12" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#environment-setup-5"><i class="fa fa-check"></i><b>6.12</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.12.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.12.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.12.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.12.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.12.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.12.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inputoutput-2"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-libraries-2"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="6.12.1" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-data-2"><i class="fa fa-check"></i><b>6.12.1</b> Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.13" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i><b>5.13</b> Inspecting Data</a></li>
-<li class="chapter" data-level="5.14" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.14</b> Data Manipulation</a></li>
-<li class="chapter" data-level="5.15" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i><b>5.15</b> Plotting Grid Map</a></li>
+<li class="chapter" data-level="6.13" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i><b>6.13</b> Inspecting Data</a></li>
+<li class="chapter" data-level="6.14" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#data-manipulation-1"><i class="fa fa-check"></i><b>6.14</b> Data Manipulation</a></li>
+<li class="chapter" data-level="6.15" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i><b>6.15</b> Plotting Grid Map</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html"><i class="fa fa-check"></i>Appendix F: Roads Data</a>
 <ul>
-<li class="chapter" data-level="5.16" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.16</b> Overview</a></li>
-<li class="chapter" data-level="5.17" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>5.17</b> Environment Setup</a>
+<li class="chapter" data-level="6.16" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#overview-3"><i class="fa fa-check"></i><b>6.16</b> Overview</a></li>
+<li class="chapter" data-level="6.17" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#environment-setup-6"><i class="fa fa-check"></i><b>6.17</b> Environment Setup</a>
 <ul>
-<li class="chapter" data-level="5.17.1" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i><b>5.17.1</b> Input/Output</a></li>
-<li class="chapter" data-level="5.17.2" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i><b>5.17.2</b> Load Libraries</a></li>
-<li class="chapter" data-level="5.17.3" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i><b>5.17.3</b> Load Data</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#inputoutput-3"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-libraries-3"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-data-3"><i class="fa fa-check"></i>Load Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.18" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.18</b> Data Manipulation</a>
+<li class="chapter" data-level="6.18" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-manipulation-2"><i class="fa fa-check"></i><b>6.18</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="5.18.1" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i><b>5.18.1</b> Prelimnary Work</a></li>
-<li class="chapter" data-level="5.18.2" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i><b>5.18.2</b> Primary Roads</a></li>
-<li class="chapter" data-level="5.18.3" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i><b>5.18.3</b> Secondary Roads</a></li>
-<li class="chapter" data-level="5.18.4" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i><b>5.18.4</b> Motorway</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i>Prelimnary Work</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i>Primary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i>Secondary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i>Motorway</a></li>
 </ul></li>
-<li class="chapter" data-level="5.19" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i><b>5.19</b> Outputting Data</a></li>
+<li class="chapter" data-level="6.19" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i><b>6.19</b> Outputting Data</a></li>
 </ul></li>
 </ul>
 
@@ -280,12 +299,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-prep-management" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Data Prep &amp; Management</h1>
+<div id="pollution-weather" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Pollution &amp; Weather</h1>
 <p>This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.</p>
 <div id="epa-pollution-data" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> EPA Pollution Data</h2>
-<div class="figure"><span id="fig:unnamed-chunk-30"></span>
+<div class="figure"><span id="fig:unnamed-chunk-13"></span>
 <img src="https://archive.epa.gov/pesticides/region4/sesd/pm25/web/jpg/air-monitoring-site.jpg" alt="EPA Pollution Monitoring Site (EPA.gov)"  />
 <p class="caption">
 Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
@@ -350,12 +369,12 @@ Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
 <tr class="odd">
 <td align="left">2</td>
 <td align="left">17</td>
-<td align="left">157</td>
-<td align="left">0001</td>
+<td align="left">115</td>
+<td align="left">0013</td>
 <td align="left">88101</td>
 <td align="right">3</td>
-<td align="right">38.17628</td>
-<td align="right">-89.78846</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
 <td align="left">WGS84</td>
 <td align="left">PM2.5 - Local Conditions</td>
 <td align="left">1 HOUR</td>
@@ -363,12 +382,12 @@ Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
 <tr class="even">
 <td align="left">2100</td>
 <td align="left">17</td>
-<td align="left">157</td>
-<td align="left">0001</td>
+<td align="left">115</td>
+<td align="left">0013</td>
 <td align="left">88101</td>
 <td align="right">3</td>
-<td align="right">38.17628</td>
-<td align="right">-89.78846</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
 <td align="left">WGS84</td>
 <td align="left">PM2.5 - Local Conditions</td>
 <td align="left">1 HOUR</td>
@@ -376,12 +395,12 @@ Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">17</td>
-<td align="left">157</td>
-<td align="left">0001</td>
+<td align="left">115</td>
+<td align="left">0013</td>
 <td align="left">88101</td>
 <td align="right">3</td>
-<td align="right">38.17628</td>
-<td align="right">-89.78846</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
 <td align="left">WGS84</td>
 <td align="left">PM2.5 - Local Conditions</td>
 <td align="left">1 HOUR</td>
@@ -389,12 +408,12 @@ Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
 <tr class="even">
 <td align="left">4</td>
 <td align="left">17</td>
-<td align="left">157</td>
-<td align="left">0001</td>
+<td align="left">115</td>
+<td align="left">0013</td>
 <td align="left">88101</td>
 <td align="right">3</td>
-<td align="right">38.17628</td>
-<td align="right">-89.78846</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
 <td align="left">WGS84</td>
 <td align="left">PM2.5 - Local Conditions</td>
 <td align="left">1 HOUR</td>
@@ -402,12 +421,12 @@ Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">17</td>
-<td align="left">157</td>
-<td align="left">0001</td>
+<td align="left">115</td>
+<td align="left">0013</td>
 <td align="left">88101</td>
 <td align="right">3</td>
-<td align="right">38.17628</td>
-<td align="right">-89.78846</td>
+<td align="right">39.86683</td>
+<td align="right">-88.92559</td>
 <td align="left">WGS84</td>
 <td align="left">PM2.5 - Local Conditions</td>
 <td align="left">1 HOUR</td>
@@ -443,7 +462,7 @@ Figure 2.1: EPA Pollution Monitoring Site (EPA.gov)
 </div>
 <div id="faa-weather-data" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> FAA Weather Data</h2>
-<div class="figure"><span id="fig:unnamed-chunk-35"></span>
+<div class="figure"><span id="fig:unnamed-chunk-18"></span>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg/1280px-2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg" alt="An ASOS Observation Station in Elko, NV. (Wikimedia Commons)"  />
 <p class="caption">
 Figure 2.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
@@ -582,7 +601,6 @@ Figure 2.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
 <h4>Finding Sensors by State</h4>
 <p>In our project, we focus on certain counties in Illinois, Indiana, and Wisconsin, so we are interested in finding the sensors within that study area. The first step is to query the locations of all weather stations in the three states using the <strong>riem</strong> package. In the example below, we query for sensors in the Illinois ASOS sensor network.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="03-weatherdata.html#cb25-1" aria-hidden="true"></a>IL.stations =<span class="st"> </span><span class="kw">riem_stations</span>(<span class="dt">network =</span> <span class="st">&#39;IL_ASOS&#39;</span>)</span></code></pre></div>
-<pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -632,36 +650,36 @@ Figure 2.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
 </tbody>
 </table>
 <p>To query for data across multiple states, we are going the apply the <code>riem_stations</code> function to a list of weather station networks, as shown below.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="03-weatherdata.html#cb27-1" aria-hidden="true"></a>networks =<span class="st"> </span><span class="kw">list</span>(<span class="st">&#39;IL_ASOS&#39;</span>, <span class="st">&#39;IN_ASOS&#39;</span>, <span class="st">&#39;WI_ASOS&#39;</span>)</span>
-<span id="cb27-2"><a href="03-weatherdata.html#cb27-2" aria-hidden="true"></a></span>
-<span id="cb27-3"><a href="03-weatherdata.html#cb27-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb27-4"><a href="03-weatherdata.html#cb27-4" aria-hidden="true"></a>station.locs =<span class="st"> </span><span class="kw">lapply</span>(networks, riem<span class="op">::</span>riem_stations) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb27-5"><a href="03-weatherdata.html#cb27-5" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="03-weatherdata.html#cb26-1" aria-hidden="true"></a>networks =<span class="st"> </span><span class="kw">list</span>(<span class="st">&#39;IL_ASOS&#39;</span>, <span class="st">&#39;IN_ASOS&#39;</span>, <span class="st">&#39;WI_ASOS&#39;</span>)</span>
+<span id="cb26-2"><a href="03-weatherdata.html#cb26-2" aria-hidden="true"></a></span>
+<span id="cb26-3"><a href="03-weatherdata.html#cb26-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb26-4"><a href="03-weatherdata.html#cb26-4" aria-hidden="true"></a>station.locs =<span class="st"> </span><span class="kw">lapply</span>(networks, riem<span class="op">::</span>riem_stations) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-5"><a href="03-weatherdata.html#cb26-5" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
 <p>Note: You can find a list of state abbreviations by typing <code>state.abb</code> in your R console.</p>
 </div>
 <div id="converting-latitude-and-longitude-coordinates-to-spatial-data" class="section level4 unnumbered">
 <h4>Converting Latitude and Longitude Coordinates to Spatial Data</h4>
 <p>The data tables returned by the <strong>riem</strong> package must be converted to spatial data to determine which sensors are located in the study area. Since the lon/lat coordinates are already provided, the data table is easily converted to a spatial <code>sf</code> object.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="03-weatherdata.html#cb28-1" aria-hidden="true"></a>station.locs.sf =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_as_sf</span>(station.locs, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb28-2"><a href="03-weatherdata.html#cb28-2" aria-hidden="true"></a></span>
-<span id="cb28-3"><a href="03-weatherdata.html#cb28-3" aria-hidden="true"></a><span class="co"># Plot stations and study area boundaries to verify that the correct sensors were selected</span></span>
-<span id="cb28-4"><a href="03-weatherdata.html#cb28-4" aria-hidden="true"></a><span class="kw">plot</span>(station.locs.sf<span class="op">$</span>geometry)</span>
-<span id="cb28-5"><a href="03-weatherdata.html#cb28-5" aria-hidden="true"></a><span class="kw">plot</span>(sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="03-weatherdata.html#cb27-1" aria-hidden="true"></a>station.locs.sf =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_as_sf</span>(station.locs, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb27-2"><a href="03-weatherdata.html#cb27-2" aria-hidden="true"></a></span>
+<span id="cb27-3"><a href="03-weatherdata.html#cb27-3" aria-hidden="true"></a><span class="co"># Plot stations and study area boundaries to verify that the correct sensors were selected</span></span>
+<span id="cb27-4"><a href="03-weatherdata.html#cb27-4" aria-hidden="true"></a><span class="kw">plot</span>(station.locs.sf<span class="op">$</span>geometry)</span>
+<span id="cb27-5"><a href="03-weatherdata.html#cb27-5" aria-hidden="true"></a><span class="kw">plot</span>(sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="OpenAirQ-Toolkit_files/figure-html/csv.to.spatial-1.png" width="672" /></p>
 <p>We plot to results to verify that our query and data conversion process worked correctly. For reference, the boundaires of the study area is outlined in red.</p>
 </div>
 <div id="selecting-sensors-within-our-study-area" class="section level4 unnumbered">
 <h4>Selecting Sensors within our Study Area</h4>
 <p>Next, we perform a spatial join to only keep the points located within the boundaries of our study area polygons. The spatial join is completed by the <strong>sf</strong> package, as shown below. For more information regarding spatial joins and spatial predicates, please see <a href="https://gisgeography.com/spatial-join/">this</a> helpful blog post by GISgeography.com.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="03-weatherdata.html#cb29-1" aria-hidden="true"></a><span class="co"># Loading study area boundaries</span></span>
-<span id="cb29-2"><a href="03-weatherdata.html#cb29-2" aria-hidden="true"></a>study.area =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb29-3"><a href="03-weatherdata.html#cb29-3" aria-hidden="true"></a></span>
-<span id="cb29-4"><a href="03-weatherdata.html#cb29-4" aria-hidden="true"></a>study.sensors =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_join</span>(station.locs.sf, study.area, <span class="dt">left =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb29-5"><a href="03-weatherdata.html#cb29-5" aria-hidden="true"></a></span>
-<span id="cb29-6"><a href="03-weatherdata.html#cb29-6" aria-hidden="true"></a><span class="co"># Verify Spatial Join by Plotting</span></span>
-<span id="cb29-7"><a href="03-weatherdata.html#cb29-7" aria-hidden="true"></a><span class="kw">plot</span>(study.area<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>)</span>
-<span id="cb29-8"><a href="03-weatherdata.html#cb29-8" aria-hidden="true"></a><span class="kw">plot</span>(study.sensors<span class="op">$</span>geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb29-9"><a href="03-weatherdata.html#cb29-9" aria-hidden="true"></a><span class="kw">title</span>(<span class="st">&#39;Weather Stations Within the Study Area&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="03-weatherdata.html#cb28-1" aria-hidden="true"></a><span class="co"># Loading study area boundaries</span></span>
+<span id="cb28-2"><a href="03-weatherdata.html#cb28-2" aria-hidden="true"></a>study.area =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb28-3"><a href="03-weatherdata.html#cb28-3" aria-hidden="true"></a></span>
+<span id="cb28-4"><a href="03-weatherdata.html#cb28-4" aria-hidden="true"></a>study.sensors =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_join</span>(station.locs.sf, study.area, <span class="dt">left =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb28-5"><a href="03-weatherdata.html#cb28-5" aria-hidden="true"></a></span>
+<span id="cb28-6"><a href="03-weatherdata.html#cb28-6" aria-hidden="true"></a><span class="co"># Verify Spatial Join by Plotting</span></span>
+<span id="cb28-7"><a href="03-weatherdata.html#cb28-7" aria-hidden="true"></a><span class="kw">plot</span>(study.area<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb28-8"><a href="03-weatherdata.html#cb28-8" aria-hidden="true"></a><span class="kw">plot</span>(study.sensors<span class="op">$</span>geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb28-9"><a href="03-weatherdata.html#cb28-9" aria-hidden="true"></a><span class="kw">title</span>(<span class="st">&#39;Weather Stations Within the Study Area&#39;</span>)</span></code></pre></div>
 <p><img src="OpenAirQ-Toolkit_files/figure-html/sensor.join-1.png" width="672" /></p>
 <p>Now that we have a dataset of which weather stations we are interested in, we can query for the weather data associated with each station.</p>
 </div>
@@ -669,10 +687,10 @@ Figure 2.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
 <div id="weather-data-query" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Weather Data Query</h3>
 <p>Again we use the <code>lapply</code> function in base R to execute the <code>riem_measures</code> function on a list of sensor IDs. This allows us to iteratively query for weather data from each individual sensor in a list. In the code snippet below, we take the study sensors obtained previously and query for a single day’s worth of weather data.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="03-weatherdata.html#cb30-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb30-2"><a href="03-weatherdata.html#cb30-2" aria-hidden="true"></a></span>
-<span id="cb30-3"><a href="03-weatherdata.html#cb30-3" aria-hidden="true"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2014-01-02&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb30-4"><a href="03-weatherdata.html#cb30-4" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="03-weatherdata.html#cb29-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb29-2"><a href="03-weatherdata.html#cb29-2" aria-hidden="true"></a></span>
+<span id="cb29-3"><a href="03-weatherdata.html#cb29-3" aria-hidden="true"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2014-01-02&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb29-4"><a href="03-weatherdata.html#cb29-4" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -724,8 +742,8 @@ Figure 2.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
 <div id="querying-full-weather-dataset" class="section level4 unnumbered">
 <h4>Querying Full Weather Dataset</h4>
 <p>Use caution when querying for a large amount of data. Data tables can easily become unwieldy after querying for a large number of weather stations across a wide time scale. The code snippet below downloads all ASOS weather data for sensors in our study area from January 1st 2014 to December 31st 2018, which is our study time period. It has approximately 4.8 Million records and takes 6-10 minutes to download.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="03-weatherdata.html#cb31-1" aria-hidden="true"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2018-12-31&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb31-2"><a href="03-weatherdata.html#cb31-2" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="03-weatherdata.html#cb30-1" aria-hidden="true"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2018-12-31&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-2"><a href="03-weatherdata.html#cb30-2" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
 
 </div>
 </div>

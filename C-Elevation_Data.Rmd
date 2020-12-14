@@ -17,13 +17,13 @@ The goal of this tutorial is to introduce the packages and techniques that are c
 
 ## Environment Setup
 
-### Input/Output
+### Input/Output {-}
 
-Our inputs include a shapefile of several large counties in the Midwest, a grid data file, and a raster file that contains the elevation data which is the focus of this tutorial. The files can be found here. **Insert Link!**
+Our inputs include a shapefile of several large counties in the Midwest, a grid data file, and a raster file that contains the elevation data which is the focus of this tutorial. The files can be found here. The files are available for download on this project's [GitHub repo](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data).
 
 Our output is a new shapefile in which we write the the elevation data for each grid.
 
-### Load Libraries
+### Load Libraries {-}
 
 We will use the following packages in this tutorial:
 
@@ -34,9 +34,9 @@ We will use the following packages in this tutorial:
 * `tamp`: to create spatial data visualization
 * `velox`: to manipulate raster data in time efficient manner
 
-The only package that is worth special mention the "velox," which has excellent performance in fast raster data manipulation. Unfortunately, this package is no longer available. For the lack of substitutes, however, we will still utilize the "velox" package in this tutorial. 
+The only package that is worth special mention the "velox," which has excellent performance in fast raster data manipulation. Unfortunately, this package is no longer available. For the lack of substitutes, however, we will still utilize the `velox` package in this tutorial. 
 
-To install "velox" from archive, we can run the following code.
+To install `velox` from archive, we can run the following code.
 
 ```{r C_Install velox, eval = FALSE}
 library(devtools)
@@ -66,7 +66,7 @@ lac.elevation <- raster("./data/lac.elevation.grd")
 
 The elevation data comes from the 3D Elevation Program (3DEP) of United States Geological Survey. One nice thing about this program is that all of its data are available "free of charge and without use restrictions". If you are interested in learning more about what data are available, feel free to explore this [website](https://www.usgs.gov/core-science-systems/ngp/3dep/about-3dep-products-services). 
 
-For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
+For more detailed description of the data, please refer to the main chapters of this tutorial book.
 
 ## Inspecting Data
 
@@ -92,7 +92,7 @@ tm_shape(lac.elevation) +
 
 ## Data Manipulation
 
-Raster data manipulation is where the "velox" packages really shines as it contains a large number of functions that you will find useful in handling raster data. For example, `aggregate` allows users to aggregate a VeloxRaster object to a lower resolution. Another function, `crop`, as its name suggests, lets you crop a VeloxRaster function. If you want to rasterize a set of polygons, then you can use `rasterize`. There are many more functions that are of interest in raster data manipulation, but it is impossible to list all of them here. Detailed documentation about this package can be found [here](https://rdrr.io/cran/velox/api/), and you should feel free to explore it at your own pace. In our tutorial, we will mainly be using `velox` and `extract`.
+Raster data manipulation is where the `velox` packages really shines as it contains a large number of functions that you will find useful in handling raster data. For example, `aggregate` allows users to aggregate a VeloxRaster object to a lower resolution. Another function, `crop`, as its name suggests, lets you crop a VeloxRaster function. If you want to rasterize a set of polygons, then you can use `rasterize`. There are many more functions that are of interest in raster data manipulation, but it is impossible to list all of them here. Detailed documentation about this package can be found [here](https://rdrr.io/cran/velox/api/), and you should feel free to explore it at your own pace. In our tutorial, we will mainly be using `velox` and `extract`.
 
 First, we call the `velox` function to convert `lac.elevation` into a VeloxRaster object. Then we extract the mean value of each grid (km $\times$ km), and we name it `km.elecation.vx`. Note that "velox" is indeed good at **fast** raster data manipulation - running the two lines of code takes very little time.
 

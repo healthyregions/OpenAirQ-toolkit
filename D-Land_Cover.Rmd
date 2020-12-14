@@ -14,15 +14,15 @@ In this tutorial, we will take a close look at the land cover raster data of sev
 * Calculate percentages of low, mid, and high intensity development for each grid
 * Write new variables into the existing grid data file
 
-## Environment Setup
+## Environment Setup {-}
 
-### Input/Output
+### Input/Output {-}
 
-Our inputs include a raster dataset of land cover that is stored in `rds.` format, the shapefile of several large counties in the Midwwest, and a grid data file. The files can be found here. **Insert Link!**
+Our inputs include a raster dataset of land cover that is stored in `rds.` format, the shapefile of several large counties in the Midwwest, and a grid data file. The files are available for download on this project's [GitHub repo](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data).
 
 Our output is a `csv` file that records the percentages of low, mid, and high intensity development for each grid. We will also insert that information into the grid data file. 
 
-### Load Libraries
+### Load Libraries {-}
 
 We will use the following packages in this tutorial:
 
@@ -38,9 +38,10 @@ library(tidyverse)
 library(sf)
 library(velox)
 library(raster)
+library(rgdal)
 ```
 
-### Load Data
+### Load Data {-}
 
 Next, we load relevant data - `lc` is the land cover data in the raster form, `lac` is the shapefile of several large counties in the Midwest, and `km.grid` is the grid data that defines the grid cells. 
 
