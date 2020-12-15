@@ -30,7 +30,7 @@ The Chicago metropolitan area is the extent of the air quality study area. The s
 
 The first order of business is to load spatial data. The 21 county boundaries are contained in an ESRI Shapefile ending in `.shp`. The code snippet below imports the shapefile as an `sf` object in R.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 counties = sf::st_read('./data/LargeAreaCounties/LargeAreaCounties.shp')
 ```
 
@@ -48,7 +48,7 @@ To produce accurate analyses across the 21 county study area, it is necessary to
 
 As before, data on the geographic boundaires of these four states can be loaded into R as shown below.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 states = sf::st_read('./data/FourStates/FourStates.shp')
 ```
 
@@ -78,7 +78,7 @@ Over 127 individual PM2.5 pollution monitoring stations are located across the f
 
 Location information of sensors that were active between 2014 and 2018 are imported into R from a pre-compiled `.geojson` file.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 sensors = sf::st_read('./data/PM25_4States_2014.2018_POINTLOCS.geojson') %>% dplyr::mutate(rec_duration = as.numeric(lastRec - firstRec))
 ```
 
@@ -96,7 +96,7 @@ Air quality is directly affected by regional and local weather patterns, so a de
 
 The location of all sensors in the study area were loaded as shown below.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 asos = sf::st_read('./data/4States_ASOS_2018_Locations.geojson')
 ```
 
@@ -111,7 +111,7 @@ tm_shape(asos) +
 ## Point Sources of Pollution
 The last vector dataset in our toolkit are point source emission locations, sourced from the EPA National Emissions Inventory of 2014. These locations represent known sources of pollution. Locations in this inventory represent various factories, processing plants, heavy industrial installations, powerplants, major HVAC systems, and more. Each location comes with information on the quantity of pollution per year released at the site. However, these number are self-reported by the polluting firm and are likely underestimates of true pollution occuring at that location. We load the location dataset as shown in the code snippet below. Each pollution sourced is represented as a point feature.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 points.pollution = sf::st_read('./data/Point_Source_Emissions_4States_2014.geojson')
 ```
 

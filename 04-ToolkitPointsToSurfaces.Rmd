@@ -87,7 +87,7 @@ nrow(county.nei)
 Let's finish filtering our data by restricting our results to only those emissions sources emitting PM2.5. We will first examine the different labels for pollution descriptions using the `unique()` function. We will then filter our dataset for only those labels that seem related to PM2.5 using the same process as above. 
 
 
-```{r, nei.pm.filter, attr.output='style="max-height: 100px;"'}
+```{r, nei.pm.filter, attr.output='style="max-height: 200px;"'}
 unique(county.nei$`pollutant desc`)
 
 pm25.names <- c("PM2.5 Filterable",  "PM2.5 Primary (Filt + Cond)")
@@ -121,10 +121,13 @@ With everything looking as it should, let's look back on what we just did. We in
 
 Here, we will use the spatial data visualization skills learned in an earlier chapter to visualize the point locations of PM2.5 sources in Cook County. 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 #Read in Cook County Shapefile using sp's readOGR function
 cook.county <- readOGR("./data/CookCounty.geojson") 
 
+```
+
+``` {r message = FALSE, warning = FALSE}
 #Check projection
 proj4string(cook.county)
 

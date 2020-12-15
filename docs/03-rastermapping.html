@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Vector Data Mapping | OpenAirQ-Toolkit.utf8</title>
+  <meta name="description" content="<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
+</style>" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Vector Data Mapping | OpenAirQ-Toolkit.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Vector Data Mapping | OpenAirQ-Toolkit.utf8" />
+  
+  
+  
+
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-15 on R version 4.0.3 (2020-10-10)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="02-vectormapping.html"/>
+<link rel="next" href="04-ToolkitPointsToSurfaces.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-basics"><i class="fa fa-check"></i>Software Basics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-team"><i class="fa fa-check"></i>Author Team</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="02-vectormapping.html"><a href="02-vectormapping.html"><i class="fa fa-check"></i><b>1</b> Vector Data Mapping</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#introduction-1"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup"><i class="fa fa-check"></i><b>1.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="1.3" data-path="02-vectormapping.html"><a href="02-vectormapping.html#county-boundaries"><i class="fa fa-check"></i><b>1.3</b> County Boundaries</a></li>
+<li class="chapter" data-level="1.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#state-boundaries"><i class="fa fa-check"></i><b>1.4</b> State Boundaries</a></li>
+<li class="chapter" data-level="1.5" data-path="02-vectormapping.html"><a href="02-vectormapping.html#epa-particulate-matter-stations"><i class="fa fa-check"></i><b>1.5</b> EPA Particulate Matter Stations</a></li>
+<li class="chapter" data-level="1.6" data-path="02-vectormapping.html"><a href="02-vectormapping.html#weather-stations"><i class="fa fa-check"></i><b>1.6</b> Weather Stations</a></li>
+<li class="chapter" data-level="1.7" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.7</b> Point Sources of Pollution</a></li>
+<li class="chapter" data-level="" data-path="02-vectormapping.html"><a href="02-vectormapping.html#further-resources"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="03-rastermapping.html"><a href="03-rastermapping.html"><i class="fa fa-check"></i><b>2</b> Vector Data Mapping</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="03-rastermapping.html"><a href="03-rastermapping.html#introduction-2"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="03-rastermapping.html"><a href="03-rastermapping.html#environment-setup-1"><i class="fa fa-check"></i><b>2.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="2.3" data-path="03-rastermapping.html"><a href="03-rastermapping.html#dataset-1"><i class="fa fa-check"></i><b>2.3</b> &lt;Dataset 1&gt;</a></li>
+<li class="chapter" data-level="" data-path="03-rastermapping.html"><a href="03-rastermapping.html#further-resources-1"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html"><i class="fa fa-check"></i><b>3</b> Point Sensors to Surfaces</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#introduction-3"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#environment-setup-2"><i class="fa fa-check"></i><b>3.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="3.3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>3.3</b> Read and Examine the Data</a></li>
+<li class="chapter" data-level="3.4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-wrangling"><i class="fa fa-check"></i><b>3.4</b> Data Wrangling</a></li>
+<li class="chapter" data-level="3.5" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>3.5</b> Creating a Spatial Object using sp</a></li>
+<li class="chapter" data-level="3.6" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-visualization-review"><i class="fa fa-check"></i><b>3.6</b> Data Visualization Review</a></li>
+<li class="chapter" data-level="3.7" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>3.7</b> Constructing a Kernal Density Estimation</a></li>
+<li class="chapter" data-level="" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#further-resources-2"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="05-interpmodels.html"><a href="05-interpmodels.html"><i class="fa fa-check"></i><b>4</b> Interpolation Models</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#introduction-4"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="05-interpmodels.html"><a href="05-interpmodels.html#environment-setup-3"><i class="fa fa-check"></i><b>4.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="4.3" data-path="05-interpmodels.html"><a href="05-interpmodels.html#importing-temperature-sensor-data"><i class="fa fa-check"></i><b>4.3</b> Importing Temperature Sensor Data</a></li>
+<li class="chapter" data-level="4.4" data-path="05-interpmodels.html"><a href="05-interpmodels.html#interpolating-temperature"><i class="fa fa-check"></i><b>4.4</b> Interpolating Temperature</a>
+<ul>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#voronoi-tesselation"><i class="fa fa-check"></i>Voronoi Tesselation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#nearest-neighbor"><i class="fa fa-check"></i>Nearest Neighbor</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#inverse-distance-weighted"><i class="fa fa-check"></i>Inverse Distance Weighted</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#idw-optimiziation"><i class="fa fa-check"></i>IDW Optimiziation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#ordinary-kriging"><i class="fa fa-check"></i>Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="05-interpmodels.html"><a href="05-interpmodels.html#method-selection-criteria"><i class="fa fa-check"></i><b>4.5</b> Method Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#calculating-rmse"><i class="fa fa-check"></i><b>4.5.1</b> Calculating RMSE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html"><i class="fa fa-check"></i><b>5</b> Merging Satellite and Point Sensor Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#generate-rasters"><i class="fa fa-check"></i><b>5.1</b> Generate Rasters</a></li>
+<li class="chapter" data-level="5.2" data-path="09-sensor2raster.html"><a href="09-sensor2raster.html#export-to-csv"><i class="fa fa-check"></i><b>5.2</b> Export to CSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-weatherdata.html"><a href="A-weatherdata.html"><i class="fa fa-check"></i>Appendix A: Pollution &amp; Weather</a>
+<ul>
+<li class="chapter" data-level="5.3" data-path="A-weatherdata.html"><a href="A-weatherdata.html#epa-pollution-data"><i class="fa fa-check"></i><b>5.3</b> EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#getting-started"><i class="fa fa-check"></i><b>5.3.1</b> Getting Started</a></li>
+<li class="chapter" data-level="5.3.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#pm2.5-data-query"><i class="fa fa-check"></i><b>5.3.2</b> PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="A-weatherdata.html"><a href="A-weatherdata.html#faa-weather-data"><i class="fa fa-check"></i><b>5.4</b> FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="A-weatherdata.html"><a href="A-weatherdata.html#sample-query"><i class="fa fa-check"></i><b>5.4.1</b> Sample Query</a></li>
+<li class="chapter" data-level="5.4.2" data-path="A-weatherdata.html"><a href="A-weatherdata.html#finding-asos-sensors"><i class="fa fa-check"></i><b>5.4.2</b> Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="5.4.3" data-path="A-weatherdata.html"><a href="A-weatherdata.html#weather-data-query"><i class="fa fa-check"></i><b>5.4.3</b> Weather Data Query</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
+<ul>
+<li class="chapter" data-level="5.5" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i><b>5.5</b> Overview</a></li>
+<li class="chapter" data-level="5.6" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup-4"><i class="fa fa-check"></i><b>5.6</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i><b>5.7</b> Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="5.8" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i><b>5.8</b> More Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
+<ul>
+<li class="chapter" data-level="5.9" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#overview-1"><i class="fa fa-check"></i><b>5.9</b> Overview</a></li>
+<li class="chapter" data-level="5.10" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#environment-setup-5"><i class="fa fa-check"></i><b>5.10</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#inputoutput-1"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-libraries-1"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-data-1"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i><b>5.11</b> Data Manipulation</a></li>
+<li class="chapter" data-level="5.12" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i><b>5.12</b> Making Point Data Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
+<ul>
+<li class="chapter" data-level="5.13" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#overview-2"><i class="fa fa-check"></i><b>5.13</b> Overview</a></li>
+<li class="chapter" data-level="5.14" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#environment-setup-6"><i class="fa fa-check"></i><b>5.14</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inputoutput-2"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-libraries-2"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="5.14.1" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-data-2"><i class="fa fa-check"></i><b>5.14.1</b> Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i><b>5.15</b> Inspecting Data</a></li>
+<li class="chapter" data-level="5.16" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#data-manipulation-1"><i class="fa fa-check"></i><b>5.16</b> Data Manipulation</a></li>
+<li class="chapter" data-level="5.17" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i><b>5.17</b> Plotting Grid Map</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html"><i class="fa fa-check"></i>Appendix F: Roads Data</a>
+<ul>
+<li class="chapter" data-level="5.18" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#overview-3"><i class="fa fa-check"></i><b>5.18</b> Overview</a></li>
+<li class="chapter" data-level="5.19" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#environment-setup-7"><i class="fa fa-check"></i><b>5.19</b> Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#inputoutput-3"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-libraries-3"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-data-3"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.20" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-manipulation-2"><i class="fa fa-check"></i><b>5.20</b> Data Manipulation</a>
+<ul>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i>Prelimnary Work</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i>Primary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i>Secondary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i>Motorway</a></li>
+</ul></li>
+<li class="chapter" data-level="5.21" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i><b>5.21</b> Outputting Data</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
+</style></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vector-data-mapping-1" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Vector Data Mapping</h1>
+<div id="introduction-2" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<p>This part will introduce you to <describe original raster datasets here></p>
+</div>
+<div id="environment-setup-1" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Environment Setup</h2>
+<p>The follow packages must be installed on your computer before proceeding.</p>
+<ul>
+<li><code>tmap</code>: flexible thematic mapping</li>
+<li><other packages as needed></li>
+</ul>
+<p><code>tmap</code> will be set to interactive mode for this tutorial.</p>
+<p>Let’s library the above packages. We also set <code>view</code> mode in <code>tmap</code> to create interactive and clickable maps.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="03-rastermapping.html#cb19-1" aria-hidden="true"></a><span class="kw">library</span>(tmap)</span>
+<span id="cb19-2"><a href="03-rastermapping.html#cb19-2" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&#39;view&#39;</span>)</span></code></pre></div>
+<pre><code>## tmap mode set to interactive viewing</code></pre>
+</div>
+<div id="dataset-1" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> &lt;Dataset 1&gt;</h2>
+<p>I am a description and interactive visualoization of the first raster dataset</p>
+</div>
+<div id="further-resources-1" class="section level2 unnumbered">
+<h2>Further Resources</h2>
+<p>Additional resources describing the origin of these datasets is provided below.</p>
+<ul>
+<li>I am an example <a href="https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information">resource</a> for more information on a topic.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="02-vectormapping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="04-ToolkitPointsToSurfaces.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

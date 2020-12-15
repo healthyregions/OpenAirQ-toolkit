@@ -1,9 +1,3 @@
----
-output:
-  html_document:
-    code_folding: show
----
-
 # Interpolation Models
 
 ## Introduction
@@ -62,9 +56,7 @@ tmpf
 
 The three-letter airport identifier is in the `site_num` column, while spatial data information is housed as coordinates in the `latitude` and `longitude` columns. Monthly average temperature is in the `tmpf` column. Next, the imported `data.frame` is converted to a spatial `sf` object and plotted in an interactive map using `tmap`. Notice how temperatures in the northern counties tend to be significantly colder than temperaturs in the southern counties.
 
-```{r}
-library(tmap)
-tmap_mode("view")
+```{r message=FALSE, warning=FALSE, results = 'hide'}
 counties = sf::st_read('./data/LargeAreaCounties/LargeAreaCounties.shp')
 sensors = sf::st_as_sf(tmpf, coords = c("longitude", "latitude"), crs = 4326)
 
@@ -162,9 +154,8 @@ tm_shape(nnmsk) +
 
 This model extends the nearest neighbor interpolation by not only taking into account multiple sensors, but also the relative distance between grid cell and sensors. Temperature values from sensors located closer to the grid cell are given more influence (higher weights) on the assigned tempertaure value than sensors located further away from the grid cell (lower weights). This model is a logical outcropping of Tobler's first law of geography, "everything is related to everything else, but nearer things are more related than distant things."
 
-```{r warning = F, message = F}
+```{r warning = F, message = F, results = 'hide'}
 set.seed(5132015)
-library(gstat)
 gs <- gstat(formula=tmpf~1, locations=dsp)
 idw <- interpolate(r, gs)
 idwr <- mask(idw, vr)
@@ -198,7 +189,7 @@ f1 <- function(x, test, train) {
   p <- predict(m, newdata=test, debug.level=0)$var1.pred
   RMSE(test$tmpf, p)
 }
-set.seed(20150518)
+
 i <- sample(nrow(dsp), 0.2 * nrow(dsp))
 tst <- dsp[i,]
 trn <- dsp[-i,]
@@ -210,7 +201,7 @@ The optimal IDW interpolation can be gleaned from the `opt$par` variable. The nu
 
 Performing the IDW interpolation with these parameters yields the following results.
 
-```{r message = F, warning = F}
+```{r message = F, warning = F, results = 'hide'}
 m <- gstat::gstat(formula=tmpf~1, locations=dsp, nmax=opt$par[1], set=list(idp=opt$par[2]))
 idw <- interpolate(r, m)
 idw <- mask(idw, il)
@@ -249,7 +240,7 @@ The ```autofitVariogram``` function fitted a Gaussian variogram to our small sam
 
 Executing an ordiary kriging model
 
-```{r message = F, warning = F}
+```{r message = F, warning = F, results = 'hide'}
 kp = krige(tmpf~1, dsp, as(blank.raster, 'SpatialGrid'), model=fve$var_model)
 spplot(kp)
 ```
@@ -273,11 +264,9 @@ tm_shape(ok[[1]]) +
 
 After examining the reuslts of each method, a single one must be chosen. Root Mean Square Error (or RMSE) was chosen as a performance metric to compare each method. The method with the lowest RMSE was chosen for the final interpolation. RMSE is calculated using the following formula. $predicted$ is the predicted temperature value by the interpolation method at a sensor location. $observed$ is the true temperature value recorded at the sensor location. The difference between $predicted$ and $observed$ is then squared. The mean of the squared errors across multiple sensor locations is taken, then the square root. The formula is saved as an R function named `RMSE`, as shown in the code snippet below.
 
-$$
 
-RMSE = \sqrt{mean((predicted - observed)^2)}
+$$RMSE = \sqrt{mean((predicted - observed)^2)}$$
 
-$$
 
 ```{r}
 RMSE <- function(observed, predicted) {
@@ -322,20 +311,16 @@ for (k in 1:5) {
   vorrmse[k] <- RMSE(test$tmpf, p1) # Save the RMSE
 }
 
-print("RMSE for each of the five folds")
-vorrmse
-
-# Take the mean RMSE and get percentage improvement
-print("Mean RMSE")
-mean(vorrmse)
-print("Improvement over NULL model")
-1 - (mean(vorrmse) / null)
+print(paste("Mean RMSE",
+mean(vorrmse),
+"Improvement over NULL model",
+1 - (mean(vorrmse) / null)))
 ```
 
 Code snippets of five-fold cross-validation for the other interpolations are below.
 
 
-```{r warning = F, message = F, collapse=T, class.source = 'fold-hide'}
+```{r message=FALSE, warning=FALSE, collapse=T}
 # Nearest Neighbor
 
 nnrmse <- rep(NA, 5)
@@ -349,16 +334,14 @@ for (k in 1:5) {
 }
 
 
-print("RMSE for each of the five folds")
-nnrmse
-print("Mean RMSE")
-mean(nnrmse)
-print("Improvement over NULL model")
-1 - (mean(nnrmse) / null)
+print(paste("Mean RMSE",
+mean(nnrmse),
+"Improvement over NULL model",
+1 - (mean(nnrmse) / null)))
 
 ```
 
-```{r warning = F, message = F, collapse = T, class.source = 'fold-hide'}
+```{r warning = F, message = F, collapse = T}
 # Inverse Distance Weighted
 
 idwrmse <- rep(NA, 5)
@@ -371,16 +354,14 @@ for (k in 1:5) {
   idwrmse[k] <- RMSE(test$tmpf, p4)
 }
 
-print("RMSE for each of the five folds")
-idwrmse
-print("Mean RMSE")
-mean(idwrmse)
-print("Improvement over NULL model")
-1 - (mean(idwrmse) / null)
+print(paste("Mean RMSE",
+mean(idwrmse),
+"Improvement over NULL model",
+1 - (mean(idwrmse) / null)))
 
 ```
 
-```{r warning = F, message = F, collapse = T, class.source = 'fold-hide'}
+```{r warning = F, message = F, collapse = T}
 # Ordinary Kriging
 
 krigrmse = rep(NA, 5)
@@ -394,12 +375,10 @@ for (i in 1:5) {
   krigrmse[i] <-  RMSE(test$tmpf, p6)
 }
 
-print("RMSE for each of the five folds")
-krigrmse
-print("Mean RMSE")
-mean(krigrmse)
-print("Improvement over NULL model")
-1 - (mean(krigrmse) / null)
+print(paste("Mean RMSE",
+mean(krigrmse),
+"Improvement over NULL model",
+1 - (mean(krigrmse) / null)))
 
 ```
 

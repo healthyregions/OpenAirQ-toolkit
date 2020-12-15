@@ -1,6 +1,6 @@
 ---
 title: "<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit</style>"
-author: "Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : `r Sys.Date()` on `R.Version()$version.string`"
+author: "Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : `r Sys.Date()` on `r R.Version()$version.string`"
 output: bookdown::gitbook
 documentclass: book
 ---

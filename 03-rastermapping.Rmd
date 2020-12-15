@@ -1,0 +1,32 @@
+# Vector Data Mapping
+
+## Introduction
+
+This part will introduce you to <describe original raster datasets here>
+
+## Environment Setup
+
+The follow packages must be installed on your computer before proceeding.
+
+* `tmap`: flexible thematic mapping 
+* <other packages as needed>
+
+`tmap` will be set to interactive mode for this tutorial.
+
+Let's library the above packages. We also set `view` mode in `tmap` to create interactive and clickable maps.
+
+```{r message=TRUE, warning=FALSE}
+library(tmap)
+tmap_mode('view')
+```
+
+## <Dataset 1>
+
+I am a description and interactive visualoization of the first raster dataset
+
+## Further Resources {-}
+
+Additional resources describing the origin of these datasets is provided below. 
+
+* I am an example [resource](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) for more information on a topic.
+
