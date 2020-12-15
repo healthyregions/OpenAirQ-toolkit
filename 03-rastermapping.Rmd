@@ -1,4 +1,4 @@
-# Vector Data Mapping
+# Raster Data Mapping
 
 ## Introduction
 

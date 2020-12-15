@@ -9,7 +9,7 @@ state-boundaries
 epa-particulate-matter-stations
 weather-stations
 point-sources-of-pollution
-vector-data-mapping-1
+raster-data-mapping
 introduction-2
 environment-setup-1
 dataset-1

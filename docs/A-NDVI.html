@@ -22,7 +22,7 @@
   
   
 
-<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philathropies. Last Updated : 2020-12-15 on R version 4.0.3 (2020-10-10)" />
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philanthropies. Last Updated : 2020-12-15 on R version 4.0.3 (2020-10-10)" />
 
 
 
@@ -163,7 +163,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>1.7</b> Point Sources of Pollution</a></li>
 <li class="chapter" data-level="" data-path="02-vectormapping.html"><a href="02-vectormapping.html#further-resources"><i class="fa fa-check"></i>Further Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="03-rastermapping.html"><a href="03-rastermapping.html"><i class="fa fa-check"></i><b>2</b> Vector Data Mapping</a>
+<li class="chapter" data-level="2" data-path="03-rastermapping.html"><a href="03-rastermapping.html"><i class="fa fa-check"></i><b>2</b> Raster Data Mapping</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="03-rastermapping.html"><a href="03-rastermapping.html#introduction-2"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
 <li class="chapter" data-level="2.2" data-path="03-rastermapping.html"><a href="03-rastermapping.html#environment-setup-1"><i class="fa fa-check"></i><b>2.2</b> Environment Setup</a></li>
@@ -317,18 +317,18 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li><code>sf</code>: to conduct basic spatial data manipulation</li>
 <li><code>tamp</code>: to create spatial data visualization</li>
 </ul>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="A-NDVI.html#cb97-1" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
-<span id="cb97-2"><a href="A-NDVI.html#cb97-2" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
-<span id="cb97-3"><a href="A-NDVI.html#cb97-3" aria-hidden="true"></a><span class="kw">library</span>(tmap)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="A-NDVI.html#cb89-1" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
+<span id="cb89-2"><a href="A-NDVI.html#cb89-2" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
+<span id="cb89-3"><a href="A-NDVI.html#cb89-3" aria-hidden="true"></a><span class="kw">library</span>(tmap)</span></code></pre></div>
 <p>Since we are mainly analyzing raster data in this tutorial, we use the “raster” package heavily, which “implements basic and high-level functions for raster data and for vector data operations such as intersections.” The detailed documentation can be found <a href="https://cran.r-project.org/web/packages/raster/raster.pdf">here</a>.</p>
 </div>
 <div id="load-data" class="section level3 unnumbered">
 <h3>Load Data</h3>
 <p>The data we are analyzing is the quarterly average of the Normalized Difference Vegetation Index for 21 large counties in the Midwest, from 2014 to 2018. It is stacked chronologically. Note that the original dataset is quite large (over 50 gigabytes), so we processed the data in advance. We can load the pre-processed data simply by running the command below.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="A-NDVI.html#cb98-1" aria-hidden="true"></a>ndvi.quarterly &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;./data/NDVILargeAreaQuarterlyStack.tif&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="A-NDVI.html#cb90-1" aria-hidden="true"></a>ndvi.quarterly &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&quot;./data/NDVILargeAreaQuarterlyStack.tif&quot;</span>)</span></code></pre></div>
 <p>(Remark: You may encounter trouble loading the data if you do not have the “rgdal” package installed!)</p>
 <p>It is a good idea to take a glance at our dataset before we proceed any further.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="A-NDVI.html#cb99-1" aria-hidden="true"></a>ndvi.quarterly</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="A-NDVI.html#cb91-1" aria-hidden="true"></a>ndvi.quarterly</span></code></pre></div>
 <pre><code>## class      : RasterStack 
 ## dimensions : 1194, 784, 936096, 20  (nrow, ncol, ncell, nlayers)
 ## resolution : 0.00295, 0.00208  (x, y)
@@ -338,7 +338,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ## min values :            -0.1979000,            -0.1400464,            -0.1463546,            -0.1714621,            -0.1730933,            -0.1068576,            -0.1513947,            -0.1989500,            -0.1977000,            -0.1508639,            -0.1616515,            -0.1834559,            -0.1792000,            -0.1500082,            -0.1286048, ... 
 ## max values :             0.4057376,             0.8217609,             0.9162192,             0.7483148,             0.5150092,             0.8381958,             0.9147448,             0.8577355,             0.7820903,             0.8141744,             0.9077643,             0.8238385,             0.8000358,             0.8359118,             0.8964590, ...</code></pre>
 <p>Also remember to load the shapfile of the 21 large counties. We will use it shortly when we start plotting.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="A-NDVI.html#cb101-1" aria-hidden="true"></a>counties &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="A-NDVI.html#cb93-1" aria-hidden="true"></a>counties &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
 <pre><code>## Reading layer `LargeAreaCounties&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/LargeAreaCounties&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 21 features and 8 fields
 ## geometry type:  MULTIPOLYGON
@@ -351,31 +351,31 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-manipulation-and-plotting" class="section level2" number="5.7">
 <h2><span class="header-section-number">5.7</span> Data manipulation and Plotting</h2>
 <p>We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="A-NDVI.html#cb103-1" aria-hidden="true"></a>this.qtr &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">subset</span>(ndvi.quarterly, <span class="dv">19</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="A-NDVI.html#cb95-1" aria-hidden="true"></a>this.qtr &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">subset</span>(ndvi.quarterly, <span class="dv">19</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p>Thanks to the data processing done beforehand, we don’t have much data manipulation to do. It is time for us to start making plots! We begin with the most basic raster map.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="A-NDVI.html#cb104-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
-<span id="cb104-2"><a href="A-NDVI.html#cb104-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>() <span class="op">+</span></span>
-<span id="cb104-3"><a href="A-NDVI.html#cb104-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="A-NDVI.html#cb96-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb96-2"><a href="A-NDVI.html#cb96-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>() <span class="op">+</span></span>
+<span id="cb96-3"><a href="A-NDVI.html#cb96-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>This plot gives an overview of the NDVI of the 21 large counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.</p>
 <p>Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="A-NDVI.html#cb105-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
-<span id="cb105-2"><a href="A-NDVI.html#cb105-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
-<span id="cb105-3"><a href="A-NDVI.html#cb105-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
-<span id="cb105-4"><a href="A-NDVI.html#cb105-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
-<span id="cb105-5"><a href="A-NDVI.html#cb105-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="A-NDVI.html#cb97-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb97-2"><a href="A-NDVI.html#cb97-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
+<span id="cb97-3"><a href="A-NDVI.html#cb97-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
+<span id="cb97-4"><a href="A-NDVI.html#cb97-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb97-5"><a href="A-NDVI.html#cb97-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
 <p>With this nicer plot, it is possible to compare the NDVI of different counties. Those who are familiar with the geography of the Midwest would immediately recognize that Cook county seems to have a lower NDVI than other counties. It is not at all surprising since the City of Chicago is located in Cook County, and metropolitan areas tend to have less vegetation than rural areas.</p>
 <p>We can also make the plot interactive so that the readers can explore the plot more thoroughly.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="A-NDVI.html#cb106-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
-<span id="cb106-2"><a href="A-NDVI.html#cb106-2" aria-hidden="true"></a></span>
-<span id="cb106-3"><a href="A-NDVI.html#cb106-3" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
-<span id="cb106-4"><a href="A-NDVI.html#cb106-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
-<span id="cb106-5"><a href="A-NDVI.html#cb106-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
-<span id="cb106-6"><a href="A-NDVI.html#cb106-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
-<span id="cb106-7"><a href="A-NDVI.html#cb106-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - the 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="A-NDVI.html#cb98-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
+<span id="cb98-2"><a href="A-NDVI.html#cb98-2" aria-hidden="true"></a></span>
+<span id="cb98-3"><a href="A-NDVI.html#cb98-3" aria-hidden="true"></a><span class="kw">tm_shape</span>(this.qtr) <span class="op">+</span></span>
+<span id="cb98-4"><a href="A-NDVI.html#cb98-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="op">+</span></span>
+<span id="cb98-5"><a href="A-NDVI.html#cb98-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(counties) <span class="op">+</span></span>
+<span id="cb98-6"><a href="A-NDVI.html#cb98-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb98-7"><a href="A-NDVI.html#cb98-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI - the 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
 <p>We can turn off the interactive mode by running the following code.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="A-NDVI.html#cb107-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="A-NDVI.html#cb99-1" aria-hidden="true"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
 <p>Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset <code>this.qtr</code>. Notice that we use <code>raster::summary</code> here to specifiy that we want R to use the <code>summary</code> function from the “raster” package.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="A-NDVI.html#cb108-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(this.qtr)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="A-NDVI.html#cb100-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(this.qtr)</span></code></pre></div>
 <pre><code>##         NDVILargeAreaQuarterlyStack.19
 ## Min.                     -9.315484e-02
 ## 1st Qu.                   6.263003e-01
@@ -387,23 +387,23 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="more-plotting" class="section level2" number="5.8">
 <h2><span class="header-section-number">5.8</span> More Plotting</h2>
 <p>Now that we have learned how to make a raster map, let’s make more. In this section, we will place our focus on the NDVI of Cook County, IL - the home county of Chicago. First, we will extract the shape of Cook County.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="A-NDVI.html#cb110-1" aria-hidden="true"></a>cook.county &lt;-<span class="st"> </span>counties[counties<span class="op">$</span>COUNTYNAME <span class="op">==</span><span class="st"> &quot;Cook&quot;</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="A-NDVI.html#cb102-1" aria-hidden="true"></a>cook.county &lt;-<span class="st"> </span>counties[counties<span class="op">$</span>COUNTYNAME <span class="op">==</span><span class="st"> &quot;Cook&quot;</span>, ]</span></code></pre></div>
 <p>Before we do anything else, we can plot the shape of Cook County that we just extracted to make sure we subsetted the dataset correctly.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="A-NDVI.html#cb111-1" aria-hidden="true"></a><span class="kw">plot</span>(cook.county<span class="op">$</span>geometry)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="A-NDVI.html#cb103-1" aria-hidden="true"></a><span class="kw">plot</span>(cook.county<span class="op">$</span>geometry)</span></code></pre></div>
 <p><img src="OpenAirQ-Toolkit_files/figure-html/A_Plot%20Cook%20County%20Shape%20ndvi-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This is a very crude plot since it only shows the border of Cook County. Rest assured that our final product is much more visually pleasing than this!</p>
 <p>The following two lines of code crop and mask raster data to Cook County. Cropping and then masking accelerates the actions for large raster data. It probably does not matter in our case, since we are only looking at Cook County, and the volume of our data is rather small.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="A-NDVI.html#cb112-1" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">crop</span>(this.qtr, cook.county)</span>
-<span id="cb112-2"><a href="A-NDVI.html#cb112-2" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">mask</span>(cook.ndvi, cook.county)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="A-NDVI.html#cb104-1" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">crop</span>(this.qtr, cook.county)</span>
+<span id="cb104-2"><a href="A-NDVI.html#cb104-2" aria-hidden="true"></a>cook.ndvi &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">mask</span>(cook.ndvi, cook.county)</span></code></pre></div>
 <p>Now we can plot a raster map for Cook County. The commands we use here are very similar to the ones we used before.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="A-NDVI.html#cb113-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(cook.ndvi) <span class="op">+</span></span>
-<span id="cb113-2"><a href="A-NDVI.html#cb113-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>) <span class="op">+</span></span>
-<span id="cb113-3"><a href="A-NDVI.html#cb113-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(cook.county) <span class="op">+</span></span>
-<span id="cb113-4"><a href="A-NDVI.html#cb113-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
-<span id="cb113-5"><a href="A-NDVI.html#cb113-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI for Cook County:</span><span class="ch">\n</span><span class="st">The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="A-NDVI.html#cb105-1" aria-hidden="true"></a><span class="kw">tm_shape</span>(cook.ndvi) <span class="op">+</span></span>
+<span id="cb105-2"><a href="A-NDVI.html#cb105-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>) <span class="op">+</span></span>
+<span id="cb105-3"><a href="A-NDVI.html#cb105-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_shape</span>(cook.county) <span class="op">+</span></span>
+<span id="cb105-4"><a href="A-NDVI.html#cb105-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb105-5"><a href="A-NDVI.html#cb105-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.outside =</span> <span class="ot">TRUE</span>, <span class="dt">main.title =</span> <span class="st">&quot;NDVI for Cook County:</span><span class="ch">\n</span><span class="st">The 3rd Quarter of 2018&quot;</span>)</span></code></pre></div>
 <p>With this raster map, we are able to discern patterns of NDVI with Cook County. The middle-east part of Cook County, where the City of Chicago is located, is shown in a lighter green than other parts of the county, signaling a lower NDVI. The northern and southern parts of the county, which are mostly rural areas, are shown to have a higher NDVI, much as we would expect.</p>
 <p>Before we conclude this tutorial, let’s again take a look at the summary statistics.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="A-NDVI.html#cb114-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(cook.ndvi)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="A-NDVI.html#cb106-1" aria-hidden="true"></a>raster<span class="op">::</span><span class="kw">summary</span>(cook.ndvi)</span></code></pre></div>
 <pre><code>##         NDVILargeAreaQuarterlyStack.19
 ## Min.                      2.923896e-02
 ## 1st Qu.                   3.955676e-01
@@ -411,9 +411,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ## 3rd Qu.                   6.440714e-01
 ## Max.                      8.844491e-01
 ## NA&#39;s                      3.973500e+04</code></pre>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="A-NDVI.html#cb116-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(cook.ndvi))) </span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="A-NDVI.html#cb108-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(cook.ndvi))) </span></code></pre></div>
 <pre><code>## [1] 0.5213509</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="A-NDVI.html#cb118-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(this.qtr))) </span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="A-NDVI.html#cb110-1" aria-hidden="true"></a>base<span class="op">::</span><span class="kw">mean</span>(<span class="kw">na.omit</span>(<span class="kw">getValues</span>(this.qtr))) </span></code></pre></div>
 <pre><code>## [1] 0.6662209</code></pre>
 <p>The mean NDVI for Cook County is 0.52, while the mean for all 21 counties is 0.67. This is reasonable because NDVI tends to be lower in large cities, and Cook County happens to be at the center of the Chicago metropolitan area. Moreover, this is consistent with what we observe from the plots - Cook County is shown in a lighter green than other counties, which we have pointed out earlier in the tutorial.</p>
 <p>This marks the end of our tutorial. Hopefully, now you feel comfortable dealing with raster data. Of course, there are many more techniques to be learned in order to conduct more sophisticated spatial analysis with raster data. There are abundant online resources that introduce more complicated tools to handle raster data, which you may want to explore on your own.</p>

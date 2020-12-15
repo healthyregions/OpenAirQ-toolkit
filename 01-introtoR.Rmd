@@ -1,0 +1,27 @@
+# Introduction to R
+
+## Introduction
+
+(Introductory Paragraph)
+
+## Environment Setup
+
+The follow packages must be installed on your computer before proceeding.
+
+* ` example package`, for doing something
+
+`tmap` will be set to interactive mode for this tutorial.
+
+Let's library the above packages
+
+```{r message=TRUE, warning=FALSE}
+#library(<package>)
+```
+
+## <Introduction to R Sections>
+
+## Further Resources {-}
+
+Additional resources describing the origin of these datasets is provided below. 
+
+* I am an example [resource](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) for more information on a topic. 
