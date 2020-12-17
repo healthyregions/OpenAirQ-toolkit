@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Appendix D: Land Cover Data | D-Land_Cover.utf8</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Appendix D: Land Cover Data | D-Land_Cover.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Appendix D: Land Cover Data | D-Land_Cover.utf8" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path=""><a href="#appendix-d-land-cover-data"><i class="fa fa-check"></i>Appendix D: Land Cover Data</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path=""><a href="#overview"><i class="fa fa-check"></i><b>0.1</b> Overview</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#environment-setup"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path=""><a href="#inputoutput"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#load-libraries"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#load-data"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="0.2" data-path=""><a href="#data-manipulation"><i class="fa fa-check"></i><b>0.2</b> Data Manipulation</a></li>
+<li class="chapter" data-level="0.3" data-path=""><a href="#data-output"><i class="fa fa-check"></i><b>0.3</b> Data Output</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:title:end-->
+<!--bookdown:title:start-->
+<div id="appendix-d-land-cover-data" class="section level1 unnumbered">
+<h1>Appendix D: Land Cover Data</h1>
+<div id="overview" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Overview</h2>
+<p>In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. To be clear, our objective are to:</p>
+<ul>
+<li>Conduct data manipulation using “for loops”</li>
+<li>Calculate percentages of low, mid, and high intensity development for each grid</li>
+<li>Write new variables into the existing grid data file</li>
+</ul>
+</div>
+<div id="environment-setup" class="section level2 unnumbered">
+<h2>Environment Setup</h2>
+<div id="inputoutput" class="section level3 unnumbered">
+<h3>Input/Output</h3>
+<p>Our inputs include a raster dataset of land cover that is stored in <code>rds.</code> format, the shapefile of several large counties in the Midwwest, and a grid data file. The files are available for download on this project’s <a href="https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data">GitHub repo</a>.</p>
+<p>Our output is a <code>csv</code> file that records the percentages of low, mid, and high intensity development for each grid. We will also insert that information into the grid data file.</p>
+</div>
+<div id="load-libraries" class="section level3 unnumbered">
+<h3>Load Libraries</h3>
+<p>We will use the following packages in this tutorial:</p>
+<ul>
+<li><code>tidyverse</code>: to perform simple statistical analyses</li>
+<li><code>sf</code>: to conduct basic spatial data manipulation</li>
+<li><code>velox</code>: to manipulate raster data in time efficient manner</li>
+<li><code>raster</code>: to manipulate and analyze raster data</li>
+</ul>
+<p>It should be mentioned here that the “velox” package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found <a href="https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages">here</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">library</span>(velox)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">library</span>(rgdal)</span></code></pre></div>
+</div>
+<div id="load-data" class="section level3 unnumbered">
+<h3>Load Data</h3>
+<p>Next, we load relevant data - <code>lc</code> is the land cover data in the raster form, <code>lac</code> is the shapefile of several large counties in the Midwest, and <code>km.grid</code> is the grid data that defines the grid cells.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>lc &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;./data/lc1&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>lac &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `LargeAreaCounties&#39; from data source `/Users/jizhouwang/Documents/GitHub/OpenAirQ-toolkit/data/LargeAreaCounties&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 21 features and 8 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -88.77879 ymin: 40.73641 xmax: -86.46629 ymax: 43.21831
+## geographic CRS: WGS 84</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>km.grid &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/Km_Grid&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `Km_Grid&#39; from data source `/Users/jizhouwang/Documents/GitHub/OpenAirQ-toolkit/data/Km_Grid&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 29903 features and 1 field
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## geographic CRS: WGS 84</code></pre>
+<p>For more detailed description of the data, please refer to the main chapters of this tutorial book. <strong>Insert Link!</strong></p>
+</div>
+</div>
+<div id="data-manipulation" class="section level2" number="0.2">
+<h2><span class="header-section-number">0.2</span> Data Manipulation</h2>
+<p>With the data at hand, it is natural for us to begin the data cleaning process. In this tutorial, unfortunately, the data manipulation is a little messy. We will use “for loops” quite extensively in order to produce our final product. Before we get into the more complicated parts, however, let’s first convert <code>lc</code> into a VeloxRaster object.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>lc.vx &lt;-<span class="st"> </span><span class="kw">velox</span>(lc)</span></code></pre></div>
+<p>Now that <code>lc.vx</code> is a VeloxRaster object as we desired, we can extract values in each grid cell, and we call the new dataset <code>km.lc</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>km.lc &lt;-<span class="st"> </span>lc.vx<span class="op">$</span><span class="kw">extract</span>(km.grid)</span></code></pre></div>
+<p>We would like to get rid of all the missing values, which can be done using the <code>map</code> function. The <code>map</code> function applies a function - in this case, the <code>na.omit</code> function - to each element of a vector. Note that <code>map</code> is a higher-order function which exist in many programming languages, and it is such an important one that it deserves an entire tutorial by itself. What we do here is the most straightforward application of this function.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>km.lc &lt;-<span class="st"> </span><span class="kw">map</span>(km.lc, na.omit)</span></code></pre></div>
+<p>Next, to facilitate better data manipulation, we convert <code>km.lc</code> first into a data table and then into a dataframe. Data tables are essentially dataframes with extra features. In general, it is faster to handle data tables than dataframes if we have large datasets, and the syntax for data tables is also cleaner. For our purposes, however, it is not critical to understand the technical details since we will convert data tables to dataframes and then only deal with dataframes.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>km.freq &lt;-<span class="st"> </span><span class="kw">map</span>(km.lc, table)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.freq)) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>  km.freq[[i]] &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(km.freq[[i]])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>}</span></code></pre></div>
+<p>In converting the data table into dataframe, we used “for loop.” Now, we will again use “for loop” to unfactor the classification labels. In other words, we will convert each column of <code>km.freq</code> first into characters and then into numbers. We then reassign the numbers back to their original positions in the dataframe <code>km.freq</code>. By looping through the entire dataframe, we thus successfully “unfactor” the labels.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.freq)) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  km.freq[[i]][,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>((km.freq[[i]][,<span class="dv">1</span>])))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  km.freq[[i]][,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>((km.freq[[i]][,<span class="dv">2</span>])))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>}</span></code></pre></div>
+<p>We then create a new data matrix called <code>developed</code>. In this matrix, each grid cell is given a row and is assigned a number for the percentages of low/mid/high intensity development. The columns are named “low,” “mid,” and “high.” This is achieved by creating a vector containing all three strings and then assigning it to the “colnames” of <code>developed</code>. Eventually, we will write this matrix into a csv file and output it.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>developed &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">nrow =</span> <span class="kw">length</span>(km.freq), <span class="dt">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">colnames</span>(developed) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;high&quot;</span>)</span></code></pre></div>
+<p>Now we enter the most complicated part of the data manipulation - we want to fill our data matrix. The logic here might be a little complex, and it might be particularly confusing to those who have little experience with programming. For this reason, we will describe what is being done in detail.</p>
+<p>First, we will use “for loop” again to loop over the entire dataframe, and in each loop, we will go through three “if” statements. First, we check if any values in the first column are equal to <code>582</code>, which is the code for low intensity development. If yes, we use the <code>which</code> function to return the position of this value and store it in a variable called <code>low</code>. Using <code>low</code>, we are able to locate the values in the dataframe. We then extract the value and assign it to the variable <code>numlow</code>. If no values are found to be equal to <code>582</code>, we do nothing and assign the value <code>0</code> to <code>numlow</code>.</p>
+<p>The next two “if” statements accomplish the same tasks, and we just change the variable names to indicate whether we are looking for low, mid, or high intensity development. Note that <code>583</code> is the code for mid intensity development, and <code>584</code> is the code for high intensity development.</p>
+<p>After going through the three “if” statements, the last step is to calculate the percentages of low, mid, and high intensity development. This is just simple algebra. The only thing worth mentioning is that we are dividing by the approximate area of the grid, which is 1000. This is not exact, but this level of precision is sufficient for our purpose.</p>
+<p>The paragraphs above should give a clear picture of what the code chunk below intends to accomplish. It might still appear puzzling for some of the readers who are not experienced in coding. Please be assured that it is normal. It just takes a little practice to fully understand the technical details that may seem formidable at first glance.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.freq)) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">any</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">582</span>))) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  low &lt;-<span class="st"> </span><span class="kw">which</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">582</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>  numlow &lt;-<span class="st"> </span>km.freq[[i]][,<span class="dv">2</span>][((low))]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  } <span class="cf">else</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>    numlow &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  )</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">any</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">583</span>))) {</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>    mid &lt;-<span class="st"> </span><span class="kw">which</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">583</span>))</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>    nummid &lt;-<span class="st"> </span>km.freq[[i]][,<span class="dv">2</span>][((mid))]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  } <span class="cf">else</span>(</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>    nummid &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>  )</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">any</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">584</span>))) {</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a>    high &lt;-<span class="st"> </span><span class="kw">which</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">584</span>))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a>    numhigh &lt;-<span class="st"> </span>km.freq[[i]][,<span class="dv">2</span>][((high))]</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a>  } <span class="cf">else</span>{</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a>    numhigh &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a>  }</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a>  </span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a>  developed[i,<span class="dv">1</span>] &lt;-<span class="st"> </span>numlow <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> </span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true"></a>  developed[i,<span class="dv">2</span>] &lt;-<span class="st"> </span>nummid <span class="op">/</span><span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true"></a>  developed[i,<span class="dv">3</span>] &lt;-<span class="st"> </span>numhigh <span class="op">/</span><span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div id="data-output" class="section level2" number="0.3">
+<h2><span class="header-section-number">0.3</span> Data Output</h2>
+<p>After all the data manipulation, it is time to prepare our output. The good news is that R makes it pretty easy to write csv files - the simple <code>write.csv</code> function does the job perfectly.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">write.csv</span>(developed, <span class="st">&quot;developedlc.csv&quot;</span>) </span></code></pre></div>
+<p>We also want to modify our <code>km.grid</code> data a little bit by adding the percentages of low, mid, and high intensity development to our existing data. This is done by the four lines of code below.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>km.grid<span class="op">$</span>DATA &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(km.grid))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>km.grid<span class="op">$</span>low &lt;-<span class="st"> </span>developed[,<span class="dv">1</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>km.grid<span class="op">$</span>mid &lt;-<span class="st"> </span>developed[,<span class="dv">2</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>km.grid<span class="op">$</span>high &lt;-<span class="st"> </span>developed[,<span class="dv">3</span>]</span></code></pre></div>
+<p>To see whether we have added the data successfully, we can just type <code>km.grid</code> and inspect the results.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>km.grid</span></code></pre></div>
+<pre><code>## Simple feature collection with 29903 features and 4 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## geographic CRS: WGS 84
+## First 10 features:
+##    DATA                       geometry low mid high
+## 1     1 POLYGON ((-88.53387 43.1943...   0   0    0
+## 2     2 POLYGON ((-88.52207 43.1943...   0   0    0
+## 3     3 POLYGON ((-88.51027 43.1943...   0   0    0
+## 4     4 POLYGON ((-88.49847 43.1943...   0   0    0
+## 5     5 POLYGON ((-88.48667 43.1943...   0   0    0
+## 6     6 POLYGON ((-88.47487 43.1943...   0   0    0
+## 7     7 POLYGON ((-88.46307 43.1943...   0   0    0
+## 8     8 POLYGON ((-88.45127 43.1943...   0   0    0
+## 9     9 POLYGON ((-88.43947 43.1943...   0   0    0
+## 10   10 POLYGON ((-88.42767 43.1943...   0   0    0</code></pre>
+<p>As we see, we have indeed successfully modified <code>km.grid</code>, which now stores the percentages of land development of different levels of intensity.</p>
+<p>This tutorial ends here. In this tutorial, we walked through how to extract information from raster data and how to construct dataframes for our own purposes. Working directly with dataframes is sometimes not so straightforward and requires a little bit of programming skills beyond the basics of R. However, how to build a dataframe from scratch and output it as a csv file is an important skill to have, and it will be rewarding in the long term.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

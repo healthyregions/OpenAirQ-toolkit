@@ -46,7 +46,7 @@ library(rgdal)
 Next, we load relevant data - `lc` is the land cover data in the raster form, `lac` is the shapefile of several large counties in the Midwest, and `km.grid` is the grid data that defines the grid cells. 
 
 ```{r D.data}
-lc <- readRDS(file = "./data/lc.tif.rds")
+lc <- raster("./data/lc1")
 lac <- st_read("./data/LargeAreaCounties")
 km.grid <- st_read("./data/Km_Grid")
 ```
