@@ -26,7 +26,7 @@ Point Emission Data | National Emissions Inventory (link) (data) | Jizhou, @Yumi
 Road Emissions | Open Street Map (link) (data) | Jizhou |  | [Road Length by Area](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/road-emissions) | 
 NDVI | MODIS (link) (data) | Jizhou, @Yuming for review |  | [NDVI Aggregation](https://github.com/GeoDaCenter/OpenAirQ-phase1/tree/master/data-workflows/covariates/ndvi-data) | 
 Elevation | National Land Elevation Model (link) (data) | Jizhou |  |  | 
-Land Use | USGS (link) (data) |  |  | [Landuse Processing](https://github.com/GeoDaCenter/OpenAirQ-phase1/blob/master/data-workflows/covariates/land-use/processLU.R) | 
+Land Use | USGS (link) (data) | Yuming |  | [Landuse Processing](https://github.com/GeoDaCenter/OpenAirQ-phase1/blob/master/data-workflows/covariates/land-use/processLU.R) | 
 Land Cover |  | Jizhou |  |  |   
 AOT sensors? |  |  |  |  |   
 Aircasting sensors? |  |  |  |  |   
