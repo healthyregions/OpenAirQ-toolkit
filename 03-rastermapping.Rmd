@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This part will introduce you to <describe original raster datasets here>
+This part will introduce you to the raster grid cells of our air quality study area, as well as the values of key pollution and the density of key environmental variables.
 
 ## Environment Setup
 
