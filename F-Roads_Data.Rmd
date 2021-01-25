@@ -53,6 +53,45 @@ km.grid <- st_read("./data/Km_Grid")
 counties <- st_read("./data/LargeAreaCounties")
 ```
 
+### Data Preparation 
+
+The roads data we use in this tutorial were prepared in advance. For educational purposes, we will show here how to download the roads data from the OpenStreetMap(OSM) project. There are of course a large number of methods to download the data, and each has its own merits. However, if we would like to accomplish the task within R, then the `osmdata` is going to be your first choice. 
+
+```{r F.library2 message = F}
+library(osmdata)
+```
+
+There are numerous types of features contained in the OSM project which can be easily downloaded. If you are not sure what features are available for use, you can check it by calling the function `available_features()`.
+
+```{r F.check.features}
+available_features()
+```
+
+The feature in which we are interested in is "highway." However, it should be pointed out that within each feature, there might be multiple tags. To see them, we call another function, `available_tags()`.
+
+```{r F.check.tags}
+available_tags("highway")
+```
+
+For our study and for this tutorial, we will focus on six of the tages, namely "primary," "primary_link," "secondary," "secondary_link," "motorway," "motorway_link." However, there are so many interesting tags out there for you to explore in your spare time. How exciting!
+
+Our next step is to build a query. This can be done using the code below. `opq()` is the main function that will build the query, where you can also specify the geographical region of interest. For illustration purpose, we will use the state of Illinois as an example. Pay attention to the "timeout" argument. It is optional but is very helpful. When this argument is not specified, a timeout error may be raised if the query takes too long. `add_osm_feature()`, does exactly what its name suggests - it allows you to filter the features as well as the tags that you are interested in. The "features" correspond to the "key" argument, and the "tags" correspond to the "value" argument. Lastly, `osmdata_xml` allows you to store the downloaded data in the `xml` format.
+
+```{r F.query eval = F}
+opq(bbox = 'Illinois', timeout = 100) %>%
+  add_osm_feature(key = 'highway', 
+                  value = c('primary', 'primary_link', 'secondary', 'secondary_link', 'motorway', 'motorway_link')) %>%
+  osmdata_xml(filename = 'data/roads_IL.osm')
+```
+
+If we would like to conduct spatial data analysis in R, it is easier to work with simple feature object. We can read the roads data, which are lines object, by using the `st_read()` function.
+
+```{r F.read.roads eval = F}
+r_IL <- sf::st_read('data/roads_IL.osm', layer = 'lines')
+```
+
+We will not be using this data file in our tutorial; we will instead use `roads`, which we have loaded earlier.
+
 ## Data Manipulation
 
 ### Prelimnary Work {-}
