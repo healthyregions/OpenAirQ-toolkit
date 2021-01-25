@@ -81,7 +81,7 @@ this.qtr <- raster::subset(ndvi.quarterly, 19, drop = FALSE)
 Thanks to the data processing done beforehand, we don't have much data manipulation to do. It is time for us to start making plots! We begin with the most basic raster map.
 
 
-```{r message=FALSE, eval = F}
+```{r message=FALSE, eval = T}
 tm_shape(this.qtr) +
   tm_raster() +
   tm_layout(legend.outside = TRUE)
@@ -93,7 +93,7 @@ This plot gives an overview of the NDVI of the 21 large counties. Without the co
 Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers. 
 
 
-```{r fig.align='center', message = FALSE, eval = F}
+```{r fig.align='center', message = FALSE, eval = T}
 tm_shape(this.qtr) +
   tm_raster(title = "NDVI") +
   tm_shape(counties) +
@@ -107,7 +107,7 @@ With this nicer plot, it is possible to compare the NDVI of different counties. 
 We can also make the plot interactive so that the readers can explore the plot more thoroughly.
 
 
-```{r A_interavtive ndvi, message = FALSE, warning = FALSE, eval = F}
+```{r A_interavtive ndvi, message = FALSE, warning = FALSE, eval = T}
 tmap_mode("view")
 
 tm_shape(this.qtr) +
@@ -121,7 +121,7 @@ tm_shape(this.qtr) +
 We can turn off the interactive mode by running the following code. 
 
 
-```{r A_Plot Mode ndvi, message = FALSE, warning = FALSE, eval = F}
+```{r A_Plot Mode ndvi, message = FALSE, warning = FALSE, eval = T}
 tmap_mode("plot")
 ```
 
@@ -166,7 +166,7 @@ cook.ndvi <- raster::mask(cook.ndvi, cook.county)
 Now we can plot a raster map for Cook County. The commands we use here are very similar to the ones we used before. 
 
 
-```{r A_Plot Cook County ndvi, fig.align='center', eval = F}
+```{r A_Plot Cook County ndvi, fig.align='center', eval = T}
 tm_shape(cook.ndvi) +
   tm_raster(title = "NDVI", palette = "Greens") +
   tm_shape(cook.county) +
