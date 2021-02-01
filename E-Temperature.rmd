@@ -1,6 +1,6 @@
 # Appendix E: Temperature {-}
 
-## Load the Packages
+## Load the Packages {-}
 
 We can use the "Packages" set-up on the right hand side to install the packages, or we could just run the code `install.packages('name', dependencies=TRUE, repos='http://cran.rstudio.com/')` from the Console to install new packages.
 
@@ -17,7 +17,7 @@ library(tmap) #modern data visualizations
 library(tidyverse) # data wrangling
 ```
 
-## Import Data
+## Import Data {-}
 
 We can read the monthly NOAA data using the following lines:
 
@@ -26,7 +26,7 @@ noaa.monthly <- read.csv("NOAA_master_monthly_final.csv")
 glimpse(noaa.monthly)
 ```
 
-## Data Wrangling
+## Data Wrangling {-}
 
 We use the following code to select minimum monthly temperatures from the data:
 
@@ -51,7 +51,7 @@ sum.mintemp.2015 <- temp.monthly.min %>%
 sum.mintemp.2015 <- rowSums(sum.mintemp.2015, na.rm = TRUE)
 ```
 
-## Merge Temperature data to Sensors
+## Merge Temperature data to Sensors {-}
 
 We use the following code to select sensor coordinates and other information. 
 
@@ -70,7 +70,7 @@ complete.temp.min <- na.omit(sensor.temp.min)
 glimpse(complete.temp.min)
 ```
 
-## Ploting the Results
+## Ploting the Results {-}
 
 Now we set the longtitude and latitude and the projection.
 
@@ -90,7 +90,7 @@ chi.map <- spTransform(chi.map, CRS("+init=epsg:4326 +proj=longlat +datum=WGS84 
                                     +towgs84=0,0,0"))
 ```
 
-## Creating a Variogram
+## Creating a Variogram {-}
 
 A variogram would be used to show the variance between different sensors. The variogram is defined as the variance of the difference between field values at two locations ({\displaystyle \mathbf {s} _{1}}{\mathbf  {s}}_{1} and {\displaystyle \mathbf {s} _{2}}{\displaystyle \mathbf {s} _{2}}, note change of notation from {\displaystyle M}M to {\displaystyle \mathbf {s} }\mathbf {s}  and {\displaystyle f}f to {\displaystyle Z}Z) across realizations of the field.
 
@@ -104,7 +104,7 @@ sum.fit <- fit.variogram(sum.mintmp.vgm, model=vgm("Sph"))
 plot(sum.mintmp.vgm, sum.fit)
 ```
 
-## Visualization
+## Visualization {-}
 
 We firstly generate a prediction surface grid. Then we fit the grid with the map of Chicago.
 

@@ -7,7 +7,7 @@ output:
 
 # Appendix B: Point Emission Data {-}
 
-## Overview
+## Overview {-}
 
 In this tutorial, we will demonstrate how to represent PM2.5 point emission data on maps. As an example, we will look at the PM2.5 data for four states - Illinois, Indiana, Wisconsin, and Michigan. The goal of this exercise is to create a point data map that provides a clear visualization of the point source of PM2.5 emission. To summarize, our objectives are to:
 
@@ -15,7 +15,7 @@ In this tutorial, we will demonstrate how to represent PM2.5 point emission data
 * Perform simple data manipulation on the PM 2.5 data
 * Visualize PM 2.5 pollution using the "tmap" package
 
-## Environment Setup
+## Environment Setup {-}
 
 ### Input/Output {-}
 The files that will be used in this tutorial are the pollution data for Illinois, Indiana, Wisconsin, and Michigan as well as he shapefile of the four states. The files are available for download on this project's [GitHub repo](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data).
@@ -60,7 +60,7 @@ fourstates <- st_read("./data/FourStates")
 
 For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
-## Data Manipulation
+## Data Manipulation {-}
 
 Once we have our data and the packages ready, we will start the data manipulation process. Since we will only look at the data from Illinois, Indiana, Wisconsin, and Michigan, we can use the `filter` function to pick out only the four states that we are interested in, and we name the new data frame `fourstate.pe1`. This is accomplished by the commented-out code below.
 
@@ -113,7 +113,7 @@ The last step in the data manipulation process is to turn our data points into a
 fourstate.pm.spatial <- st_as_sf(fourstate.pm.final, coords = c("site longitude", "site latitude"), crs = 4326)
 ```
 
-## Making Point Data Maps
+## Making Point Data Maps {-}
 
 ```{r echo=FALSE, message = FALSE, warning = FALSE}
 tmap_mode("view")

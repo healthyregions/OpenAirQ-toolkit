@@ -7,7 +7,7 @@ output:
 
 # Appendix C: Elevation Data {-}
 
-## Overview
+## Overview {-}
 
 The goal of this tutorial is to introduce the packages and techniques that are commonly utilized to manipulate raster data and create grid cells. We will use the elevation data of several larges counties in the Midwest as an example, and special emphasis will be placed on introducing the functionalities of the "velox" package. In short, our objectives are to:
 
@@ -15,7 +15,7 @@ The goal of this tutorial is to introduce the packages and techniques that are c
 * Inspect the elevation data of several large counties in the Midwest
 * Output a new shapefile that contains the elevation data for each grid
 
-## Environment Setup
+## Environment Setup {-}
 
 ### Input/Output {-}
 
@@ -54,7 +54,7 @@ library(tmap)
 library(velox)
 ```
 
-### Load Data
+### Load Data {-}
 
 Loading data is the next step. We load the "grid" data (in kilometers), which is named `km.grid`, the shapefile of large counties, which is named `lac`, and also the elevation data, which is named `lac.elevation`.
 
@@ -68,7 +68,7 @@ The elevation data comes from the 3D Elevation Program (3DEP) of United States G
 
 For more detailed description of the data, please refer to the main chapters of this tutorial book.
 
-## Inspecting Data
+## Inspecting Data {-}
 
 Before we proceed any further, let's check the resolution of our elevation data first. The resolution is shown in degrees because that is the unit of CRS.
 
@@ -90,7 +90,7 @@ tm_shape(lac.elevation) +
             main.title.size = 1.2)
 ```
 
-## Data Manipulation
+## Data Manipulation {-}
 
 Raster data manipulation is where the `velox` packages really shines as it contains a large number of functions that you will find useful in handling raster data. For example, `aggregate` allows users to aggregate a VeloxRaster object to a lower resolution. Another function, `crop`, as its name suggests, lets you crop a VeloxRaster function. If you want to rasterize a set of polygons, then you can use `rasterize`. There are many more functions that are of interest in raster data manipulation, but it is impossible to list all of them here. Detailed documentation about this package can be found [here](https://rdrr.io/cran/velox/api/), and you should feel free to explore it at your own pace. In our tutorial, we will mainly be using `velox` and `extract`.
 
@@ -113,7 +113,7 @@ Next, we join this elevation data with `km.grid`, which we loaded earlier but ha
 km.grid$Elevation <- as.numeric(km.elevation.vx) 
 ```
 
-## Plotting Grid Map
+## Plotting Grid Map {-}
 
 With the data ready, we can now plot a graph. 
 

@@ -7,7 +7,7 @@ output:
 
 # Appendix A: NDVI {-}
 
-## Overview
+## Overview {-}
 
 In this tutorial, we will learn to deal with raster data. For illustrative purposes, we will take a look at the NDVI data (Normalized Difference Vegetation Index) of 21 large counties in the Midwest. Our objectives are to:
 
@@ -15,7 +15,7 @@ In this tutorial, we will learn to deal with raster data. For illustrative purpo
 * Learn the basic techniques of cropping and masking
 * Check and analyze summary statistics of raster data
 
-## Environment Setup
+## Environment Setup {-}
 
 ### Input/Output {-}
 
@@ -68,7 +68,7 @@ counties <- st_read("./data/LargeAreaCounties")
 
 For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
-## Data manipulation and Plotting
+## Data manipulation and Plotting {-}
 
 We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.
 
@@ -133,7 +133,7 @@ Before we jump to the next section, it may be helpful to quickly examine the sum
 raster::summary(this.qtr)
 ```
 
-## More Plotting
+## More Plotting {-}
 
 
 Now that we have learned how to make a raster map, let's make more. In this section, we will place our focus on the NDVI of Cook County, IL - the home county of Chicago. First, we will extract the shape of Cook County.

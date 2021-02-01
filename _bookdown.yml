@@ -1,5 +1,5 @@
 
 book_filename: "OpenAirQ-Toolkit"
 output_dir: "docs"
-rmd_files: ["index.Rmd", "01-introtoR.Rmd", "02-vectormapping.Rmd", "03-rastermapping.Rmd", "04-ToolkitPointsToSurfaces.Rmd", "05-interpmodels.Rmd", "06-aggregation.Rmd", "07-neighborhood.Rmd", "A-weatherdata.Rmd", "A-NDVI.Rmd", "B-Point_Emission_Data.Rmd", "C-Elevation_Data.Rmd", "F-Roads_Data.Rmd", "G-Land_Use.Rmd", "H-Elevation.Rmd"]
+rmd_files: ["index.Rmd", "01-introtoR.Rmd", "02-vectormapping.Rmd", "03-rastermapping.Rmd", "04-ToolkitPointsToSurfaces.Rmd", "05-interpmodels.Rmd", "06-aggregation.Rmd", "07-neighborhood.Rmd", "A-NDVI.Rmd", "B-Point_Emission_Data.Rmd", "C-Elevation_Data.Rmd", "D-Land_Cover.Rmd", "E-Temperature", "F-Roads_Data.Rmd", "G-Land_Use.Rmd", "H-weatherdata.Rmd"]
 delete_merged_file: true

@@ -6,7 +6,7 @@ output:
 ---
 # Appendix D: Land Cover Data {-}
 
-## Overview
+## Overview {-}
 
 In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. To be clear, our objective are to:
 
@@ -53,7 +53,7 @@ km.grid <- st_read("./data/Km_Grid")
 
 For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
-## Data Manipulation
+## Data Manipulation {-}
 
 With the data at hand, it is natural for us to begin the data cleaning process. In this tutorial, unfortunately, the data manipulation is a little messy. We will use "for loops" quite extensively in order to produce our final product. Before we get into the more complicated parts, however, let's first convert `lc` into a VeloxRaster object. 
 
@@ -136,7 +136,7 @@ for(i in 1:length(km.freq)) {
 }
 ```
 
-## Data Output
+## Data Output {-}
 
 After all the data manipulation, it is time to prepare our output. The good news is that R makes it pretty easy to write csv files - the simple `write.csv` function does the job perfectly.
 

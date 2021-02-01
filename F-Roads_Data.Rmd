@@ -15,7 +15,7 @@ Transportation system is a significant source of air pollution, and roads are wi
 * learn to work with data of type "units"
 * summarize data by groups and output results
 
-## Environment Setup
+## Environment Setup {-}
 
 ### Input/Output {-}
 
@@ -53,7 +53,7 @@ km.grid <- st_read("./data/Km_Grid")
 counties <- st_read("./data/LargeAreaCounties")
 ```
 
-### Data Preparation 
+### Data Preparation {-}
 
 The roads data we use in this tutorial were prepared in advance. For educational purposes, we will show here how to download the roads data from the OpenStreetMap(OSM) project. There are of course a large number of methods to download the data, and each has its own merits. However, if we would like to accomplish the task within R, then the `osmdata` is going to be your first choice. 
 
@@ -92,7 +92,7 @@ r_IL <- sf::st_read('data/roads_IL.osm', layer = 'lines')
 
 We will not be using this data file in our tutorial; we will instead use `roads`, which we have loaded earlier.
 
-## Data Manipulation
+## Data Manipulation {-}
 
 ### Prelimnary Work {-}
 
@@ -243,7 +243,7 @@ Before we proceed, we take a galnce at `motorway.roadlengths`.
 motorway.roadlengths
 ```
 
-## Outputting Data
+## Outputting Data {-}
 
 We now enter the last section of this tutorial, where we would like to save all the work we have done so far. This is not difficult - we just create three fields in `km.grid` (`primary`, `secondary`, and `motorway`), where we store the lengths of the roads.
 
