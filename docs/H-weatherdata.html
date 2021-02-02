@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Appendix J: Pollution &amp; Weather | OpenAirQ-Toolkit.utf8</title>
+  <meta name="description" content="<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
+</style>" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Appendix J: Pollution &amp; Weather | OpenAirQ-Toolkit.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Appendix J: Pollution &amp; Weather | OpenAirQ-Toolkit.utf8" />
+  
+  
+  
+
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philanthropies. Last Updated : 2021-02-01 on R version 4.0.3 (2020-10-10)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="F-Roads_Data.html"/>
+
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-basics"><i class="fa fa-check"></i>Software Basics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-team"><i class="fa fa-check"></i>Author Team</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="01-introtoR.html"><a href="01-introtoR.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="01-introtoR.html"><a href="01-introtoR.html#introduction-1"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="01-introtoR.html"><a href="01-introtoR.html#environment-setup"><i class="fa fa-check"></i><b>1.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="1.3" data-path="01-introtoR.html"><a href="01-introtoR.html#section"><i class="fa fa-check"></i><b>1.3</b> <Introduction to R Sections></a></li>
+<li class="chapter" data-level="" data-path="01-introtoR.html"><a href="01-introtoR.html#further-resources"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-vectormapping.html"><a href="02-vectormapping.html"><i class="fa fa-check"></i><b>2</b> Vector Data Mapping</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#introduction-2"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup-1"><i class="fa fa-check"></i><b>2.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="2.3" data-path="02-vectormapping.html"><a href="02-vectormapping.html#county-boundaries"><i class="fa fa-check"></i><b>2.3</b> County Boundaries</a></li>
+<li class="chapter" data-level="2.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#state-boundaries"><i class="fa fa-check"></i><b>2.4</b> State Boundaries</a></li>
+<li class="chapter" data-level="2.5" data-path="02-vectormapping.html"><a href="02-vectormapping.html#epa-particulate-matter-stations"><i class="fa fa-check"></i><b>2.5</b> EPA Particulate Matter Stations</a></li>
+<li class="chapter" data-level="2.6" data-path="02-vectormapping.html"><a href="02-vectormapping.html#weather-stations"><i class="fa fa-check"></i><b>2.6</b> Weather Stations</a></li>
+<li class="chapter" data-level="2.7" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>2.7</b> Point Sources of Pollution</a></li>
+<li class="chapter" data-level="" data-path="02-vectormapping.html"><a href="02-vectormapping.html#further-resources-1"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-rastermapping.html"><a href="03-rastermapping.html"><i class="fa fa-check"></i><b>3</b> Raster Data Mapping</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="03-rastermapping.html"><a href="03-rastermapping.html#introduction-3"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="03-rastermapping.html"><a href="03-rastermapping.html#environment-setup-2"><i class="fa fa-check"></i><b>3.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="3.3" data-path="03-rastermapping.html"><a href="03-rastermapping.html#dataset-1"><i class="fa fa-check"></i><b>3.3</b> &lt;Dataset 1&gt;</a></li>
+<li class="chapter" data-level="" data-path="03-rastermapping.html"><a href="03-rastermapping.html#further-resources-2"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html"><i class="fa fa-check"></i><b>4</b> Point Sensors to Surfaces</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#introduction-4"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#environment-setup-3"><i class="fa fa-check"></i><b>4.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="4.3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>4.3</b> Read and Examine the Data</a></li>
+<li class="chapter" data-level="4.4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-wrangling"><i class="fa fa-check"></i><b>4.4</b> Data Wrangling</a></li>
+<li class="chapter" data-level="4.5" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>4.5</b> Creating a Spatial Object using sp</a></li>
+<li class="chapter" data-level="4.6" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-visualization-review"><i class="fa fa-check"></i><b>4.6</b> Data Visualization Review</a></li>
+<li class="chapter" data-level="4.7" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>4.7</b> Constructing a Kernal Density Estimation</a></li>
+<li class="chapter" data-level="" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#further-resources-3"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="05-interpmodels.html"><a href="05-interpmodels.html"><i class="fa fa-check"></i><b>5</b> Interpolation Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#introduction-5"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="05-interpmodels.html"><a href="05-interpmodels.html#environment-setup-4"><i class="fa fa-check"></i><b>5.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="5.3" data-path="05-interpmodels.html"><a href="05-interpmodels.html#importing-temperature-sensor-data"><i class="fa fa-check"></i><b>5.3</b> Importing Temperature Sensor Data</a></li>
+<li class="chapter" data-level="5.4" data-path="05-interpmodels.html"><a href="05-interpmodels.html#interpolating-temperature"><i class="fa fa-check"></i><b>5.4</b> Interpolating Temperature</a>
+<ul>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#voronoi-tesselation"><i class="fa fa-check"></i>Voronoi Tesselation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#nearest-neighbor"><i class="fa fa-check"></i>Nearest Neighbor</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#inverse-distance-weighted"><i class="fa fa-check"></i>Inverse Distance Weighted</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#idw-optimiziation"><i class="fa fa-check"></i>IDW Optimiziation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#ordinary-kriging"><i class="fa fa-check"></i>Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="05-interpmodels.html"><a href="05-interpmodels.html#method-selection-criteria"><i class="fa fa-check"></i><b>5.5</b> Method Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#calculating-rmse"><i class="fa fa-check"></i><b>5.5.1</b> Calculating RMSE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="06-aggregation.html"><a href="06-aggregation.html"><i class="fa fa-check"></i><b>6</b> Aggregation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="06-aggregation.html"><a href="06-aggregation.html#introduction-6"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="06-aggregation.html"><a href="06-aggregation.html#environment-setup-5"><i class="fa fa-check"></i><b>6.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="6.3" data-path="06-aggregation.html"><a href="06-aggregation.html#section-1"><i class="fa fa-check"></i><b>6.3</b> <Aggregation Sections></a></li>
+<li class="chapter" data-level="" data-path="06-aggregation.html"><a href="06-aggregation.html#further-resources-4"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="07-neighborhood.html"><a href="07-neighborhood.html"><i class="fa fa-check"></i><b>7</b> Linking Neighborhood Factors</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="07-neighborhood.html"><a href="07-neighborhood.html#introduction-7"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="07-neighborhood.html"><a href="07-neighborhood.html#environment-setup-6"><i class="fa fa-check"></i><b>7.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="7.3" data-path="07-neighborhood.html"><a href="07-neighborhood.html#section-2"><i class="fa fa-check"></i><b>7.3</b> <Neighborhood Factors Sections></a></li>
+<li class="chapter" data-level="" data-path="07-neighborhood.html"><a href="07-neighborhood.html#further-resources-5"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
+<ul>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup-7"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i>Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i>More Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#environment-setup-8"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#inputoutput-1"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-libraries-1"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-data-1"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i>Data Manipulation</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i>Making Point Data Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#overview-2"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#environment-setup-9"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inputoutput-2"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-libraries-2"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-data-2"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i>Inspecting Data</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#data-manipulation-1"><i class="fa fa-check"></i>Data Manipulation</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i>Plotting Grid Map</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html"><i class="fa fa-check"></i>Appendix D: Land Cover Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#environment-setup-10"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#inputoutput-3"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#load-libraries-3"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#load-data-3"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#data-manipulation-2"><i class="fa fa-check"></i>Data Manipulation</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#data-output"><i class="fa fa-check"></i>Data Output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html"><i class="fa fa-check"></i>Appendix F: Roads Data</a>
+<ul>
+<li class="chapter" data-level="7.4" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#overview-4"><i class="fa fa-check"></i><b>7.4</b> Overview</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#environment-setup-11"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#inputoutput-4"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-libraries-4"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-data-4"><i class="fa fa-check"></i>Load Data</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-preparation"><i class="fa fa-check"></i>Data Preparation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-manipulation-3"><i class="fa fa-check"></i>Data Manipulation</a>
+<ul>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i>Prelimnary Work</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i>Primary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i>Secondary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i>Motorway</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i>Outputting Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html"><i class="fa fa-check"></i>Appendix J: Pollution &amp; Weather</a>
+<ul>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#epa-pollution-data"><i class="fa fa-check"></i>EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#pm2.5-data-query"><i class="fa fa-check"></i>PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#faa-weather-data"><i class="fa fa-check"></i>FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#sample-query"><i class="fa fa-check"></i>Sample Query</a></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#finding-asos-sensors"><i class="fa fa-check"></i>Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#weather-data-query"><i class="fa fa-check"></i>Weather Data Query</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
+</style></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-j-pollution-weather" class="section level1 unnumbered">
+<h1>Appendix J: Pollution &amp; Weather</h1>
+<p>This project uses weather and pollution data from remotely sensed satellite imagery, but also ground based sensors maintained by the EPA and FAA to model air quality in the Midwest. Using the ground sensors, the team can attempt to predict pollutions levels based on satellite data. This chapter focuses on how weather and pollution data from ground sensors was downloaded and prepared for use in refining the prediction.</p>
+<div id="epa-pollution-data" class="section level2 unnumbered">
+<h2>EPA Pollution Data</h2>
+<div class="figure"><span id="fig:unnamed-chunk-51"></span>
+<img src="https://archive.epa.gov/pesticides/region4/sesd/pm25/web/jpg/air-monitoring-site.jpg" alt="EPA Pollution Monitoring Site (EPA.gov)"  />
+<p class="caption">
+Figure 7.1: EPA Pollution Monitoring Site (EPA.gov)
+</p>
+</div>
+<p>EPA data was seamlessly imported into R using the <strong>aqsr</strong> package by <a href="https://github.com/jpkeller">Joshua P. Keller</a> at Colorado State University. The package takes advanatge of the <a href="https://aqs.epa.gov/aqsweb/documents/data_mart_welcome.html">EPA AQS DataMart API</a> to load data in R as data.frame objects with only a couple lines of code. It allows users to query for sensor data across multiple air quality variables, geographies, and timeframes. Let’s get started by downloading the package.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="H-weatherdata.html#cb181-1" aria-hidden="true"></a><span class="co"># devtools::install_github(&quot;jpkeller/aqsr&quot;)</span></span>
+<span id="cb181-2"><a href="H-weatherdata.html#cb181-2" aria-hidden="true"></a><span class="kw">library</span>(aqsr)</span></code></pre></div>
+<div id="getting-started" class="section level3 unnumbered">
+<h3>Getting Started</h3>
+<p>This section describes the process for querying EPA sensor data using the <strong>aqsr</strong> package. For more information on how each function works, please reference the package documentation.</p>
+<div id="obtaining-an-api-key" class="section level4 unnumbered">
+<h4>Obtaining an API Key</h4>
+<p>For first time users of the AQS DataMart API, you must first register your email to recieve an API key. (Users who already have a DataMart API key, please skep to the next step). The API key is a required input for all querying functions in the <strong>aqsr</strong> package. Obtaining a key is made simple by calling the <code>aqs_signup()</code> function and inputting your own email address.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="H-weatherdata.html#cb182-1" aria-hidden="true"></a><span class="kw">aqs_signup</span>(<span class="st">&#39;YourEmailHere@uchicago.edu&#39;</span>)</span></code></pre></div>
+<p>Save your API key from the email confirmation for future reference. In case you don’t recieve an email, verify that your email address was typed correctly, and check your spam folder.</p>
+</div>
+<div id="using-your-api-key-in-aqsr" class="section level4 unnumbered">
+<h4>Using your API Key in <code>aqsr</code></h4>
+<p>Setup your AQI key with the <code>aqr</code> package by using the <code>create_user()</code> function. This way, you won’t have to keep typing your email and API key each time you query for data.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="H-weatherdata.html#cb183-1" aria-hidden="true"></a>myuser =<span class="st"> </span><span class="kw">create_user</span>(<span class="dt">email =</span> <span class="st">&#39;YourEmailHere@uchicago.edu&#39;</span>, <span class="dt">key =</span> <span class="st">&#39;apikey123&#39;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="pm2.5-data-query" class="section level3 unnumbered">
+<h3>PM2.5 Data Query</h3>
+<p>This section describes how to query for PM2.5 concetration data from EPA pollution sensors. We are looking for at PM2.5 data Wisconsin, Illinois, and Indiana between 2014 and 2018 for our project. First, let’s start small and query only for Illinois data for the first week of 2018.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="H-weatherdata.html#cb184-1" aria-hidden="true"></a>IL.data =<span class="st"> </span><span class="kw">aqs_dailyData_byState</span>(<span class="dt">aqs_user =</span> myuser,    <span class="co"># Previously defined user emailand API key</span></span>
+<span id="cb184-2"><a href="H-weatherdata.html#cb184-2" aria-hidden="true"></a>                                <span class="dt">param =</span> <span class="dv">88101</span>,        <span class="co"># EPA AQS Parameter Code for PM2.5</span></span>
+<span id="cb184-3"><a href="H-weatherdata.html#cb184-3" aria-hidden="true"></a>                                <span class="dt">bdate =</span> <span class="st">&quot;20180101&quot;</span>,   <span class="co"># Starting Date (Jan 1st ,2018)</span></span>
+<span id="cb184-4"><a href="H-weatherdata.html#cb184-4" aria-hidden="true"></a>                                <span class="dt">edate =</span> <span class="st">&quot;20180107&quot;</span>,   <span class="co"># Ending Date (Jan 7th, 2018)</span></span>
+<span id="cb184-5"><a href="H-weatherdata.html#cb184-5" aria-hidden="true"></a>                                <span class="dt">state =</span> <span class="st">&quot;17&quot;</span>)         <span class="co"># State FIPS Code for Illinois</span></span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="4%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="3%" />
+<col width="7%" />
+<col width="8%" />
+<col width="4%" />
+<col width="20%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">state_code</th>
+<th align="left">county_code</th>
+<th align="left">site_number</th>
+<th align="left">parameter_code</th>
+<th align="right">poc</th>
+<th align="right">latitude</th>
+<th align="right">longitude</th>
+<th align="left">datum</th>
+<th align="left">parameter</th>
+<th align="left">sample_duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">17</td>
+<td align="left">119</td>
+<td align="left">2009</td>
+<td align="left">88101</td>
+<td align="right">1</td>
+<td align="right">38.90308</td>
+<td align="right">-90.14317</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24 HOUR</td>
+</tr>
+<tr class="even">
+<td align="left">2100</td>
+<td align="left">17</td>
+<td align="left">119</td>
+<td align="left">2009</td>
+<td align="left">88101</td>
+<td align="right">1</td>
+<td align="right">38.90308</td>
+<td align="right">-90.14317</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24 HOUR</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">17</td>
+<td align="left">119</td>
+<td align="left">2009</td>
+<td align="left">88101</td>
+<td align="right">1</td>
+<td align="right">38.90308</td>
+<td align="right">-90.14317</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24 HOUR</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">17</td>
+<td align="left">119</td>
+<td align="left">2009</td>
+<td align="left">88101</td>
+<td align="right">1</td>
+<td align="right">38.90308</td>
+<td align="right">-90.14317</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24 HOUR</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">17</td>
+<td align="left">119</td>
+<td align="left">2009</td>
+<td align="left">88101</td>
+<td align="right">1</td>
+<td align="right">38.90308</td>
+<td align="right">-90.14317</td>
+<td align="left">WGS84</td>
+<td align="left">PM2.5 - Local Conditions</td>
+<td align="left">24 HOUR</td>
+</tr>
+</tbody>
+</table>
+<pre><code>##      state_code county_code site_number parameter_code poc latitude longitude datum                parameter sample_duration
+## 2            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 2100         17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 3            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 4            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 5            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 6            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 7            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 8            17         119        2009          88101   1 38.90308 -90.14317 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 9            17         089        0007          88101   1 41.78472 -88.32937 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 10           17         089        0007          88101   1 41.78472 -88.32937 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 11           17         089        0007          88101   1 41.78472 -88.32937 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 12           17         089        0007          88101   1 41.78472 -88.32937 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 13           17         111        0001          88101   1 42.22144 -88.24221 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 14           17         111        0001          88101   1 42.22144 -88.24221 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 15           17         111        0001          88101   1 42.22144 -88.24221 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 16           17         111        0001          88101   1 42.22144 -88.24221 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 17           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 18           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 19           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 20           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 21           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 22           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 23           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 24           17         019        0006          88101   1 40.12389 -88.24055 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 25           17         163        0010          88101   1 38.61203 -90.16048 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 26           17         163        0010          88101   1 38.61203 -90.16048 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 27           17         163        0010          88101   1 38.61203 -90.16048 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 28           17         163        0010          88101   1 38.61203 -90.16048 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 29           17         119        0024          88101   1 38.70063 -90.14476 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 30           17         119        0024          88101   1 38.70063 -90.14476 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 31           17         119        0024          88101   1 38.70063 -90.14476 WGS84 PM2.5 - Local Conditions         24 HOUR
+## 32           17         119        0024          88101   1 38.70063 -90.14476 WGS84 PM2.5 - Local Conditions         24 HOUR
+##      pollutant_standard date_local            units_of_measure event_type observation_count observation_percent
+## 2      PM25 Annual 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 2100  PM25 24-hour 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 3      PM25 Annual 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 4     PM25 24-hour 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 5      PM25 Annual 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 6     PM25 24-hour 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 7      PM25 Annual 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 8     PM25 24-hour 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 9      PM25 Annual 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 10    PM25 24-hour 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 11     PM25 Annual 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 12    PM25 24-hour 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 13     PM25 Annual 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 14    PM25 24-hour 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 15     PM25 Annual 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 16    PM25 24-hour 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 17     PM25 Annual 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 18    PM25 24-hour 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 19     PM25 Annual 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 20    PM25 24-hour 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 21     PM25 Annual 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 22    PM25 24-hour 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 23     PM25 Annual 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 24    PM25 24-hour 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 25     PM25 Annual 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 26    PM25 24-hour 2012 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 27     PM25 Annual 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 28    PM25 24-hour 2006 2018-01-02 Micrograms/cubic meter (LC)       None                 1                 100
+## 29    PM25 24-hour 2012 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 30    PM25 24-hour 2006 2018-01-05 Micrograms/cubic meter (LC)       None                 1                 100
+## 31     PM25 Annual 2012 2018-01-05 Micrograms/cubic meter (LC)   Included                 1                 100
+## 32    PM25 24-hour 2012 2018-01-05 Micrograms/cubic meter (LC)   Included                 1                 100
+##      validity_indicator arithmetic_mean first_max_value first_max_hour aqi method_code
+## 2                     Y             9.2             9.2              0  38         142
+## 2100                  Y             9.2             9.2              0  38         142
+## 3                     Y             9.2             9.2              0  38         142
+## 4                     Y             9.2             9.2              0  38         142
+## 5                     Y             9.2             9.2              0  38         142
+## 6                     Y             9.2             9.2              0  38         142
+## 7                     Y             9.2             9.2              0  38         142
+## 8                     Y             9.2             9.2              0  38         142
+## 9                     Y            10.3            10.3              0  43         153
+## 10                    Y            10.3            10.3              0  43         153
+## 11                    Y            10.3            10.3              0  43         153
+## 12                    Y            10.3            10.3              0  43         153
+## 13                    Y             5.8             5.8              0  24         153
+## 14                    Y             5.8             5.8              0  24         153
+## 15                    Y             5.8             5.8              0  24         153
+## 16                    Y             5.8             5.8              0  24         153
+## 17                    Y             5.6             5.6              0  23         142
+## 18                    Y             5.6             5.6              0  23         142
+## 19                    Y             5.6             5.6              0  23         142
+## 20                    Y             5.6             5.6              0  23         142
+## 21                    Y             6.0             6.0              0  25         142
+## 22                    Y             6.0             6.0              0  25         142
+## 23                    Y             6.0             6.0              0  25         142
+## 24                    Y             6.0             6.0              0  25         142
+## 25                    Y            10.3            10.3              0  43         142
+## 26                    Y            10.3            10.3              0  43         142
+## 27                    Y            10.3            10.3              0  43         142
+## 28                    Y            10.3            10.3              0  43         142
+## 29                    Y            10.0            10.0              0  42         142
+## 30                    Y            10.0            10.0              0  42         142
+## 31                    Y            10.0            10.0              0  42         142
+## 32                    Y            10.0            10.0              0  42         142
+##                                                      method                 local_site_name               site_address
+## 2        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 2100     BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 3        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 4        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 5        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 6        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 7        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 8        BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               SIU DENTAL CLINIC             1700 ANNEX ST.
+## 9    Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric         KANE COUNTY HEALTH DEPT      1240 N. HIGHLAND AVE.
+## 10   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric         KANE COUNTY HEALTH DEPT      1240 N. HIGHLAND AVE.
+## 11   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric         KANE COUNTY HEALTH DEPT      1240 N. HIGHLAND AVE.
+## 12   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric         KANE COUNTY HEALTH DEPT      1240 N. HIGHLAND AVE.
+## 13   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric                   CARY GROVE HS FIRST ST. &amp; THREE OAKS RD.
+## 14   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric                   CARY GROVE HS FIRST ST. &amp; THREE OAKS RD.
+## 15   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric                   CARY GROVE HS FIRST ST. &amp; THREE OAKS RD.
+## 16   Thermo Electron Model RAAS2.5-100 w/VSCC - Gravimetric                   CARY GROVE HS FIRST ST. &amp; THREE OAKS RD.
+## 17       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 18       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 19       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 20       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 21       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 22       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 23       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 24       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric                904 North Walnut           904 North Walnut
+## 25       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               IEPA-RAPS TRAILER               13TH &amp; TUDOR
+## 26       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               IEPA-RAPS TRAILER               13TH &amp; TUDOR
+## 27       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               IEPA-RAPS TRAILER               13TH &amp; TUDOR
+## 28       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric               IEPA-RAPS TRAILER               13TH &amp; TUDOR
+## 29       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric Gateway Regional Medical Center        2100 MADISON AVENUE
+## 30       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric Gateway Regional Medical Center        2100 MADISON AVENUE
+## 31       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric Gateway Regional Medical Center        2100 MADISON AVENUE
+## 32       BGI Models PQ200-VSCC or PQ200A-VSCC - Gravimetric Gateway Regional Medical Center        2100 MADISON AVENUE
+##         state      county             city cbsa_code                               cbsa date_of_last_change
+## 2    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 2100 Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 3    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 4    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 5    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 6    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 7    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 8    Illinois     Madison            Alton     41180                   St. Louis, MO-IL          2019-01-30
+## 9    Illinois        Kane           Aurora     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 10   Illinois        Kane           Aurora     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 11   Illinois        Kane           Aurora     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 12   Illinois        Kane           Aurora     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 13   Illinois     McHenry             Cary     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 14   Illinois     McHenry             Cary     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 15   Illinois     McHenry             Cary     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 16   Illinois     McHenry             Cary     16980 Chicago-Naperville-Elgin, IL-IN-WI          2019-01-30
+## 17   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 18   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 19   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 20   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 21   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 22   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 23   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 24   Illinois   Champaign        Champaign     16580               Champaign-Urbana, IL          2019-01-30
+## 25   Illinois Saint Clair East Saint Louis     41180                   St. Louis, MO-IL          2019-01-30
+## 26   Illinois Saint Clair East Saint Louis     41180                   St. Louis, MO-IL          2019-01-30
+## 27   Illinois Saint Clair East Saint Louis     41180                   St. Louis, MO-IL          2019-01-30
+## 28   Illinois Saint Clair East Saint Louis     41180                   St. Louis, MO-IL          2019-01-30
+## 29   Illinois     Madison     Granite City     41180                   St. Louis, MO-IL          2020-04-28
+## 30   Illinois     Madison     Granite City     41180                   St. Louis, MO-IL          2020-04-28
+## 31   Illinois     Madison     Granite City     41180                   St. Louis, MO-IL          2020-04-28
+## 32   Illinois     Madison     Granite City     41180                   St. Louis, MO-IL          2020-04-28
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 627 rows ]</code></pre>
+<p>The outputted data frame includes many fields regarding the PM2.5 observation, including spatial data for the sensor’s location. We will focus on these details later on in our data wrangling process. The next code chunk describes how to query for PM2.5 data across our three states and four years.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="H-weatherdata.html#cb186-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb186-2"><a href="H-weatherdata.html#cb186-2" aria-hidden="true"></a></span>
+<span id="cb186-3"><a href="H-weatherdata.html#cb186-3" aria-hidden="true"></a><span class="co"># List of States to Iterate Through</span></span>
+<span id="cb186-4"><a href="H-weatherdata.html#cb186-4" aria-hidden="true"></a>states =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;17&quot;</span>, <span class="st">&quot;18&quot;</span>, <span class="st">&quot;55&quot;</span>)</span>
+<span id="cb186-5"><a href="H-weatherdata.html#cb186-5" aria-hidden="true"></a></span>
+<span id="cb186-6"><a href="H-weatherdata.html#cb186-6" aria-hidden="true"></a><span class="co"># Matrix of Start Dates and End Dates to Iterate Through</span></span>
+<span id="cb186-7"><a href="H-weatherdata.html#cb186-7" aria-hidden="true"></a>dates =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="st">&quot;20140101&quot;</span>, <span class="st">&quot;20141231&quot;</span>, <span class="st">&quot;20150101&quot;</span>, <span class="st">&quot;20151231&quot;</span>, <span class="st">&quot;20160101&quot;</span>, <span class="st">&quot;20161231&quot;</span>, <span class="st">&quot;20170101&quot;</span>, <span class="st">&quot;20171231&quot;</span>, <span class="st">&quot;20180101&quot;</span>, <span class="st">&quot;20181231&quot;</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb186-8"><a href="H-weatherdata.html#cb186-8" aria-hidden="true"></a></span>
+<span id="cb186-9"><a href="H-weatherdata.html#cb186-9" aria-hidden="true"></a><span class="co"># Leveraging apply functions to iterate through both states and dates</span></span>
+<span id="cb186-10"><a href="H-weatherdata.html#cb186-10" aria-hidden="true"></a>full.data =<span class="st"> </span><span class="kw">lapply</span>(states, <span class="cf">function</span>(x){</span>
+<span id="cb186-11"><a href="H-weatherdata.html#cb186-11" aria-hidden="true"></a>                </span>
+<span id="cb186-12"><a href="H-weatherdata.html#cb186-12" aria-hidden="true"></a>                <span class="kw">mapply</span>(aqs_dailyData_byState, </span>
+<span id="cb186-13"><a href="H-weatherdata.html#cb186-13" aria-hidden="true"></a>                       <span class="dt">bdate =</span> dates[,<span class="dv">1</span>], </span>
+<span id="cb186-14"><a href="H-weatherdata.html#cb186-14" aria-hidden="true"></a>                       <span class="dt">edate =</span> dates[,<span class="dv">2</span>], </span>
+<span id="cb186-15"><a href="H-weatherdata.html#cb186-15" aria-hidden="true"></a>                       <span class="dt">MoreArgs =</span> <span class="kw">list</span>(<span class="dt">aqs_user =</span> myuser, </span>
+<span id="cb186-16"><a href="H-weatherdata.html#cb186-16" aria-hidden="true"></a>                                       <span class="dt">param =</span> <span class="dv">88101</span>,</span>
+<span id="cb186-17"><a href="H-weatherdata.html#cb186-17" aria-hidden="true"></a>                                       <span class="dt">state =</span> x),</span>
+<span id="cb186-18"><a href="H-weatherdata.html#cb186-18" aria-hidden="true"></a>                       <span class="dt">SIMPLIFY =</span> <span class="ot">FALSE</span></span>
+<span id="cb186-19"><a href="H-weatherdata.html#cb186-19" aria-hidden="true"></a>                       </span>
+<span id="cb186-20"><a href="H-weatherdata.html#cb186-20" aria-hidden="true"></a>                ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb186-21"><a href="H-weatherdata.html#cb186-21" aria-hidden="true"></a><span class="st">                        </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, .)</span>
+<span id="cb186-22"><a href="H-weatherdata.html#cb186-22" aria-hidden="true"></a>        }) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb186-23"><a href="H-weatherdata.html#cb186-23" aria-hidden="true"></a><span class="st">                </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, .)</span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="faa-weather-data" class="section level2 unnumbered">
+<h2>FAA Weather Data</h2>
+<div class="figure"><span id="fig:unnamed-chunk-56"></span>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg/1280px-2008-07-01_Elko_ASOS_viewed_from_the_south_cropped.jpg" alt="An ASOS Observation Station in Elko, NV. (Wikimedia Commons)"  />
+<p class="caption">
+Figure 7.2: An ASOS Observation Station in Elko, NV. (Wikimedia Commons)
+</p>
+</div>
+<p>FAA weather data gathered from the <a href="https://en.wikipedia.org/wiki/Automated_airport_weather_station">Automated Surface Observing System (ASOS)</a> can be imported using the <strong>riem</strong> package. This package, created by <a href="https://ropensci.org/">ROpenSci</a>, queries weather data from the <a href="https://mesonet.agron.iastate.edu/ASOS/">Iowa Environmental Mesonet</a>, an online portal for international ASOS data maintained by Iowa State University. First, let’s load the package.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="H-weatherdata.html#cb187-1" aria-hidden="true"></a><span class="co"># devtools::install_github(&#39;ropensci/riem&#39;)</span></span>
+<span id="cb187-2"><a href="H-weatherdata.html#cb187-2" aria-hidden="true"></a><span class="kw">library</span>(riem, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div id="sample-query" class="section level3 unnumbered">
+<h3>Sample Query</h3>
+<p>Below is an R code snippet that performs the simplest weather data query possible in the <strong>riem</strong> package. It specifies a particular weather station using an airport code and a date range to query for. The output is a tibble table of raw ASOS weather data. The code snippet below extracts sensor data at the San Francisco International Airport.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="H-weatherdata.html#cb188-1" aria-hidden="true"></a>SFO.weather =<span class="st"> </span><span class="kw">riem_measures</span>(<span class="dt">station =</span> <span class="st">&#39;KSFO&#39;</span>, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&#39;2014-01-02&#39;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station</th>
+<th align="left">valid</th>
+<th align="right">tmpf</th>
+<th align="right">dwpf</th>
+<th align="right">relh</th>
+<th align="right">drct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 00:56:00</td>
+<td align="right">53.96</td>
+<td align="right">42.98</td>
+<td align="right">66.28</td>
+<td align="right">290</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 01:56:00</td>
+<td align="right">51.98</td>
+<td align="right">42.98</td>
+<td align="right">71.28</td>
+<td align="right">280</td>
+</tr>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 02:56:00</td>
+<td align="right">51.08</td>
+<td align="right">44.06</td>
+<td align="right">76.80</td>
+<td align="right">290</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 03:56:00</td>
+<td align="right">48.92</td>
+<td align="right">37.94</td>
+<td align="right">65.67</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 04:56:00</td>
+<td align="right">50.00</td>
+<td align="right">39.92</td>
+<td align="right">68.15</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station</th>
+<th align="left">valid</th>
+<th align="right">tmpf</th>
+<th align="right">dwpf</th>
+<th align="right">alti</th>
+<th align="right">vsby</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 00:56:00</td>
+<td align="right">53.96</td>
+<td align="right">42.98</td>
+<td align="right">30.16</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 01:56:00</td>
+<td align="right">51.98</td>
+<td align="right">42.98</td>
+<td align="right">30.17</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 02:56:00</td>
+<td align="right">51.08</td>
+<td align="right">44.06</td>
+<td align="right">30.17</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 03:56:00</td>
+<td align="right">48.92</td>
+<td align="right">37.94</td>
+<td align="right">30.18</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 04:56:00</td>
+<td align="right">50.00</td>
+<td align="right">39.92</td>
+<td align="right">30.18</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">SFO</td>
+<td align="left">2014-01-01 05:56:00</td>
+<td align="right">48.92</td>
+<td align="right">37.04</td>
+<td align="right">30.19</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<p>The outputted table shows weather data for a 24-hour period on January 1st, 2014 at the San Francisco International Airport. The <code>valid</code> column species when each weather report was generated, typically at 1-hour intervals. The <code>tmpf</code> and <code>dwpf</code> columns give the ambient air temperature and dew point in Fahrenheit (ºF). Other important variables in our project include air pressure (<code>alti</code>), measured in inches of mercury (in.Hg), and visibility (<code>vsby</code>) in miles. For more information on all available varibles, see Iowa State’s <a href="https://mesonet.agron.iastate.edu/request/download.phtml">Documentation</a>.</p>
+<p>Next, we will apply this function at a large scare across multiple sensors and timescales.</p>
+</div>
+<div id="finding-asos-sensors" class="section level3 unnumbered">
+<h3>Finding ASOS Sensors</h3>
+<p>The FAA collects weather data at hourly intervals for each meteorological station, with some stations providing half-hour intervals. Even querying for short periods of time can yield large amounts of data. To optimise performance, we want to only query data from stations in our study area.</p>
+<div id="finding-sensors-by-state" class="section level4 unnumbered">
+<h4>Finding Sensors by State</h4>
+<p>In our project, we focus on certain counties in Illinois, Indiana, and Wisconsin, so we are interested in finding the sensors within that study area. The first step is to query the locations of all weather stations in the three states using the <strong>riem</strong> package. In the example below, we query for sensors in the Illinois ASOS sensor network.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="H-weatherdata.html#cb189-1" aria-hidden="true"></a>IL.stations =<span class="st"> </span><span class="kw">riem_stations</span>(<span class="dt">network =</span> <span class="st">&#39;IL_ASOS&#39;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ALN</td>
+<td align="left">ALTON/ST LOUIS R</td>
+<td align="right">-90.04599</td>
+<td align="right">38.88992</td>
+</tr>
+<tr class="even">
+<td align="left">BMI</td>
+<td align="left">BLOOMINGTON/NORM</td>
+<td align="right">-88.91592</td>
+<td align="right">40.47711</td>
+</tr>
+<tr class="odd">
+<td align="left">CPS</td>
+<td align="left">CAHOKIA/ST LOUIS</td>
+<td align="right">-90.15622</td>
+<td align="right">38.57073</td>
+</tr>
+<tr class="even">
+<td align="left">CIR</td>
+<td align="left">Cairo</td>
+<td align="right">-89.21960</td>
+<td align="right">37.06470</td>
+</tr>
+<tr class="odd">
+<td align="left">MDH</td>
+<td align="left">CARBONDALE/MURPH</td>
+<td align="right">-89.25000</td>
+<td align="right">37.78000</td>
+</tr>
+<tr class="even">
+<td align="left">CUL</td>
+<td align="left">Carmi</td>
+<td align="right">-88.12306</td>
+<td align="right">38.08948</td>
+</tr>
+</tbody>
+</table>
+<p>To query for data across multiple states, we are going the apply the <code>riem_stations</code> function to a list of weather station networks, as shown below.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="H-weatherdata.html#cb190-1" aria-hidden="true"></a>networks =<span class="st"> </span><span class="kw">list</span>(<span class="st">&#39;IL_ASOS&#39;</span>, <span class="st">&#39;IN_ASOS&#39;</span>, <span class="st">&#39;WI_ASOS&#39;</span>)</span>
+<span id="cb190-2"><a href="H-weatherdata.html#cb190-2" aria-hidden="true"></a></span>
+<span id="cb190-3"><a href="H-weatherdata.html#cb190-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb190-4"><a href="H-weatherdata.html#cb190-4" aria-hidden="true"></a>station.locs =<span class="st"> </span><span class="kw">lapply</span>(networks, riem<span class="op">::</span>riem_stations) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb190-5"><a href="H-weatherdata.html#cb190-5" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<p>Note: You can find a list of state abbreviations by typing <code>state.abb</code> in your R console.</p>
+</div>
+<div id="converting-latitude-and-longitude-coordinates-to-spatial-data" class="section level4 unnumbered">
+<h4>Converting Latitude and Longitude Coordinates to Spatial Data</h4>
+<p>The data tables returned by the <strong>riem</strong> package must be converted to spatial data to determine which sensors are located in the study area. Since the lon/lat coordinates are already provided, the data table is easily converted to a spatial <code>sf</code> object.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="H-weatherdata.html#cb191-1" aria-hidden="true"></a>station.locs.sf =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_as_sf</span>(station.locs, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb191-2"><a href="H-weatherdata.html#cb191-2" aria-hidden="true"></a></span>
+<span id="cb191-3"><a href="H-weatherdata.html#cb191-3" aria-hidden="true"></a><span class="co"># Plot stations and study area boundaries to verify that the correct sensors were selected</span></span>
+<span id="cb191-4"><a href="H-weatherdata.html#cb191-4" aria-hidden="true"></a><span class="kw">plot</span>(station.locs.sf<span class="op">$</span>geometry)</span>
+<span id="cb191-5"><a href="H-weatherdata.html#cb191-5" aria-hidden="true"></a><span class="kw">plot</span>(sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="OpenAirQ-Toolkit_files/figure-html/csv.to.spatial-1.png" width="672" /></p>
+<p>We plot to results to verify that our query and data conversion process worked correctly. For reference, the boundaires of the study area is outlined in red.</p>
+</div>
+<div id="selecting-sensors-within-our-study-area" class="section level4 unnumbered">
+<h4>Selecting Sensors within our Study Area</h4>
+<p>Next, we perform a spatial join to only keep the points located within the boundaries of our study area polygons. The spatial join is completed by the <strong>sf</strong> package, as shown below. For more information regarding spatial joins and spatial predicates, please see <a href="https://gisgeography.com/spatial-join/">this</a> helpful blog post by GISgeography.com.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="H-weatherdata.html#cb192-1" aria-hidden="true"></a><span class="co"># Loading study area boundaries</span></span>
+<span id="cb192-2"><a href="H-weatherdata.html#cb192-2" aria-hidden="true"></a>study.area =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_read</span>(<span class="st">&#39;https://uchicago.box.com/shared/static/uw0srt8nyyjfqo6l0dv07cyskwmv6r50.geojson&#39;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb192-3"><a href="H-weatherdata.html#cb192-3" aria-hidden="true"></a></span>
+<span id="cb192-4"><a href="H-weatherdata.html#cb192-4" aria-hidden="true"></a>study.sensors =<span class="st"> </span>sf<span class="op">::</span><span class="kw">st_join</span>(station.locs.sf, study.area, <span class="dt">left =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb192-5"><a href="H-weatherdata.html#cb192-5" aria-hidden="true"></a></span>
+<span id="cb192-6"><a href="H-weatherdata.html#cb192-6" aria-hidden="true"></a><span class="co"># Verify Spatial Join by Plotting</span></span>
+<span id="cb192-7"><a href="H-weatherdata.html#cb192-7" aria-hidden="true"></a><span class="kw">plot</span>(study.area<span class="op">$</span>geometry, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb192-8"><a href="H-weatherdata.html#cb192-8" aria-hidden="true"></a><span class="kw">plot</span>(study.sensors<span class="op">$</span>geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb192-9"><a href="H-weatherdata.html#cb192-9" aria-hidden="true"></a><span class="kw">title</span>(<span class="st">&#39;Weather Stations Within the Study Area&#39;</span>)</span></code></pre></div>
+<p><img src="OpenAirQ-Toolkit_files/figure-html/sensor.join-1.png" width="672" /></p>
+<p>Now that we have a dataset of which weather stations we are interested in, we can query for the weather data associated with each station.</p>
+</div>
+</div>
+<div id="weather-data-query" class="section level3 unnumbered">
+<h3>Weather Data Query</h3>
+<p>Again we use the <code>lapply</code> function in base R to execute the <code>riem_measures</code> function on a list of sensor IDs. This allows us to iteratively query for weather data from each individual sensor in a list. In the code snippet below, we take the study sensors obtained previously and query for a single day’s worth of weather data.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="H-weatherdata.html#cb193-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb193-2"><a href="H-weatherdata.html#cb193-2" aria-hidden="true"></a></span>
+<span id="cb193-3"><a href="H-weatherdata.html#cb193-3" aria-hidden="true"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2014-01-02&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb193-4"><a href="H-weatherdata.html#cb193-4" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station</th>
+<th align="left">valid</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+<th align="right">tmpf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 00:49:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">12.20</td>
+</tr>
+<tr class="even">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 00:51:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">12.92</td>
+</tr>
+<tr class="odd">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 01:51:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">12.92</td>
+</tr>
+<tr class="even">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 02:27:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">14.00</td>
+</tr>
+<tr class="odd">
+<td align="left">MDW</td>
+<td align="left">2014-01-01 02:51:00</td>
+<td align="right">-87.7524</td>
+<td align="right">41.786</td>
+<td align="right">14.00</td>
+</tr>
+</tbody>
+</table>
+<div id="querying-full-weather-dataset" class="section level4 unnumbered">
+<h4>Querying Full Weather Dataset</h4>
+<p>Use caution when querying for a large amount of data. Data tables can easily become unwieldy after querying for a large number of weather stations across a wide time scale. The code snippet below downloads all ASOS weather data for sensors in our study area from January 1st 2014 to December 31st 2018, which is our study time period. It has approximately 4.8 Million records and takes 6-10 minutes to download.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="H-weatherdata.html#cb194-1" aria-hidden="true"></a>weather.data =<span class="st"> </span><span class="kw">lapply</span>(study.sensors<span class="op">$</span>id, <span class="cf">function</span>(x){riem<span class="op">::</span><span class="kw">riem_measures</span>(x, <span class="dt">date_start =</span> <span class="st">&quot;2014-01-01&quot;</span>, <span class="dt">date_end =</span> <span class="st">&quot;2018-12-31&quot;</span>)}) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb194-2"><a href="H-weatherdata.html#cb194-2" aria-hidden="true"></a><span class="st">        </span><span class="kw">do.call</span>(rbind, .) <span class="co"># Creates a single data table as output</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="F-Roads_Data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

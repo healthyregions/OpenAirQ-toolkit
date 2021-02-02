@@ -6,7 +6,7 @@ We can use the "Packages" set-up on the right hand side to install the packages,
 
 Spatial analysis in R requires multiple libraries. Package installation is done with the following syntax: `install.packages(“sp”)`. Some of these take additional time for installation, depending on your system. The following list is comprehensive for this tutorial, as well as much spatial analysis.
 
-```{r packages,include=FALSE}
+```{r packages}
 library(sp) #spatial data wrangling & analysis
 library(rgdal) #spatial data wrangling & analysis
 library(rgeos) #spatial data wrangling & analysis

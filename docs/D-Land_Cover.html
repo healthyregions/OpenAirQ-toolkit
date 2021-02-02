@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Appendix D: Land Cover Data | OpenAirQ-Toolkit.utf8</title>
+  <meta name="description" content="<span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
+</style>" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Appendix D: Land Cover Data | OpenAirQ-Toolkit.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Appendix D: Land Cover Data | OpenAirQ-Toolkit.utf8" />
+  
+  
+  
+
+<meta name="author" content="Developed for the Partnership for Healthy Cities with support from Bloomberg Philanthropies. Last Updated : 2021-02-01 on R version 4.0.3 (2020-10-10)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C-Elevation_Data.html"/>
+<link rel="next" href="F-Roads_Data.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-basics"><i class="fa fa-check"></i>Software Basics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#author-team"><i class="fa fa-check"></i>Author Team</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="01-introtoR.html"><a href="01-introtoR.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="01-introtoR.html"><a href="01-introtoR.html#introduction-1"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="01-introtoR.html"><a href="01-introtoR.html#environment-setup"><i class="fa fa-check"></i><b>1.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="1.3" data-path="01-introtoR.html"><a href="01-introtoR.html#section"><i class="fa fa-check"></i><b>1.3</b> <Introduction to R Sections></a></li>
+<li class="chapter" data-level="" data-path="01-introtoR.html"><a href="01-introtoR.html#further-resources"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-vectormapping.html"><a href="02-vectormapping.html"><i class="fa fa-check"></i><b>2</b> Vector Data Mapping</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-vectormapping.html"><a href="02-vectormapping.html#introduction-2"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="02-vectormapping.html"><a href="02-vectormapping.html#environment-setup-1"><i class="fa fa-check"></i><b>2.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="2.3" data-path="02-vectormapping.html"><a href="02-vectormapping.html#county-boundaries"><i class="fa fa-check"></i><b>2.3</b> County Boundaries</a></li>
+<li class="chapter" data-level="2.4" data-path="02-vectormapping.html"><a href="02-vectormapping.html#state-boundaries"><i class="fa fa-check"></i><b>2.4</b> State Boundaries</a></li>
+<li class="chapter" data-level="2.5" data-path="02-vectormapping.html"><a href="02-vectormapping.html#epa-particulate-matter-stations"><i class="fa fa-check"></i><b>2.5</b> EPA Particulate Matter Stations</a></li>
+<li class="chapter" data-level="2.6" data-path="02-vectormapping.html"><a href="02-vectormapping.html#weather-stations"><i class="fa fa-check"></i><b>2.6</b> Weather Stations</a></li>
+<li class="chapter" data-level="2.7" data-path="02-vectormapping.html"><a href="02-vectormapping.html#point-sources-of-pollution"><i class="fa fa-check"></i><b>2.7</b> Point Sources of Pollution</a></li>
+<li class="chapter" data-level="" data-path="02-vectormapping.html"><a href="02-vectormapping.html#further-resources-1"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-rastermapping.html"><a href="03-rastermapping.html"><i class="fa fa-check"></i><b>3</b> Raster Data Mapping</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="03-rastermapping.html"><a href="03-rastermapping.html#introduction-3"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="03-rastermapping.html"><a href="03-rastermapping.html#environment-setup-2"><i class="fa fa-check"></i><b>3.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="3.3" data-path="03-rastermapping.html"><a href="03-rastermapping.html#dataset-1"><i class="fa fa-check"></i><b>3.3</b> &lt;Dataset 1&gt;</a></li>
+<li class="chapter" data-level="" data-path="03-rastermapping.html"><a href="03-rastermapping.html#further-resources-2"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html"><i class="fa fa-check"></i><b>4</b> Point Sensors to Surfaces</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#introduction-4"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#environment-setup-3"><i class="fa fa-check"></i><b>4.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="4.3" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#read-and-examine-the-data"><i class="fa fa-check"></i><b>4.3</b> Read and Examine the Data</a></li>
+<li class="chapter" data-level="4.4" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-wrangling"><i class="fa fa-check"></i><b>4.4</b> Data Wrangling</a></li>
+<li class="chapter" data-level="4.5" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#creating-a-spatial-object-using-sp"><i class="fa fa-check"></i><b>4.5</b> Creating a Spatial Object using sp</a></li>
+<li class="chapter" data-level="4.6" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#data-visualization-review"><i class="fa fa-check"></i><b>4.6</b> Data Visualization Review</a></li>
+<li class="chapter" data-level="4.7" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#constructing-a-kernal-density-estimation"><i class="fa fa-check"></i><b>4.7</b> Constructing a Kernal Density Estimation</a></li>
+<li class="chapter" data-level="" data-path="04-ToolkitPointsToSurfaces.html"><a href="04-ToolkitPointsToSurfaces.html#further-resources-3"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="05-interpmodels.html"><a href="05-interpmodels.html"><i class="fa fa-check"></i><b>5</b> Interpolation Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#introduction-5"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="05-interpmodels.html"><a href="05-interpmodels.html#environment-setup-4"><i class="fa fa-check"></i><b>5.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="5.3" data-path="05-interpmodels.html"><a href="05-interpmodels.html#importing-temperature-sensor-data"><i class="fa fa-check"></i><b>5.3</b> Importing Temperature Sensor Data</a></li>
+<li class="chapter" data-level="5.4" data-path="05-interpmodels.html"><a href="05-interpmodels.html#interpolating-temperature"><i class="fa fa-check"></i><b>5.4</b> Interpolating Temperature</a>
+<ul>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#voronoi-tesselation"><i class="fa fa-check"></i>Voronoi Tesselation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#nearest-neighbor"><i class="fa fa-check"></i>Nearest Neighbor</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#inverse-distance-weighted"><i class="fa fa-check"></i>Inverse Distance Weighted</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#idw-optimiziation"><i class="fa fa-check"></i>IDW Optimiziation</a></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#ordinary-kriging"><i class="fa fa-check"></i>Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="05-interpmodels.html"><a href="05-interpmodels.html#method-selection-criteria"><i class="fa fa-check"></i><b>5.5</b> Method Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="05-interpmodels.html"><a href="05-interpmodels.html#calculating-rmse"><i class="fa fa-check"></i><b>5.5.1</b> Calculating RMSE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="05-interpmodels.html"><a href="05-interpmodels.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="06-aggregation.html"><a href="06-aggregation.html"><i class="fa fa-check"></i><b>6</b> Aggregation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="06-aggregation.html"><a href="06-aggregation.html#introduction-6"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="06-aggregation.html"><a href="06-aggregation.html#environment-setup-5"><i class="fa fa-check"></i><b>6.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="6.3" data-path="06-aggregation.html"><a href="06-aggregation.html#section-1"><i class="fa fa-check"></i><b>6.3</b> <Aggregation Sections></a></li>
+<li class="chapter" data-level="" data-path="06-aggregation.html"><a href="06-aggregation.html#further-resources-4"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="07-neighborhood.html"><a href="07-neighborhood.html"><i class="fa fa-check"></i><b>7</b> Linking Neighborhood Factors</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="07-neighborhood.html"><a href="07-neighborhood.html#introduction-7"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="07-neighborhood.html"><a href="07-neighborhood.html#environment-setup-6"><i class="fa fa-check"></i><b>7.2</b> Environment Setup</a></li>
+<li class="chapter" data-level="7.3" data-path="07-neighborhood.html"><a href="07-neighborhood.html#section-2"><i class="fa fa-check"></i><b>7.3</b> <Neighborhood Factors Sections></a></li>
+<li class="chapter" data-level="" data-path="07-neighborhood.html"><a href="07-neighborhood.html#further-resources-5"><i class="fa fa-check"></i>Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html"><i class="fa fa-check"></i>Appendix A: NDVI</a>
+<ul>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#environment-setup-7"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#inputoutput"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-libraries"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#load-data"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#data-manipulation-and-plotting"><i class="fa fa-check"></i>Data manipulation and Plotting</a></li>
+<li class="chapter" data-level="" data-path="A-NDVI.html"><a href="A-NDVI.html#more-plotting"><i class="fa fa-check"></i>More Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html"><i class="fa fa-check"></i>Appendix B: Point Emission Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#environment-setup-8"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#inputoutput-1"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-libraries-1"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#load-data-1"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#data-manipulation"><i class="fa fa-check"></i>Data Manipulation</a></li>
+<li class="chapter" data-level="" data-path="B-Point_Emission_Data.html"><a href="B-Point_Emission_Data.html#making-point-data-maps"><i class="fa fa-check"></i>Making Point Data Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html"><i class="fa fa-check"></i>Appendix C: Elevation Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#overview-2"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#environment-setup-9"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inputoutput-2"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-libraries-2"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#load-data-2"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#inspecting-data"><i class="fa fa-check"></i>Inspecting Data</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#data-manipulation-1"><i class="fa fa-check"></i>Data Manipulation</a></li>
+<li class="chapter" data-level="" data-path="C-Elevation_Data.html"><a href="C-Elevation_Data.html#plotting-grid-map"><i class="fa fa-check"></i>Plotting Grid Map</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html"><i class="fa fa-check"></i>Appendix D: Land Cover Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#environment-setup-10"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#inputoutput-3"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#load-libraries-3"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#load-data-3"><i class="fa fa-check"></i>Load Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#data-manipulation-2"><i class="fa fa-check"></i>Data Manipulation</a></li>
+<li class="chapter" data-level="" data-path="D-Land_Cover.html"><a href="D-Land_Cover.html#data-output"><i class="fa fa-check"></i>Data Output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html"><i class="fa fa-check"></i>Appendix F: Roads Data</a>
+<ul>
+<li class="chapter" data-level="7.4" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#overview-4"><i class="fa fa-check"></i><b>7.4</b> Overview</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#environment-setup-11"><i class="fa fa-check"></i>Environment Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#inputoutput-4"><i class="fa fa-check"></i>Input/Output</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-libraries-4"><i class="fa fa-check"></i>Load Libraries</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#load-data-4"><i class="fa fa-check"></i>Load Data</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-preparation"><i class="fa fa-check"></i>Data Preparation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#data-manipulation-3"><i class="fa fa-check"></i>Data Manipulation</a>
+<ul>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#prelimnary-work"><i class="fa fa-check"></i>Prelimnary Work</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#primary-roads"><i class="fa fa-check"></i>Primary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#secondary-roads"><i class="fa fa-check"></i>Secondary Roads</a></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#motorway"><i class="fa fa-check"></i>Motorway</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="F-Roads_Data.html"><a href="F-Roads_Data.html#outputting-data"><i class="fa fa-check"></i>Outputting Data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html"><i class="fa fa-check"></i>Appendix J: Pollution &amp; Weather</a>
+<ul>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#epa-pollution-data"><i class="fa fa-check"></i>EPA Pollution Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#pm2.5-data-query"><i class="fa fa-check"></i>PM2.5 Data Query</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#faa-weather-data"><i class="fa fa-check"></i>FAA Weather Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#sample-query"><i class="fa fa-check"></i>Sample Query</a></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#finding-asos-sensors"><i class="fa fa-check"></i>Finding ASOS Sensors</a></li>
+<li class="chapter" data-level="" data-path="H-weatherdata.html"><a href="H-weatherdata.html#weather-data-query"><i class="fa fa-check"></i>Weather Data Query</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><span style='color: #982568; font-size:42px'>OpenAirQ Toolkit
+</style></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-d-land-cover-data" class="section level1 unnumbered">
+<h1>Appendix D: Land Cover Data</h1>
+<div id="overview-3" class="section level2 unnumbered">
+<h2>Overview</h2>
+<p>In this tutorial, we will take a close look at the land cover raster data of several large counties in the Midwest, and our goal is to map out the percentage of 1 km grid cells that are covered by low, mid, and high intensity urban land cover. At this point, it may not be clear what it is exactly that we intend to do, but everything will start to make sense once we inspect the available data. To be clear, our objective are to:</p>
+<ul>
+<li>Conduct data manipulation using “for loops”</li>
+<li>Calculate percentages of low, mid, and high intensity development for each grid</li>
+<li>Write new variables into the existing grid data file</li>
+</ul>
+</div>
+<div id="environment-setup-10" class="section level2 unnumbered">
+<h2>Environment Setup</h2>
+<div id="inputoutput-3" class="section level3 unnumbered">
+<h3>Input/Output</h3>
+<p>Our inputs include a raster dataset of land cover that is stored in <code>rds.</code> format, the shapefile of several large counties in the Midwwest, and a grid data file. The files are available for download on this project’s <a href="https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data">GitHub repo</a>.</p>
+<p>Our output is a <code>csv</code> file that records the percentages of low, mid, and high intensity development for each grid. We will also insert that information into the grid data file.</p>
+</div>
+<div id="load-libraries-3" class="section level3 unnumbered">
+<h3>Load Libraries</h3>
+<p>We will use the following packages in this tutorial:</p>
+<ul>
+<li><code>tidyverse</code>: to perform simple statistical analyses</li>
+<li><code>sf</code>: to conduct basic spatial data manipulation</li>
+<li><code>velox</code>: to manipulate raster data in time efficient manner</li>
+<li><code>raster</code>: to manipulate and analyze raster data</li>
+</ul>
+<p>It should be mentioned here that the “velox” package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found <a href="https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages">here</a>.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="D-Land_Cover.html#cb125-1" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb125-2"><a href="D-Land_Cover.html#cb125-2" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
+<span id="cb125-3"><a href="D-Land_Cover.html#cb125-3" aria-hidden="true"></a><span class="kw">library</span>(velox)</span>
+<span id="cb125-4"><a href="D-Land_Cover.html#cb125-4" aria-hidden="true"></a><span class="kw">library</span>(raster)</span>
+<span id="cb125-5"><a href="D-Land_Cover.html#cb125-5" aria-hidden="true"></a><span class="kw">library</span>(rgdal)</span></code></pre></div>
+</div>
+<div id="load-data-3" class="section level3 unnumbered">
+<h3>Load Data</h3>
+<p>Next, we load relevant data - <code>lc</code> is the land cover data in the raster form, <code>lac</code> is the shapefile of several large counties in the Midwest, and <code>km.grid</code> is the grid data that defines the grid cells.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="D-Land_Cover.html#cb126-1" aria-hidden="true"></a>lc &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;./data/lc1&quot;</span>)</span>
+<span id="cb126-2"><a href="D-Land_Cover.html#cb126-2" aria-hidden="true"></a>lac &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/LargeAreaCounties&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `LargeAreaCounties&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/LargeAreaCounties&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 21 features and 8 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -88.77879 ymin: 40.73641 xmax: -86.46629 ymax: 43.21831
+## geographic CRS: WGS 84</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="D-Land_Cover.html#cb128-1" aria-hidden="true"></a>km.grid &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./data/Km_Grid&quot;</span>)</span></code></pre></div>
+<pre><code>## Reading layer `Km_Grid&#39; from data source `/Users/LorenzMenendez/Desktop/OpenAirQ-toolkit/data/Km_Grid&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 29903 features and 1 field
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## geographic CRS: WGS 84</code></pre>
+<p>For more detailed description of the data, please refer to the main chapters of this tutorial book. <strong>Insert Link!</strong></p>
+</div>
+</div>
+<div id="data-manipulation-2" class="section level2 unnumbered">
+<h2>Data Manipulation</h2>
+<p>With the data at hand, it is natural for us to begin the data cleaning process. In this tutorial, unfortunately, the data manipulation is a little messy. We will use “for loops” quite extensively in order to produce our final product. Before we get into the more complicated parts, however, let’s first convert <code>lc</code> into a VeloxRaster object.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="D-Land_Cover.html#cb130-1" aria-hidden="true"></a>lc.vx &lt;-<span class="st"> </span><span class="kw">velox</span>(lc)</span></code></pre></div>
+<p>Now that <code>lc.vx</code> is a VeloxRaster object as we desired, we can extract values in each grid cell, and we call the new dataset <code>km.lc</code></p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="D-Land_Cover.html#cb131-1" aria-hidden="true"></a>km.lc &lt;-<span class="st"> </span>lc.vx<span class="op">$</span><span class="kw">extract</span>(km.grid)</span></code></pre></div>
+<p>We would like to get rid of all the missing values, which can be done using the <code>map</code> function. The <code>map</code> function applies a function - in this case, the <code>na.omit</code> function - to each element of a vector. Note that <code>map</code> is a higher-order function which exist in many programming languages, and it is such an important one that it deserves an entire tutorial by itself. What we do here is the most straightforward application of this function.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="D-Land_Cover.html#cb132-1" aria-hidden="true"></a>km.lc &lt;-<span class="st"> </span><span class="kw">map</span>(km.lc, na.omit)</span></code></pre></div>
+<p>Next, to facilitate better data manipulation, we convert <code>km.lc</code> first into a data table and then into a dataframe. Data tables are essentially dataframes with extra features. In general, it is faster to handle data tables than dataframes if we have large datasets, and the syntax for data tables is also cleaner. For our purposes, however, it is not critical to understand the technical details since we will convert data tables to dataframes and then only deal with dataframes.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="D-Land_Cover.html#cb133-1" aria-hidden="true"></a>km.freq &lt;-<span class="st"> </span><span class="kw">map</span>(km.lc, table)</span>
+<span id="cb133-2"><a href="D-Land_Cover.html#cb133-2" aria-hidden="true"></a></span>
+<span id="cb133-3"><a href="D-Land_Cover.html#cb133-3" aria-hidden="true"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.freq)) {</span>
+<span id="cb133-4"><a href="D-Land_Cover.html#cb133-4" aria-hidden="true"></a>  km.freq[[i]] &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(km.freq[[i]])</span>
+<span id="cb133-5"><a href="D-Land_Cover.html#cb133-5" aria-hidden="true"></a>}</span></code></pre></div>
+<p>In converting the data table into dataframe, we used “for loop.” Now, we will again use “for loop” to unfactor the classification labels. In other words, we will convert each column of <code>km.freq</code> first into characters and then into numbers. We then reassign the numbers back to their original positions in the dataframe <code>km.freq</code>. By looping through the entire dataframe, we thus successfully “unfactor” the labels.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="D-Land_Cover.html#cb134-1" aria-hidden="true"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.freq)) {</span>
+<span id="cb134-2"><a href="D-Land_Cover.html#cb134-2" aria-hidden="true"></a>  km.freq[[i]][,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>((km.freq[[i]][,<span class="dv">1</span>])))</span>
+<span id="cb134-3"><a href="D-Land_Cover.html#cb134-3" aria-hidden="true"></a>  km.freq[[i]][,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>((km.freq[[i]][,<span class="dv">2</span>])))</span>
+<span id="cb134-4"><a href="D-Land_Cover.html#cb134-4" aria-hidden="true"></a>}</span></code></pre></div>
+<p>We then create a new data matrix called <code>developed</code>. In this matrix, each grid cell is given a row and is assigned a number for the percentages of low/mid/high intensity development. The columns are named “low,” “mid,” and “high.” This is achieved by creating a vector containing all three strings and then assigning it to the “colnames” of <code>developed</code>. Eventually, we will write this matrix into a csv file and output it.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="D-Land_Cover.html#cb135-1" aria-hidden="true"></a>developed &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">nrow =</span> <span class="kw">length</span>(km.freq), <span class="dt">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb135-2"><a href="D-Land_Cover.html#cb135-2" aria-hidden="true"></a><span class="kw">colnames</span>(developed) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;high&quot;</span>)</span></code></pre></div>
+<p>Now we enter the most complicated part of the data manipulation - we want to fill our data matrix. The logic here might be a little complex, and it might be particularly confusing to those who have little experience with programming. For this reason, we will describe what is being done in detail.</p>
+<p>First, we will use “for loop” again to loop over the entire dataframe, and in each loop, we will go through three “if” statements. First, we check if any values in the first column are equal to <code>582</code>, which is the code for low intensity development. If yes, we use the <code>which</code> function to return the position of this value and store it in a variable called <code>low</code>. Using <code>low</code>, we are able to locate the values in the dataframe. We then extract the value and assign it to the variable <code>numlow</code>. If no values are found to be equal to <code>582</code>, we do nothing and assign the value <code>0</code> to <code>numlow</code>.</p>
+<p>The next two “if” statements accomplish the same tasks, and we just change the variable names to indicate whether we are looking for low, mid, or high intensity development. Note that <code>583</code> is the code for mid intensity development, and <code>584</code> is the code for high intensity development.</p>
+<p>After going through the three “if” statements, the last step is to calculate the percentages of low, mid, and high intensity development. This is just simple algebra. The only thing worth mentioning is that we are dividing by the approximate area of the grid, which is 1000. This is not exact, but this level of precision is sufficient for our purpose.</p>
+<p>The paragraphs above should give a clear picture of what the code chunk below intends to accomplish. It might still appear puzzling for some of the readers who are not experienced in coding. Please be assured that it is normal. It just takes a little practice to fully understand the technical details that may seem formidable at first glance.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="D-Land_Cover.html#cb136-1" aria-hidden="true"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(km.freq)) {</span>
+<span id="cb136-2"><a href="D-Land_Cover.html#cb136-2" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">any</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">582</span>))) {</span>
+<span id="cb136-3"><a href="D-Land_Cover.html#cb136-3" aria-hidden="true"></a>  low &lt;-<span class="st"> </span><span class="kw">which</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">582</span>))</span>
+<span id="cb136-4"><a href="D-Land_Cover.html#cb136-4" aria-hidden="true"></a>  numlow &lt;-<span class="st"> </span>km.freq[[i]][,<span class="dv">2</span>][((low))]</span>
+<span id="cb136-5"><a href="D-Land_Cover.html#cb136-5" aria-hidden="true"></a>  } <span class="cf">else</span>(</span>
+<span id="cb136-6"><a href="D-Land_Cover.html#cb136-6" aria-hidden="true"></a>    numlow &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb136-7"><a href="D-Land_Cover.html#cb136-7" aria-hidden="true"></a>  )</span>
+<span id="cb136-8"><a href="D-Land_Cover.html#cb136-8" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">any</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">583</span>))) {</span>
+<span id="cb136-9"><a href="D-Land_Cover.html#cb136-9" aria-hidden="true"></a>    mid &lt;-<span class="st"> </span><span class="kw">which</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">583</span>))</span>
+<span id="cb136-10"><a href="D-Land_Cover.html#cb136-10" aria-hidden="true"></a>    nummid &lt;-<span class="st"> </span>km.freq[[i]][,<span class="dv">2</span>][((mid))]</span>
+<span id="cb136-11"><a href="D-Land_Cover.html#cb136-11" aria-hidden="true"></a>  } <span class="cf">else</span>(</span>
+<span id="cb136-12"><a href="D-Land_Cover.html#cb136-12" aria-hidden="true"></a>    nummid &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb136-13"><a href="D-Land_Cover.html#cb136-13" aria-hidden="true"></a>  )</span>
+<span id="cb136-14"><a href="D-Land_Cover.html#cb136-14" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">any</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">584</span>))) {</span>
+<span id="cb136-15"><a href="D-Land_Cover.html#cb136-15" aria-hidden="true"></a>    high &lt;-<span class="st"> </span><span class="kw">which</span>((km.freq[[i]][,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">584</span>))</span>
+<span id="cb136-16"><a href="D-Land_Cover.html#cb136-16" aria-hidden="true"></a>    numhigh &lt;-<span class="st"> </span>km.freq[[i]][,<span class="dv">2</span>][((high))]</span>
+<span id="cb136-17"><a href="D-Land_Cover.html#cb136-17" aria-hidden="true"></a>  } <span class="cf">else</span>{</span>
+<span id="cb136-18"><a href="D-Land_Cover.html#cb136-18" aria-hidden="true"></a>    numhigh &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb136-19"><a href="D-Land_Cover.html#cb136-19" aria-hidden="true"></a>  }</span>
+<span id="cb136-20"><a href="D-Land_Cover.html#cb136-20" aria-hidden="true"></a>  </span>
+<span id="cb136-21"><a href="D-Land_Cover.html#cb136-21" aria-hidden="true"></a>  developed[i,<span class="dv">1</span>] &lt;-<span class="st"> </span>numlow <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> </span>
+<span id="cb136-22"><a href="D-Land_Cover.html#cb136-22" aria-hidden="true"></a>  developed[i,<span class="dv">2</span>] &lt;-<span class="st"> </span>nummid <span class="op">/</span><span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb136-23"><a href="D-Land_Cover.html#cb136-23" aria-hidden="true"></a>  developed[i,<span class="dv">3</span>] &lt;-<span class="st"> </span>numhigh <span class="op">/</span><span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb136-24"><a href="D-Land_Cover.html#cb136-24" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div id="data-output" class="section level2 unnumbered">
+<h2>Data Output</h2>
+<p>After all the data manipulation, it is time to prepare our output. The good news is that R makes it pretty easy to write csv files - the simple <code>write.csv</code> function does the job perfectly.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="D-Land_Cover.html#cb137-1" aria-hidden="true"></a><span class="kw">write.csv</span>(developed, <span class="st">&quot;developedlc.csv&quot;</span>) </span></code></pre></div>
+<p>We also want to modify our <code>km.grid</code> data a little bit by adding the percentages of low, mid, and high intensity development to our existing data. This is done by the four lines of code below.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="D-Land_Cover.html#cb138-1" aria-hidden="true"></a>km.grid<span class="op">$</span>DATA &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(km.grid))</span>
+<span id="cb138-2"><a href="D-Land_Cover.html#cb138-2" aria-hidden="true"></a>km.grid<span class="op">$</span>low &lt;-<span class="st"> </span>developed[,<span class="dv">1</span>]</span>
+<span id="cb138-3"><a href="D-Land_Cover.html#cb138-3" aria-hidden="true"></a>km.grid<span class="op">$</span>mid &lt;-<span class="st"> </span>developed[,<span class="dv">2</span>]</span>
+<span id="cb138-4"><a href="D-Land_Cover.html#cb138-4" aria-hidden="true"></a>km.grid<span class="op">$</span>high &lt;-<span class="st"> </span>developed[,<span class="dv">3</span>]</span></code></pre></div>
+<p>To see whether we have added the data successfully, we can just type <code>km.grid</code> and inspect the results.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="D-Land_Cover.html#cb139-1" aria-hidden="true"></a>km.grid</span></code></pre></div>
+<pre><code>## Simple feature collection with 29903 features and 4 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -88.78167 ymin: 40.73704 xmax: -86.46887 ymax: 43.19439
+## geographic CRS: WGS 84
+## First 10 features:
+##    DATA                       geometry low mid high
+## 1     1 POLYGON ((-88.53387 43.1943...   0   0    0
+## 2     2 POLYGON ((-88.52207 43.1943...   0   0    0
+## 3     3 POLYGON ((-88.51027 43.1943...   0   0    0
+## 4     4 POLYGON ((-88.49847 43.1943...   0   0    0
+## 5     5 POLYGON ((-88.48667 43.1943...   0   0    0
+## 6     6 POLYGON ((-88.47487 43.1943...   0   0    0
+## 7     7 POLYGON ((-88.46307 43.1943...   0   0    0
+## 8     8 POLYGON ((-88.45127 43.1943...   0   0    0
+## 9     9 POLYGON ((-88.43947 43.1943...   0   0    0
+## 10   10 POLYGON ((-88.42767 43.1943...   0   0    0</code></pre>
+<p>As we see, we have indeed successfully modified <code>km.grid</code>, which now stores the percentages of land development of different levels of intensity.</p>
+<p>This tutorial ends here. In this tutorial, we walked through how to extract information from raster data and how to construct dataframes for our own purposes. Working directly with dataframes is sometimes not so straightforward and requires a little bit of programming skills beyond the basics of R. However, how to build a dataframe from scratch and output it as a csv file is an important skill to have, and it will be rewarding in the long term.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C-Elevation_Data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="F-Roads_Data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
