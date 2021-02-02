@@ -4,24 +4,24 @@
 
 This chapter will introduce how to convert point sensors to surfaces. In it, we will work with the CSV file for the 2017 National Emissions Inventory, downloadable from the EPA's website [here](ftp://newftp.epa.gov/air/nei/2017/data_summaries/2017v1/2017neiApr_facility_process_byregions.zip). If you wish to follow along with this chapter, please download the dataset now. If you have a specific interest area and would like to skip the data wrangling in R, you can download state-specific and pollutant-specific summaries from the NEI website. 
 
-We will begin with a brief review of the basics of data wrangling and filter the relatively large CSV file to the considerably smaller subset of the data with which we are concerned. Then, we will reinforce the data visualization skills covered in a previous chapter by mapping out the point locations of emissions sources in our study area. Finally, we will transition into the process of creating a continuous surface in the form of a Kernal Density Estimation (KDE) of PM2.5 point emission source density in Cook County, Illinois. 
+We will begin with a brief review of the basics of data wrangling and filter the relatively large CSV file to the considerably smaller subset of the data with which we are concerned. Then, we will reinforce the data visualization skills covered in a previous chapter by mapping out the point locations of emissions sources in our study area. Finally, we will transition into the process of creating a continuous surface in the form of a Kernel Density Estimation (KDE) of PM2.5 point emission source density in Cook County, Illinois. 
 
 
 By the end of this tutorial you will be able to: 
 
 * Understand and wrangle National Emissions Inventory data
 * Use the sp package in R
-* Generate a Kernal Density Estimation using real data
+* Generate a Kernel Density Estimation using real data
 
 
 ## Environment Setup
 
-To process our data and create a Kernal Density Estimation, we will need the following packages:
+To process our data and create a Kernel Density Estimation, we will need the following packages:
 
 * `tidyverse`, for data wrangling
 * `sp`, for spatial data manipulation and analysis
 * `rgdal`, for importing spatial data
-* `tmap`, for cartography and mapmaking in R
+* `tmap`, for cartography and map-making in R
 * `spatialEco`, for Kernel Density Estimation
 
 If you do not already have any of these packages installed, you will want to install them using `install.package("*PackageName*")`. Once they are installed, we are going to library the required packages:
@@ -37,12 +37,11 @@ library(readr)
 
 ## Read and Examine the Data
 
-Now that we have loaded our required packages, we will now read in our National Emissions Inventory CSV. After unzipping the zipped folder downloaded from the EPA, you will have two files: "process_12345.csv" and "process678910.csv". For the purposes of this chapter, we will only need "process_12345.csv". This file is quite large, so beware that it may take 30 seconds to load.
+Now that we have loaded our required packages, we will read in our National Emissions Inventory CSV. After unzipping the zipped folder downloaded from the EPA, you will have two files: "process_12345.csv" and "process678910.csv". For the purposes of this chapter, we will only need "process_12345.csv". This file is quite large, so beware that it may take 30 seconds to load.
 
 ```{r, nei.load, warning=FALSE, message=FALSE}
 nei.data <- readr::read_csv("./data/process_12345.csv.zip")
 ```
-
 
 Having successfully read our data into the R environment, let's take a second to examine it. 
 
@@ -51,7 +50,7 @@ nrow(nei.data)
 names(nei.data)
 ```
 
-As we can see, the dataset is huge, with over 3 million observations and 53 attributes. None of the existing spatial data packages in R are well equipped to handle such a dataset of such size. Luckily, we are only interested in a small subset of the data -- PM2.5 emissions sources in Illinois, Michigan, Wisconsin, and Indiana. 
+As we can see, the dataset is huge, with over 3 million observations and 53 attributes. None of the existing spatial data packages in R are well equipped to handle a dataset of such size. Luckily, we are only interested in a small subset of the data -- PM2.5 emissions sources in Illinois, Michigan, Wisconsin, and Indiana. 
 
 ## Data Wrangling
 
@@ -65,14 +64,14 @@ state.nei <- nei.data %>%
 
 nrow(state.nei)
 ```
+
 With that, we're already down to *just* 386,338 emissions sources. While we still have a ways to go with our filtering, this is certainly progress. Let's take a second to look back over what we just did. 
 
 The second line of this code is using the pipe (`%>%`) operator to *pipe* in the complete nei dataset into the filter function covered in an earlier chapter. 
 
 `%in%` is an infix operator that matches the items from the first vector (the complete list of state abbreviations for all point emissions sources) with those of the second (the state abbreviations for state of interest).
 
-This code is written this way to allow this code to be used for larger, multistate study areas. If you are interested in examining points from multiple states, simply add their abbreviations to the `state.abbr` vector. If you are only using one state, feel free to simplify the code to your liking. We are next going to filter our data down further to include only those points within Cook County, IL.
-
+This code is written this way to allow it to be used for larger, multistate study areas. If you are interested in examining points from multiple states, simply add their abbreviations to the `state.abbr` vector. If you are only using one state, feel free to simplify the code to your liking. We are next going to filter our data down further to include only those points within Cook County, IL.
 
 ```{r, nei.county.filter}
 county.names <- c("Cook")
@@ -83,9 +82,7 @@ county.nei <- state.nei %>%
 nrow(county.nei)
 ```
 
-
 Let's finish filtering our data by restricting our results to only those emissions sources emitting PM2.5. We will first examine the different labels for pollution descriptions using the `unique()` function. We will then filter our dataset for only those labels that seem related to PM2.5 using the same process as above. 
-
 
 ```{r, nei.pm.filter, attr.output='style="max-height: 200px;"'}
 unique(county.nei$`pollutant desc`)
@@ -102,7 +99,7 @@ Now, with a manageable number of observations in our area of interest, we are go
 
 ## Creating a Spatial Object using sp 
 
-We first want to use our filtered tibble to create an sp Spatial Points object. 
+We first want to use our filtered tibble to create an `sp` Spatial Points object. 
 
 ```{r, nei.sp.create}
 #Assign the proper coordinates 
@@ -115,7 +112,7 @@ proj4string(county.pm25) <- CRS("+init=epsg:4326")
 plot(county.pm25)
 ```
 
-With everything looking as it should, let's look back on what we just did. We initialized the Spatial Points object using the `coordinates()` function, assigning the proper longitude and latitude from the dataset. We then used the `proj4string()` function to assign the correct Coordinate Reference System (CRS) to our data. Be careful not to use the wrong projection (check your data source). If you need to transform the projection of your dataset, use the `spTransform()` function. Let's now briefly review data visualization with the tmap package using this point data.
+With everything looking as it should, let's look back on what we just did. We initialized the Spatial Points object using the `coordinates()` function, assigning it the proper longitude and latitude from the dataset. We then used the `proj4string()` function to assign the correct Coordinate Reference System (CRS) to our data. Be careful not to use the wrong projection (check your data source). If you need to transform the projection of your dataset, use the `spTransform()` function. Let's now briefly review data visualization with the tmap package using our point data.
 
 ## Data Visualization Review
 
@@ -139,8 +136,7 @@ tm_shape(cook.county) +
 
 ```
 
-
-This is clearly a very basic plot of the data. We can get a basic idea of where the point density may be highest, but we cannot tell much else about the data. Let's now create an interactive map with the dots colored and sized based off of the volume of emissions (self-reported) given off at each point location.
+This is clearly a very basic plot of the data. We can get a general idea of where the point density may be highest, but we cannot tell much else about the data. Let's now create an interactive map with the dots colored and sized based off of the volume of emissions (self-reported) given off at each point location.
 
 ```{r, nei.point.interactive.dataviz, warning=FALSE, message=FALSE}
 #Set tmap mode to view
@@ -156,14 +152,13 @@ tm_shape(cook.county) +
 
 ```
 
+Here, we used the `tmap_mode()` function to change the map style to interactive viewing and changed the arguments of the `tm_bubbles()` function to alter the appearance of the point locations. Let's now construct a continuous surface Kernel Density Estimation from our point data.
 
-Here, we used the `tmap_mode()` function to change the map style to interactive viewing and changed the arguments of the `tm_bubbles()` function to change the appearance of the point locations. Let's now construct a continuous surface Kernal Density Estimation from our point data.
+## Constructing a Kernel Density Estimation
 
-## Constructing a Kernal Density Estimation
+A Kernel Density Estimation (KDE) map at its most basic level is, as the name suggests, a means of representing the density of features over a given area. The term heatmap is often used interchangeably with KDE. Constructing a KDE gives us a continuous surface from discrete point data. This is quite useful as both an end product or an input to a model that requires continuous surface inputs. Each cell of the constructed raster is assigned a value based on the estimated density of points in that part of the map. This value can either be entirely unweighted (based solely on the number of points in an area) or weighted on a given variable (points with higher values for that variable will make an area appear denser). There are countless online resources available for learning more about the mathematics/history of KDE. 
 
-A Kernal Density Estimation (KDE) map at its most basic level is, as the name suggests, a means of representing the density of features over a given area. The term heatmap is often used interchangeably with KDE. Constructing a KDE gives us a continuous surface from discrete point data. This is quite useful as both an end product or an input to a model that requires continuous surface inputs. Each cell of the constructed raster is assigned a value based on the estimated density of ponits in that part of the map. This value can either be entirely unweighted (based solely on the number of points in an area) or weighted on a given variable (points with higher values for that variable will make an area appear denser). There are countless online resources available for learning more about the mathematics/history of KDE. 
-
-Let's now create our first KDE from the point data we've been using. We are going to be using the `sp.kde()` function from the spatialEco package, however there are several other R packages that achieve a more or less identical outcome. 
+Let's now create our first KDE from the point data we've been using. We are going to be using the `sp.kde()` function from the spatialEco package, but there are several other R packages that achieve a more or less identical outcome. 
 
 ```{r, nei.kde.unweighted, message=F, warning=F}
 #Construct KDE
@@ -172,7 +167,7 @@ county.kde <- sp.kde(county.pm25, nr=500, nc=500)
 plot(county.kde)
 ```
 
-We've now produced a continuous surface representing the density of PM2.5 emissions sources across Cook County. Let's look over the `sp.kde()` function in a little more detail. In addition to inputting our sp object, we also input values of 500 for the `nr` and `nc` arguments. These abbreviations are short for "number of rows" and "number of columns" respectively. The `sp.kde` function creates a grid on which to map the results of the KDE, and these arguments tell the function what the dimensions of this grid should be. Let's look at how changing these two arguments changes the appearance of our KDE map:
+We've now produced a continuous surface representing the density of PM2.5 emissions sources across Cook County. Let's look over the `sp.kde()` function in a little more detail. In addition to inputting our `sp` object, we also input values of 500 for the `nr` and `nc` arguments. These abbreviations are short for "number of rows" and "number of columns" respectively. The `sp.kde` function creates a grid on which to map the results of the KDE, and these arguments tell the function what the dimensions of this grid should be. Let's look at how changing these two arguments changes the appearance of our KDE map:
 
 ```{r, nei.kde.resolution.changes, message=F, warning=F}
 #10x10 grid
@@ -189,7 +184,7 @@ plot(county.kde.500)
 
 ```
 
-Note the changes in the plots as the resolution of the grid is increased. Let's now look at the `y` argument used to add a weight to the KDE. Let's say we wanted to weigh our KDE based on the amount of total emissions from individual sites. Here's how you would do that:
+Note the changes in the plots as the resolution of the grid is increased. Let's now look at the `y` argument used to add a weight to the KDE. Let's say we want to weigh our KDE based on the amount of total emissions from individual sites. Here's how you would do that:
 
 ```{r, nei.kde.weighted, message=F, warning=F}
 #Construct weighted KDE
@@ -198,11 +193,13 @@ county.kde.weighted <- sp.kde(county.pm25, y=county.pm25$`total emissions`, nr=5
 plot(county.kde.weighted)
 ```
 
-As you can see, weighing the KDE on the total emissions amount dramatically changes the map. These changes can be deemphasized/accentuated if you transform the variable weighing the data. 
+As you can see, weighing the KDE on the total emissions amount dramatically changes the map. These changes can be de-emphasized/accentuated if you transform the variable weighing the data. 
 
 If you are interested in reading more about the arguments of this function check out its [R Documentation](https://www.rdocumentation.org/packages/spatialEco/versions/1.3-2/topics/sp.kde) page.
 
 ## Further Resources {-}
+
+*NOT FINISHED - ADD FURTHER RESOURCES*
 
 You made it to the end of the first chapter, great job! If you would like to learn more about how to source these datsets, see appendix E. Additional resources describing the origin of these datasets is provided below. 
 
