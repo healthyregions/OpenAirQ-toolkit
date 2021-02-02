@@ -26,7 +26,7 @@ tmap_mode('view')
 
 ## County Boundaries
 
-The Chicago metropolitan area is the extent of the air quality study area. The study area is centered on Chicago, a major American city of 2.7 million people (2018) located along the Eastern shore of Lake Michigan and within Cook County. However, the study spans a total of 21 counties along Lake Michigan, covering Northeastern Illinois, Northwestern Indiana, and Southern Wisconsin. Included in our study area is the midwestern city of Milwaukee, approximately 100 miles due North of Chicago.
+The Chicago metropolitan area is the extent of the air quality study area. The study area is centered on Chicago, a major American city of 2.7 million people (2018) located along the Eastern shore of Lake Michigan and within Cook County. However, the study spans a total of 21 counties along Lake Michigan, covering Northeastern Illinois, Northwestern Indiana, and Southern Wisconsin. Included in our study area is the Midwestern city of Milwaukee, approximately 100 miles due North of Chicago.
 
 The first order of business is to load spatial data. The 21 county boundaries are contained in an ESRI Shapefile ending in `.shp`. The code snippet below imports the shapefile as an `sf` object in R.
 
@@ -46,13 +46,13 @@ tm_shape(counties) +
 ## State Boundaries
 To produce accurate analyses across the 21 county study area, it is necessary to get an understanding of the geographic context of the large geographic area that our counties are located in. This is due to region-wide weather and pollution patterns impacting local pollution levels observed in our study area. Since our counties are situated in the Midwestern region of the United States, data is actually collected across the four U.S. states of Illinois, Indiana, Michigan, and Wisconsin.
 
-As before, data on the geographic boundaires of these four states can be loaded into R as shown below.
+As before, data on the geographic boundaries of these four states can be loaded into R as shown below.
 
 ```{r message=FALSE, warning=FALSE, results = 'hide'}
 states = sf::st_read('./data/FourStates/FourStates.shp')
 ```
 
-The code snippet below produces an interactive mapping of the four states. For reference, the original 21 county study area is depicted in grey, at the center of the map. Each state is depicted in a different color for easy differentiation. This map provides an estimate of how much air qualtiy must be collected just to predict pollution levels in our relatively small 21 county study area.
+The code snippet below produces an interactive mapping of the four states. For reference, the original 21 county study area is depicted in gray, at the center of the map. Each state is depicted in a different color for easy differentiation. This map provides an estimate of how much air quality must be collected just to predict pollution levels in our relatively small 21 county study area.
 
 ```{r}
 tm_shape(states) +
@@ -74,9 +74,9 @@ tm_shape(counties) +
 
 
 ## EPA Particulate Matter Stations
-Over 127 individual PM2.5 pollution monitoring stations are located across the four state data collection area. These sensors are maintained by state-level environmental protection agencies. Collected data is then reported to the federal Environmental Protection Agency (EPA). Some sensors are digital and provide pollution observations at least every day, and sometimes every hour. However, the vast majority are anolog and only report data every three to twelve days. Analog sensors work by sucking air through a paper wafer designed to trap particular matter. For each observation, a technician removes the wafer from the instrument and places a new one for the next observation. The used wafer is then sent to a lab where it is weighed, creating an estimate of average PM2.5 concentration during the monitoring period.
+Over 127 individual PM2.5 pollution monitoring stations are located across the four state data collection area. These sensors are maintained by state-level environmental protection agencies. Collected data are then reported to the federal Environmental Protection Agency (EPA). Some sensors are digital and provide pollution observations at least every day, and sometimes every hour. However, the vast majority are analog and only report data every three to twelve days. Analog sensors work by sucking air through a paper wafer designed to trap particular matter. For each observation, a technician removes the wafer from the instrument and places a new one for the next observation. The used wafer is then sent to a lab where it is weighed, creating an estimate of average PM2.5 concentration during the monitoring period.
 
-Location information of sensors that were active between 2014 and 2018 are imported into R from a pre-compiled `.geojson` file.
+Location information of sensors that were active between 2014 and 2018 is imported into R from a pre-compiled `.geojson` file.
 
 ```{r message=FALSE, warning=FALSE, results = 'hide'}
 sensors = sf::st_read('./data/PM25_4States_2014.2018_POINTLOCS.geojson') %>% dplyr::mutate(rec_duration = as.numeric(lastRec - firstRec))
@@ -92,16 +92,15 @@ tm_shape(sensors) +
 
 ## Weather Stations
 
-Air quality is directly affected by regional and local weather patterns, so a dense network of weather stations is an important tool in our data toolbox. High temporal resolution weather data was sourced from a large network of ground-based weather stations typically located at airports. These sensors form the Automated Surface Observing System (or ASOS) and provide hourly data an many weather characteristics, such as temperature, pressure, wind velocity, and wind direction. ASOS sensors are maintained by a variety of agencies like the National Oceanic and Atmospheric Administration (NOAA), the Federal Aviation Administration (FAA), and the Department of Defense (DoD). Their primary purpose it to provide real-time, accurate weather information for pilots landing or departing at a given airport. Additionally, they serve as primary weather sensors for a variety of NOAA weather models. All sensors are digital, with data being continuously monitored in real-time for errors and inconsistencies.
+Air quality is directly affected by regional and local weather patterns, so a dense network of weather stations is an important tool in our data toolbox. High temporal resolution weather data were sourced from a large network of ground-based weather stations typically located at airports. These sensors form the Automated Surface Observing System (or ASOS) and provide hourly data an many weather characteristics, such as temperature, pressure, wind velocity, and wind direction. ASOS sensors are maintained by a variety of agencies like the National Oceanic and Atmospheric Administration (NOAA), the Federal Aviation Administration (FAA), and the Department of Defense (DoD). Their primary purpose is to provide real-time, accurate weather information for pilots landing or departing at a given airport. Additionally, they serve as primary weather sensors for a variety of NOAA weather models. All sensors are digital, with data being continuously monitored in real-time for errors and inconsistencies.
 
-The location of all sensors in the study area were loaded as shown below.
+The locations of all sensors in the study area are loaded as shown below.
 
 ```{r message=FALSE, warning=FALSE, results = 'hide'}
 asos = sf::st_read('./data/4States_ASOS_2018_Locations.geojson')
 ```
 
-The map below describes the distribution of sensors in the four-state data collection area. There are a total of 249 sensors in the four state area. Similarly to the EPA sensor map, use the scroll wheel to zoom in and the mouse to explore the map. Individual sensors are represented with a blue airplane icon. Clicking on an airport will reveal the three-letter airport identifier and full name for that airport. As these weather sensors are used for aviation purposes, they report data continously throughout the day once installed. 
-
+The map below describes the distribution of sensors in the four state data collection area. There are a total of 249 sensors in the four state area. Similarly to the EPA sensor map, use the scroll wheel to zoom in and the mouse to explore the map. Individual sensors are represented with a blue airplane icon. Clicking on an airport will reveal the three-letter airport identifier and full name for that airport. As these weather sensors are used for aviation purposes, they report data continuously throughout the day once installed. 
 ```{r}
 basemap +
 tm_shape(asos) +
@@ -109,7 +108,7 @@ tm_shape(asos) +
 ```
 
 ## Point Sources of Pollution
-The last vector dataset in our toolkit are point source emission locations, sourced from the EPA National Emissions Inventory of 2014. These locations represent known sources of pollution. Locations in this inventory represent various factories, processing plants, heavy industrial installations, powerplants, major HVAC systems, and more. Each location comes with information on the quantity of pollution per year released at the site. However, these number are self-reported by the polluting firm and are likely underestimates of true pollution occuring at that location. We load the location dataset as shown in the code snippet below. Each pollution sourced is represented as a point feature.
+The last vector dataset in our toolkit are point source emission locations, sourced from the EPA National Emissions Inventory of 2014. These locations represent known sources of pollution. Locations in this inventory represent various factories, processing plants, heavy industrial installations, powerplants, major HVAC systems, and more. Each location comes with information on the quantity of pollution per year released at the site. However, these number are self-reported by the polluting firm and are likely underestimates of true pollution occurring at that location. We load the location dataset as shown in the code snippet below. Each pollution sourced is represented as a point feature.
 
 ```{r message=FALSE, warning=FALSE, results = 'hide'}
 points.pollution = sf::st_read('./data/Point_Source_Emissions_4States_2014.geojson')
@@ -125,9 +124,9 @@ tm_shape(points.pollution) +
 
 ## Further Resources {-}
 
-You made it to the end of the first chapter, great job! If you would like to learn more about how to source these datsets, see appendix E. Additional resources describing the origin of these datasets is provided below. 
+You made it to the end of the first chapter, great job! If you would like to learn more about how to source these datasets, see appendix E. Additional resources describing the origin of these datasets are provided below. 
 
 * See the [EPA's air quality information page](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) for more information on air quality measuring in the United States.
 * Refer to [Iowa State University](https://mesonet.agron.iastate.edu/ASOS/) for more information on the ASOS weather station network.
 * See the [EPA's National Emissions Inventory homepage](https://www.epa.gov/air-emissions-inventories/2014-national-emissions-inventory-nei-data) for more information on point source emissions.
-* Mor einformation about mapping in R using `tmap` and other packages can be found in [Chapter 8 Making maps with R](https://geocompr.robinlovelace.net/adv-map.html) from Geocomputation with R by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow.
+* More information about mapping in R using `tmap` and other packages can be found in [Chapter 8 Making maps with R](https://geocompr.robinlovelace.net/adv-map.html) from Geocomputation with R by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow.
