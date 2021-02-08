@@ -31,7 +31,7 @@ We will use the following packages in this tutorial:
 * `velox`: to manipulate raster data in time efficient manner
 * `raster`: to manipulate and analyze raster data
 
-It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. Detailed instructions for installing this package from R archive are included in other parts of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
+It should be mentioned here that the "velox" package, which is great at fast raster data manipulation, is sadly no longer available. More detailed instructions for installing this package from R archive are included in Appendix C of this tutorial book and can also be found [here](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages).
 
 ```{r D.packages, message = F, warning = F}
 library(tidyverse)
@@ -51,7 +51,6 @@ lac <- st_read("./data/LargeAreaCounties")
 km.grid <- st_read("./data/Km_Grid")
 ```
 
-For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
 ## Data Manipulation {-}
 

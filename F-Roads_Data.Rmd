@@ -19,7 +19,7 @@ Transportation system is a significant source of air pollution, and roads are wi
 
 ### Input/Output {-}
 
-Our input includes the shapefile of several large counties in the Midwest, a grid data file, and the shapefile of the major roads in Illinois, Indiana, Wisconsin, and Michigan. The files can be found here. **Insert Link!**
+Our input includes the shapefile of several large counties in the Midwest, a grid data file, and the shapefile of the major roads in Illinois, Indiana, Wisconsin, and Michigan. The files are available for download on this project's [GitHub repo](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data).
 
 Our output is a shapefile that records the lengths of primary raods, secondary roads, and motorways in each 1 km \times 1 km grid. 
 

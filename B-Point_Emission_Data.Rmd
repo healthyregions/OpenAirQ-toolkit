@@ -11,7 +11,7 @@ output:
 
 In this tutorial, we will demonstrate how to represent PM2.5 point emission data on maps. As an example, we will look at the PM2.5 data for four states - Illinois, Indiana, Wisconsin, and Michigan. The goal of this exercise is to create a point data map that provides a clear visualization of the point source of PM2.5 emission. To summarize, our objectives are to:
 
-* Gain famililarity with the pollution data from 2014 National Emissions Inventory
+* Gain familiarity with the pollution data from 2014 National Emissions Inventory
 * Perform simple data manipulation on the PM 2.5 data
 * Visualize PM 2.5 pollution using the "tmap" package
 
@@ -36,17 +36,17 @@ library(tmap)
 
 ### Load Data {-}
 
-Besides the packages, we also need to load our data, which can be done by running the commented-out code below. We call the data frame `pe1`. 
+Besides the packages, we also need to load our data, which could have been done by running the code below. 
 
 ```{r eval = FALSE, warning = FALSE, message = FALSE}
 pe1 <- read_csv("process_12345.csv")
 ```
 
 
-Note that this file above is unfortunately too large to be uploaded to Github, so we will instead use a pre-processed data set:
+However, we note that this file above is unfortunately too large to be uploaded to Github, so we will instead use a pre-processed data set:
 
 
-```{r echo = FALSE, warning = FALSE, message = FALSE}
+```{r echo = T, warning = FALSE, message = FALSE}
 fourstate.pe <- read_csv("./data/four_state.csv")
 ```
 
@@ -58,11 +58,10 @@ We also load the shapefile for the four states:
 fourstates <- st_read("./data/FourStates")
 ```
 
-For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
 
 ## Data Manipulation {-}
 
-Once we have our data and the packages ready, we will start the data manipulation process. Since we will only look at the data from Illinois, Indiana, Wisconsin, and Michigan, we can use the `filter` function to pick out only the four states that we are interested in, and we name the new data frame `fourstate.pe1`. This is accomplished by the commented-out code below.
+Once we have our data and the packages ready, we will start the data manipulation process. Since we will only look at the data from Illinois, Indiana, Wisconsin, and Michigan, we can use the `filter` function to pick out only the four states that we are interested in, and we name the new data frame `fourstate.pe1`. This is accomplished by the code below.
 
 This dataset comes from 2014 National Emissions Inventory, which is "a comprehensive and detailed estimate of air emissions of criteria pollutants, criteria precursors, and hazardous air pollutants from air emissions sources." You can read more about this dataset on this [website](https://www.epa.gov/air-emissions-inventories/national-emissions-inventory-nei).
 

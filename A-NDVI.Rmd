@@ -40,7 +40,7 @@ Since we are mainly analyzing raster data in this tutorial, we use the "raster" 
 
 ### Load Data {-}
 
-The data we are analyzing is the quarterly average of the Normalized Difference Vegetation Index for 21 large counties in the Midwest, from 2014 to 2018. It is stacked chronologically. Note that the original dataset is quite large (over 50 gigabytes), so we processed the data in advance. We can load the pre-processed data simply by running the command below. 
+The data we are analyzing are the quarterly average of the Normalized Difference Vegetation Index for 21 large counties in the Midwest, from 2014 to 2018, which are stacked chronologically. Note that the original dataset is quite large (over 50 gigabytes), so we processed the data in advance. We can load the pre-processed data simply by running the code below. 
 
 
 ```{r A_loading ndvi data}
@@ -65,9 +65,6 @@ Also remember to load the shapfile of the 21 large counties. We will use it shor
 counties <- st_read("./data/LargeAreaCounties")
 ```
 
-
-For more detailed description of the data, please refer to the main chapters of this tutorial book. **Insert Link!**
-
 ## Data manipulation and Plotting {-}
 
 We start our analysis by looking at the data for one specific quarter - the 3rd quarter of 2018. Since this is the 19th layer of our dataset (recall that our dataset is stacked chronologically), we can easily extract the data using the line of code shown below.
@@ -90,7 +87,7 @@ tm_shape(this.qtr) +
 
 This plot gives an overview of the NDVI of the 21 large counties. Without the county borders explicitly drawn, we are unable to compare the NDVI across counties. Moreover, the plot is far from aesthetically pleasing.
 
-Hence we redraw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers. 
+Hence we re-draw the graph, this time with counties borders as well as an informative title for the plot. In addition, we modify the title of the legend so that it is more comprehensible to readers. 
 
 
 ```{r fig.align='center', message = FALSE, eval = T}
@@ -126,7 +123,7 @@ tmap_mode("plot")
 ```
 
 
-Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset `this.qtr`. Notice that we use `raster::summary` here to specifiy that we want R to use the `summary` function from the "raster" package.
+Before we jump to the next section, it may be helpful to quickly examine the summary statistics for the sub-dataset `this.qtr`. Notice that we use `raster::summary` here to specify that we want R to use the `summary` function from the "raster" package.
 
 
 ```{r A_summary ndvi, message = FALSE, warning = FALSE}
@@ -152,7 +149,7 @@ plot(cook.county$geometry)
 ```
 
 
-This is a very crude plot since it only shows the border of Cook County. Rest assured that our final product is much more visually pleasing than this!
+This is a very crude plot since it only shows the border of Cook County - we confirm the general shape of Cook County seems correct. If you are unsatisfied with how this map looks, rest assured that our final product is much more visually pleasing than this!
 
 The following two lines of code crop and mask raster data to Cook County. Cropping and then masking accelerates the actions for large raster data. It probably does not matter in our case, since we are only looking at Cook County, and the volume of our data is rather small.
 
