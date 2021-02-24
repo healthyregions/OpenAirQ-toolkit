@@ -1,1 +1,89 @@
+# Point Emission KDE
 
+## Overview
+
+In this tutorial, we will demonstrate how to represent PM2.5 point emission data as Kernel Density Estimation Results on 1 km grid cells. As an example, we will look at the PM2.5 data for four states - Illinois, Indiana, Wisconsin, and Michigan. The goal of this exercise is to create a raster data map that provides a clear visualization of the point source of PM2.5 emission. To summarize, our objectives are to:
+
+* Gain familiarity with the pollution data from 2017 National Emissions Inventory
+* Perform Kernel Density Estimation on the PM 2.5 data
+* Visualize PM 2.5 pollution as raster cells
+* Write the KDE results to new shapefiles
+
+## Environment Setup
+
+### Input/Output
+The files that will be used in this tutorial are the pollution data for Illinois, Indiana, Wisconsin, and Michigan as well as the shapefiles of the four states 1 km grid cells. The files are available for download on this project's [GitHub repo](https://github.com/GeoDaCenter/OpenAirQ-toolkit/tree/master/data/Point%20Emissions).
+
+### Load Libraries 
+
+We start by loading the necessary packages - `sf`, and `raster`: 
+
+* `sf`: to perform simple spatial data manipulation. 
+* `raster`: needed for grid and kernel density surface
+
+```{r B_package.setup.points, message = FALSE}
+library(sf)
+library(leaflet)
+library(raster) # Needed for grid and kernel density surface
+library(adehabitatHR) # Needed for kernel density surface
+library(spatialEco)
+library(rgdal)
+library(sp)
+library(arc)
+library(readr)
+library(rgeos)
+```
+### Load Data
+
+Besides the packages, we also need to load our data, which could have been done by running the code below. The data has already been filtered for PM2.5 and our 4 states.
+
+This dataset comes from 2017National Emissions Inventory, which is "a comprehensive and detailed estimate of air emissions of criteria pollutants, criteria precursors, and hazardous air pollutants from air emissions sources." You can read more about this dataset on this [website](https://www.epa.gov/air-emissions-inventories/national-emissions-inventory-nei).
+
+```{r eval = FALSE, warning = FALSE, message = FALSE}
+data <- st_read('pm25PE.shp')
+grid <- st_read('grid_4states.shp')
+```
+
+We also loaded the shapefiles for the four states grid cells.
+
+## Data Manipulation
+
+Once we have our data and the packages ready, we will start the data manipulation process. We will firstly change the data type from st to sf and filter out the empty data points. Then we modify the data from sf to spatial points.
+
+```{r eval = FALSE, warning = FALSE, message = FALSE}
+datasf<-st_as_sf(data)
+datap <- datasf[! st_is_empty( datasf), ]
+data.sp <- sf:::as_Spatial(datap)
+```
+
+## Generating the KDE
+
+When we have the spatial points, we can use them to general our KDE model using `kernelUD` command. The documentation of `kernelUD` could be found at [website](https://www.rdocumentation.org/packages/adehabitatHR/versions/0.4.19/topics/kernelUD). Then we set a projection for the rasterized KDE results.
+
+
+```{r eval = FALSE, warning = FALSE, message = FALSE}
+kde.output <- kernelUD(data.sp, h="href", grid = 1000)
+kde <- raster(kde.output)
+projection(kde) <- CRS("+init=EPSG:4326")
+plot(kde)
+```
+
+## Mask/Intersect KDE with 4 State Grid
+
+Then we need to mask the KDE result to the 4 state 1 km grid cells. We could use either mask the rasters or intersect the spatial polygons. Here is the code to mask the raster files.
+
+```{r eval = FALSE, warning = FALSE, message = FALSE}
+grid.raster <- raster(grid)
+masked_kde <- mask(kde, grid.raster)
+plot(masked_kde)
+```
+
+## Save the new Shapefiles
+
+We would firstly transfer the raster file to spatial polygons and save them as new shapefiles. Or we can just save the results as .grd files.
+
+```{r eval = FALSE, warning = FALSE, message = FALSE}
+poly = rasterToPolygons(masked_kde)
+writeRaster(masked_kde, 'pm25kde.grd', overwrite=TRUE)
+raster::shapefile(poly, "poly.shp")
+```
