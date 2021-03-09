@@ -24,10 +24,10 @@ Before we begin, install the following packages for data wrangling and spatial d
 * `dplyr`, for data frame manipulation
 
 ## Author Team {-}
-This toolkit was developed for the [Partnership for Healthy Cities](https://partnershipforhealthycities.bloomberg.org/) by Marynia Kolak, Isaac Kamber, Lorenz Menendez, Haowen Shang, Yuming Liu, and Jizhou Wang at the [Center for Spatial Data Science](https://spatial.uchicago.edu/) at the University of Chicago with support from [Bloomberg Philantropies](https://www.bloomberg.org/).
+This toolkit was created by Marynia Kolak, Isaac Kamber, Lorenz Menendez, Haowen Shang, Yuming Liu, Jizhou Wang, and Andrew Morse at the [Center for Spatial Data Science](https://spatial.uchicago.edu/) at the University of Chicago.
 
 ## Acknowledgements {-}
-This research was supported by TBD, add any legal discliamers or other sponsor verbiage here.
+This toolkit was developed with support from the [Partnership for Healthy Cities](https://partnershipforhealthycities.bloomberg.org/), a global network funded by Bloomberg Philanthropies in partnership with the World Health Organization and the global health organization Vital Strategies.
 
 ***
 
