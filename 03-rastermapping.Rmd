@@ -1,32 +1,348 @@
 # Raster Data Mapping
 
 ## Introduction
+In this chapter, we will be introducing raster data in R. Whereas vector data covered last chapter deals with points, lines, and polygons, raster data concerns matrices of cells with unique values. Raster data is essentially a picture, with each pixel representing a value for a given location. Raster datasets are often the product of *remote sensing*, the process of recording data without any physical contact with the target of observation (think satellite/aerial imagery). In the world of environmental data analysis, remote sensing is an invaluable source of information on everything from aerosol thickness to vegetation coverage. 
 
-This part will introduce you to the raster grid cells of our air quality study area, as well as the values of key pollution and the density of key environmental variables.
+We will be examining two datasets over the city of Chicago: one dealing with Normalized Difference Vegtation Index (NDVI) and the other Land Cover. NDVI is an example of a continuous dataset, where the values of a cell correspond to measurements for a given reading. Land Cover is an example of a discrete dataset, where rather than a measurement falling along a scale with some unit, the value of a cell refers to a category of classification. We will introduce the basic concepts with the NDVI dataset before moving on to the Land Cover one. 
+
+By the end of this chapter, you will be able to: 
+
+* Manipulate rasters in R
+* Conduct basic raster calculations 
+* Create interactive visualizations of raster datasets
+* Work with both discrete and continuous rasters 
 
 ## Environment Setup
 
-The follow packages must be installed on your computer before proceeding.
+With both datasets, feel free to use the downloadable files accompanying the toolkit or follow along with data for your own area. The NDVI data in this tutorial comes from the MOD13Q1 Dataset, accessible via the USGS [Earth Explorer](https://earthexplorer.usgs.gov) tool. The files download in the HDF4 format which will require additional processing to convert to the GeoTiff format typically used in R raster processing. For a walkthrough on how to convert HDF4 files to GeoTiffs, please see *INSERT LINK TO CONVERSION SCRIPT*.
 
-* `tmap`: flexible thematic mapping 
-* <other packages as needed>
+The Land Cover dataset is available for download from the USGS [Gap Land Cover](https://www.usgs.gov/core-science-systems/science-analytics-and-synthesis/gap/science/land-cover-data-download?qt-science_center_objects=0#qt-science_center_objects) website. You can download extracts for various administrative divisions, however we have pre-cropped the raster to the boundaries of a 21 county area around Chicago because the raw files are quite large. 
 
-`tmap` will be set to interactive mode for this tutorial.
+This chapter will be using the following packages:
 
-Let's library the above packages. We also set `view` mode in `tmap` to create interactive and clickable maps.
+* `tidyverse` (Aspatial data wrangling)
+* `raster` (Raster operations)
+* `sf` (Vector data manipulation/analysis)
+* `tmap` (Spatial data visualization)
 
-```{r message=TRUE, warning=FALSE}
+If you have not already downloaded them, please do so now with the `install.packages()` function.
+
+```{r, package.load, results='hide', warning=FALSE, message=FALSE}
+library(raster)
+library(sf)
 library(tmap)
-tmap_mode('view')
+library(tidyverse)
 ```
 
-## <Dataset 1>
 
-I am a description and interactive visualoization of the first raster dataset
+## Loading and Examining Raster Datasets
 
-## Further Resources {-}
+First, we want to load our raster datasets into our R environment. We can do this quite easily with the `raster` package's creatively named `raster()` function. The function can either create a raster from scratch, a process outside the scope of this chapter, or read in an existing raster dataset. We are first going to read in two NDVI files for the grid tile containing Chicago. The MOD13Q1 dataset has a biweekly temporal resolution, so these two files from two weeks apart in 2018 are consecutive readings from the satellite.
 
-Additional resources describing the origin of these datasets is provided below. 
+Note: data from NASA's Moderate Resolution Imaging Spectroradiometer (MODIS) is typically downloadable as tiles on a sinusoidal grid covering the entire world. Chicago is located in grid cell H11, V04 (horizontal tile 11, vertical tile 4). 
 
-* I am an example [resource](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) for more information on a topic.
 
+```{r, ndvi.load}
+
+ndvi.1 <- raster("MOD13Q1.A2018209.h11v04.006.tif")
+ndvi.2 <- raster("MOD13Q1.A2018225.h11v04.006.tif")
+
+```
+
+With our two files read into our R environment, let's take a second to examine one of them. With RasterLayer data structures in R, this is as simple as typing out the dataname of the layer. 
+
+```{r, ndvi.examine}
+
+ndvi.1 
+
+```
+
+The above line gives us a lot of information about the raster. We can see the resolution is 231.7 meters x 231.7 meters by looking at the resolution line in conjunction with the units descriptor on the crs line. This is largely consistent with the documentation of the MOD13Q1 dataset which tells us that it is provided at a 250 meter resolution. We can also see the coordinate reference system on the crs line telling us that this raster is in a sinusoidal projection with a unit of meters. Finally, this tells us that the values in our raster range from -20,000,000 to 99,960,000. This is initially confusing, as NDVI values range from -1 to 1, however reading the data documentation reveals that the raster data is scaled by a factor of 100,000,000. 
+
+If you are not interested in all of that information, you can pull up specific information about rasters in R using more limited functions like `res()` for resolution, `projection()` to get/set the crs, or `getValues()` to output a vector of all values in the raster (23,040,000 in this case).
+
+Before we move on, let's quickly plot one of our rasters to see what the data looks like right now.
+
+```{r, ndvi.basicplot}
+
+plot(ndvi.1)
+
+```
+
+You can identify the boundaries of the Great Lakes, however the distortion of the sinusoidal projection is readily apparent. We will address this in our next section. 
+
+## Cropping and Masking Rasters
+
+Now that we've loaded rasters into our environment, let's work on cropping them to the boundaries of our area of interest. First, we need to load in our Shapefile containing the boundaries of the 21 county area of interest. We will read it in using the `sf` package and quickly visualize it.
+
+```{r, shapefile.load}
+
+lac <- st_read("LargeAreaCounties")
+
+plot(lac$geometry)
+
+```
+
+Next, we need to reproject our rasters to match the projection of the vector dataset. We will do this using the `projectRaster()` function. We will extract the CRS from the Shapefile and use that as our target CRS for reprojecting our raster. Note that the raster reprojection will take some time to run because of the large file size.
+
+```{r, ndvi.reproj, results='hide', warning=FALSE, message=FALSE}
+
+new.crs <- st_crs(lac)
+
+ndvi.1.reproj <- projectRaster(ndvi.1, crs = new.crs$proj4string)
+ndvi.2.reproj <- projectRaster(ndvi.2, crs = new.crs$proj4string)
+
+
+```
+
+
+Let's double check that our projections are all in order before we crop our dataset. We can do this both by making sure the two CRS's are equivalent and should also be able to map the boundaries on top of the raster data without any mismatch.
+
+```{r, ndvi.reproj.check}
+
+raster::projection(ndvi.1.reproj)
+st_crs(lac)
+
+plot(ndvi.1.reproj)
+plot(lac$geometry, add = T)
+
+```
+
+Everything seems to be in order (the extra detail in the proj4 output for the raster projection shouldn't affect our final analysis). Let's crop our rasters down to the boundaries of the 21 counties. We're going to be using the raster package's `crop()` function. The function takes two arguments: the first being the raster you would like to crop, and the second being an object whose boundaries you wish to crop it. 
+
+```{r, ndvi.crop}
+
+ndvi.1.crop <- raster::crop(ndvi.1.reproj, lac)
+ndvi.2.crop <- raster::crop(ndvi.2.reproj, lac)
+
+plot(ndvi.1.crop)
+plot(lac$geometry, add = T)
+
+```
+
+
+Our raster is finally starting to take shape! Let's follow up with the cropping by masking our rasters using the `mask()` function. While `crop()` changes the extent of the raster to the new extent provided in the second argument, `mask()` hides all cells outside of the exact boundaries. This makes more sense with an example: 
+
+```{r, ndvi.mask}
+
+ndvi.1.mask <- raster::mask(ndvi.1.crop, lac)
+ndvi.2.mask <- raster::mask(ndvi.2.crop, lac)
+
+plot(ndvi.1.mask)
+plot(lac$geometry, add = T)
+
+```
+
+We can see that our raster matches perfectly with the boundaries of the Shapefile. An important thing to keep in mind is that the `mask()` function is far more computationally intensive than the `crop()` function, so be sure to crop your rasters before you mask them. 
+
+With these smaller data structures, we can transform the values by the inverse of the scale factor without too much computational power. Let's do that quickly so our cell values match with NDVI values. The RasterLayer structure allows us to apply simple arithmetic operation to our rasters, meaning we can easily scale our data up or down by a given factor (in this case, 100000000). 
+
+```{r, ndvi.scale}
+
+ndvi.1.mask <- ndvi.1.mask / 100000000
+ndvi.2.mask <- ndvi.2.mask / 100000000
+
+```
+
+## Raster Stacks
+
+Now that we have two cropped and masked NDVI rasters, let's explore another important concept in raster processing -- the raster stack. Raster stacks are a data structure that can be used to store multiple raster files in R. They are extremely useful for organizing your data and can be input into a number of functions for data processing. Let's look at an example of this by creating a raster stack from the two NDVI rasters and calculating their mean. 
+
+```{r, ndvi.stack}
+
+ndvi.stack <- raster::stack(ndvi.1.mask, ndvi.2.mask)
+
+ndvi.mean <- raster::mean(ndvi.stack, na.rm = T)
+
+```
+
+
+## Visualizing Raster Data
+
+Now that we have a cropped, masked, and averaged raster, let's make a nice visualization using the `tmap` package. We will be adding onto the previous chapter's use of `tmap` by using the `tm_raster()` function. 
+
+```{r, ndvi.plot}
+
+ndvi.plot <- tm_shape(ndvi.mean) +
+        tm_raster(palette =  "Greens", title = "NDVI", alpha = 0.7) +
+        tm_shape(lac) +
+        tm_borders() +
+        tm_layout(legend.position = c("RIGHT","TOP"))
+
+ndvi.plot
+
+```
+
+
+Finally, let's make this into an interactive map by changing the `tmap_mode()`. 
+
+```{r, ndvi.interactive.plot, message=FALSE}
+
+tmap_mode("view")
+
+ndvi.plot
+
+```
+
+## Loading and Examining the Land Cover Data
+
+(this is just here so the script runs. When compiled into same chapter will delete)
+```{r, package.load, results='hide', warning=FALSE, message=FALSE}
+library(raster)
+library(sf)
+library(tmap)
+library(tidyverse)
+```
+
+Now that we have covered the basics of raster processing, let's dive into some more concepts with the example of the land cover dataset. As mentioned in the introduction, the land cover raster represents categorical information. Each cell is assigned a value which corresponds to a type of land cover. The key matching values to identifying information can be found in an accompanying CSV. We will focus first on reading in this data and examining it before working to calculate some summary statistics and filter out land cover values of interest.
+
+We are going to read in our data just as we did with the NDVI rasters. Let's also load in the csv file for the key. 
+
+```{r, landcover.load, results='hide', warning=FALSE, message=FALSE}
+
+land.cover <- raster("lc.tif")
+lc.key <- read_csv("LandCoverKey.csv")
+
+```
+
+Let's examine the data. We are first going to look at the raster before looking at the key.
+
+```{r, landcover.examine}
+
+land.cover
+
+```
+
+Due to its large file size, the raster has already been reprojected and cropped to fit the 21 county boundaries. If you are working with data downloaded from the USGS directly, you may want to reproject and crop your data to fit your area of interest. Looking at the raster, we can see that the file contains a very large number of cells (over 76 million). We will want to keep this in mind when calling various mapping functions, as they may take quite some time to fully render. The resolution is given in degrees because that is the unit of the projection. The value given in the "resolution" line is equivalent to the 30m resolution of the dataset. Finally we can see the CRS is set to the same EPSG 4326 lat/lon WGS84 standard as before. 
+
+```{r, landcover.key.examine}
+
+head(lc.key)
+nrow(lc.key)
+
+```
+
+As we can see, each of the 585 land cover classifications contains details on everything from the total number of cells of a given type to the RGB values of the cells classified as belonging to that land cover grouping to, most importantly for us, the land cover classification. For the purposes of this chapter, we will be most concerned with the "NVC Class," offering a broad categorical grouping of a classification, and "ECOLSYS_LU," the detailed land cover type.
+
+
+Finally, let's create a quick plot of our land cover data. This will probably take upwards of 15 seconds to run, so feel free to simply refer to this example.
+
+```{r, landcover.plot}
+
+plot(land.cover)
+
+```
+
+This map is more or less meaningless without knowing the corresponding land cover classification for each value. Seeing as the data is discrete rather than continuous, the numbers alone do not represent anything. While we can see that the map values seem to largely fall over 500 (green) and under 100 (pink), we do not know what this means yet. 
+
+## Introduction to Categorical Data
+
+Let's focus our research on areas of developed land cover in and around Chicago. Let's create a new raster that exists solely to highlight developed areas. Our goal in this section is to generate a raster with values of either 0 (not developed) or 1 (developed).
+
+First, we want to identify values on the key that are of interest. Let's examine the unique values in the "NVC_Class" attribute to see if any of the classes represent this category
+
+```{r, landcover.key.findurban}
+
+unique(lc.key$NVC_CLASS)
+
+```
+
+As we can see, the final category, "Developed & Other Human Use" seems to be cover our research area. Let's create a vector of values for land cover cell values that fall into this category. This vector will contain all values from the land cover key where "NVC_Class" is equal to this category.
+
+```{r, landcover.key.developed}
+
+developed.values <- lc.key[lc.key$NVC_CLASS == "Developed & Other Human Use", "Value"]
+developed.values
+
+```
+
+Our values of interest seem to be the five numbers above. Let's identify which cells in our raster contain one of those five values. We will do this using the `getValues()` function. This function pulls a vector containing all values contained in a raster. 
+
+```{r, landcover.getvals}
+
+lc.vals <- getValues(land.cover)
+
+dev.cells <- which(lc.vals %in% developed.values$Value)
+
+```
+
+Let's double check that our ratio of developed cells to total cells is consistent with what we'd expect from our land cover raster. Because of the nature of the masked raster and the land cover dataset, we need to ensure we are only considering cells with values greater than 0 during these calculations. 
+
+```{r, landcover.devpercent}
+
+length(dev.cells) / length(na.omit(lc.vals[lc.vals > 0])) 
+
+```
+
+Developed cells appear to make up about 30% of our total area, a value that makes sense given a purely qualitative assessment of the 21 counties around Chicago. Let's now work to represent these areas on a new raster. We want to create a vector that we can later replace the raster values with that will show us developed areas as 1s and all other areas as 0s. In order to keep the shape of our masked raster, we must also preserve the location of NA cells. 
+
+```{r, landcover.newvals}
+
+na.vals <- which(is.na(lc.vals))
+
+lc.newvals <- rep(0, length(lc.vals))
+lc.newvals[na.vals] <- NA
+lc.newvals[dev.cells] <- 1
+
+
+```
+
+
+Now, we will make a copy of our land cover raster to serve as the structure for our raster of 0s and 1s that we will soon create.
+
+```{r, landcover.copy}
+
+lc.copy <- land.cover 
+
+```
+
+In order to set the values of a raster, we will use the `setValues()` function. This is typically used when you are creating a raster from scratch, however it is also useful in situations such as these where you wish to change the values of an existing raster. 
+
+```{r, landcover.setvalues}
+
+lc.copy <- setValues(lc.copy, lc.newvals)
+plot(lc.copy)
+
+```
+
+As we can see, we have a raster showing us everywhere in the 21 county area with developed land cover. We can clearly see Chicago and major suburbs/nearby cities. Techniques like this can be used to create a raster with a binary variable representing developed/not developed as an input to a model. 
+
+## Analyzing Categorical Rasters
+
+We've seen how we might want to look at a small subcategory, but let's try to summarize the raster as a whole. We will be cross-referencing the raster cell values with the key to try to create a table containing the percentage of the raster that falls into each broad land cover classification (NVC_Class)
+
+Rather than doing this processing on the raster itself, a slow and laborious process, we will instead be using the numeric vector from the `getValues()` function used in the above section. We already have the lc.vals variable created above. Unlike the above steps, we don't need the raster itself, so we will discard the NA and 0 values. 
+
+```{r, landcover.complete}
+
+lc.completevals <- na.omit(lc.vals)
+lc.completevals <- lc.completevals[lc.completevals > 0]
+
+```
+
+Now we want to replace the cell values in this vector with the corresponding NVC_Class. 
+
+We will want to subtract 1 from each cell value before matching to the index for the NVC_Class because the "Value" attribute starts at 0 while the row starts at 1.
+
+```{r, landcover.replacenvc}
+
+lc.nvcs <- lc.key[(base::match(lc.completevals, lc.key$Value)-1), "NVC_CLASS"]
+
+head(lc.nvcs,5)
+
+```
+
+We now have a vector containing each of the NVC classifications for the cells in the raster. From this, creating a table of frequencies for each type is as simple as calling the `table()` function.
+
+```{r, landcover.nvctable}
+
+lc.nvcs.table <- table(lc.nvcs)
+
+lc.nvcs.table
+
+barplot(lc.nvcs.table, main="Land Cover Frequencies", 
+   xlab="", las=2, cex.names=.35)
+
+```
+
+As we can see (albeit barely due to the small label size necesssary to fit the classification names on the barplot), we were able to generate a frequency table for land cover values. 
