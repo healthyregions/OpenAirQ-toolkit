@@ -1,27 +1,215 @@
 # Introduction to R
 
-## Introduction
+## Introduction {-}
 
-(Introductory Paragraph)
+Before we delve into the world of spatial analysis, it is critical that we gain some familiarity with R, which is our main tool to manipulate and analyze spatial data. This tutorial assumes some basic knowledge of R - for example, you should already have R and RStudio installed on your computer. In the following chapter, however, we will nevertheless go though some basics of R. If you are highly skilled in programming in R, please feel free to skip this section. If you are new to R, then reading through the following chapter might be of help. Note that this brief introduction to R tutorial might not be enough if you have never used R or other programming language before. We will point you to some additional resources at the end of this chapter, which you may want to read through in your spare time. 
 
-## Environment Setup
+We will quickly review the following concepts in R:
 
-The follow packages must be installed on your computer before proceeding.
+* Basic Data Types
+* Logical Operators
+* Functions
+* Useful Packages
 
-* ` example package`, for doing something
+## Basic Data Types {-}
 
-`tmap` will be set to interactive mode for this tutorial.
+In this section, we will go through four basic data types in R, the first of which is numeric values. For example, we can assign the number "8" to the object `a`. If we check the class of `a`, we see that `a` is of the "numeric" class. Moreover, if we check the type of `a`, we see that `a` is of the "double" type. 
 
-Let's library the above packages
-
-```{r message=TRUE, warning=FALSE}
-#library(<package>)
+```{r numeric1}
+(a <- 8)
+class(a)
+typeof(a)
 ```
 
-## <Introduction to R Sections>
+It might seem strange that R does not automatically recognize "8" as an integer. To specify that "8" is indeed an integer, we can run the following code:
+
+```{r numeric2}
+(a <- as.integer(8))
+typeof(a)
+```
+
+After we explicitly set "8" to be an integer, the object `a` is of the "integer" type.
+
+Sometimes, we might wish to work with several numbers simultaneously. To do so, we can create a vector. In R, this is achieved by calling the "combine" function. In the following example, `b` is a vector containing numbers 1, 23, 1200, and 10000.
+
+```{r numeric3}
+(b <- c(1, 23, 1200, 10000))
+```
+
+The second data type we are going to look at is the "character values" or "strings". Notice that all the character values are in quotation marks, which is what distinguishs them from variable names. For example, `apple` is a variable name, but its value is the characters "apple".
+
+```{r string1}
+(apple <- "apple")
+class(apple)
+```
+
+We then check the class of `apple`, and it does not surprise us that it is of the "character" class.
+
+```{r string2}
+(fruit <- c("apples", "peaches", "oranges", "bananas"))
+```
+
+Just like the vector of numbers, we can also create a vectors of strings. As an example, we create a vector called fruit, which contains four kinds of fruit - apples, peaches, oranges, and bananas. 
+
+Next, we look at the logical value in R. There are two local values in R - `TRUE` or `FALSE`. In the following example, `d` is assigned the value of `TRUE`, and `e` is assigned the value of `FALSE`.
+
+```{r logical1}
+(d <- TRUE)
+(e <- FALSE)
+class(d)
+class(e)
+```
+
+We will learn more about the logical values and logical operators in the next section. 
+
+The last data type we will learn about is the missing value - `NA`. It is not quoted! In the example below, we assign the missing value `NA` to `missing`.
+
+```{r missing values}
+(missing <- NA)
+class(missing)
+```
+
+If we check the class of `missing`, we see that it is of the "logical" class. Conceptually, we can think of the missing values as logical values, although people usually only refer to `TRUE` and `FALSE` when they talk about the logical values.
+
+## Logical Operators {-}
+
+In this section, we will learn about logical operators. Since this is not meant to be a comprehensive guide to R, we will only give some examples below, with comments providing short explanations to the examples. If you would like to learn more about the logical operators in R, please refer to the resources at the end of this chapter.
+
+```{r log op 1}
+# assign the value of 10 to the object a. assign the value of 20 to the object b.
+a <- 10
+b <- 20
+
+# compare a with 9. Clearly, a is not equal to 9.
+a == 9
+
+# determine whether a is not equal to 11. Clearly, a is not equal to 11
+a != 11
+
+# determine whether a is greater than 8. Clearly, a is greater than 8.
+a > 9
+
+# determine whether a is smaller than or equal to 2.20. Clearly, a is not smaller than or equal 2.20.
+a <= 2.20
+
+# determine whether a is greater than 300 and b is equal to 20. The answer is FALSE.
+a > 300 & b == 20
+
+# determine whether a is greater than 300 or b is equal to 20. The answer is TRUE.
+a > 300 | b == 20
+
+# determine whether a + b is 30 and a * b is 201. The answer is FALSE
+a + b == 30 & a * b == 201
+```
+
+It is worth noting that we can also get a vector of logial values if we apply logical operators to a vector. Please see the example below.
+
+```{r log op 2}
+# create vectors a and b
+a <- c(1, -2, 33, 44, 55)
+b <- c(2, 4, 33, 44, 100)
+
+# determine if a and b are equal
+a == b
+
+# determine if a is not equal to b
+a != b
+
+# determine if a is equal to b - 1 and if b is greater than 0
+a == b-1 & b > 0
+
+# determine if a + b is smaller than 88 or if b is a squared
+a + b < 88 | b == a^2
+
+# determine if a and b are both positive and b is greater than a + 1
+a > 0 & b > 0 & b > a + 1
+```
+
+## Functions {-}
+
+In this section, we will study functions in R. Most programming languages have built-in functions, and R is no exception. There are a number of built-in functions in R that are quite handy. 
+
+For example, the `abs()` function takes in a number and returns its absolute value.
+
+```{r fun1}
+abs(100)
+abs(-5)
+```
+
+The `log()` function takes in a number and returns the natural logarithm.
+
+```{r fun2}
+log(1)
+log(1000)
+```
+
+The `median()` function takes in a vector of number and returns its median.
+
+```{r fun3}
+median(c(0, 1, 2, 4, 5))
+median(1:101)
+```
+
+There are many other examples of built-in functions, and it is impossible and unnecessay to list all of them here. To see a list of commonly used built-in functions in R, please refer to this [page](https://www.statmethods.net/management/functions.html). Note that this list is not exhaustive, either. For other built-in functions, you may want to check the documentation of R to see which function best suits your needs.
+
+Of course, it happens sometimes that no built-in function perfectly accomplishes the task you have at time. In those situations, it might be helpful to define your own function. As an example, we define below a simple function called `convert_num()`, which returns the number squared if the input is an even number and returns the number cubed if the input is an odd number. If, however, the input is not a numeric value, then the function returns "Warning: input is not a number!"
+
+```{r user-written fun1}
+convert_num <- function(num){
+  if (is.numeric(num)){
+    if (num %/% 2 == 0){
+      result <- num^2
+    }
+    else{
+      result <- num^3
+    }
+  }
+  else{
+    result <- "Warning: input is not a number!"
+  }
+  return(result)
+}
+```
+
+We apply our function to a few inputs. Unsurprisingly, if we input 4, 64 is returned; if we input 5, 125 is returned; and if we input the string "hello", then we get "Warning: input is not a number!"
+
+```{r user-written fun2}
+convert_num(4)
+convert_num(5)
+convert_num("hello")
+```
+
+What we show above is a nice little example of how you can define your own function in R. You can define more complicated functions if the problem you want to solve demands a more complex solution. Of course, writing your own functions in R can be quite challenging, especially if you have never had any prior programming experience. Fortunately, in this toolkit, we will not write any functions of our own, so please be assured that you will not have any trouble reading through this toolkit even with minimal experience with R. 
+
+## Packages {-}
+
+As mentioned in the last section, we will not be writing our own functions most of the time; instead, we will take advantage of the variety of packages available in R. 
+
+To use any packages, we must install them first. If you are unsure which packages you have already installed on your computer, you can check using the `library()` function.
+
+```{r pack1, eval = F}
+library()
+```
+
+To install new packages, simply call the `install.packages()` function. For this toolkit, we recommend that you install these packages on your computer: `sf`, `sp`, `raster`, `tmap`, and `tidyverse`. As an example, the code below installs the `raster` package. Note that each package only needs to be installed once!
+
+```{r pack2, eval = F}
+install.packages("raster")
+```
+
+Every time we begin a new R session, we would need to load the packages. To do this, we call the `library()` function. As an example, the code below loads the `raster` package.
+
+```{r pack3, eval = F, warning = F}
+library(raster)
+```
+
+We will introduce the packages mentioned above in the following chapters in greater detail. These packages are widely used in spatial data analysis, and a certain level of familiarity with these packages will not only help you as you go through this toolkit but will also be of great help when you conduct your own data analysis in the future. 
 
 ## Further Resources {-}
 
-Additional resources describing the origin of these datasets is provided below. 
+This concludes our brief introductory chapter on R. To emphasize, this is far from a comprehensive tutorial of R - it takes years of practice to be proficient in R, and we hope this chapter serves as a starting point for you. As the saying goes, if you want to become a chef, you must first be an apprentice and cut ingredients for years. Analogously, if you want to become R expert, you must first practice the basic coding skills for years. To help you become an R expert, we would also like to point you to the following resources, which might be especially valuable to beginners:
 
-* I am an example [resource](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) for more information on a topic. 
+* [R for Social Scientists](https://datacarpentry.org/r-socialsci/) 
+* [Spatial Data Science](https://rspatial.org/intr/index.html)
+* [Learn R Programming](https://www.tutorialspoint.com/r/index.htm)
+* [R Tutorial for Beginners](https://www.guru99.com/r-tutorial.html)
