@@ -2,7 +2,7 @@
 
 ## Introduction {-}
 
-Before we delve into the world of spatial analysis, it is critical that we gain some familiarity with R, which is our main tool to manipulate and analyze spatial data. This tutorial assumes some basic knowledge of R - for example, you should already have R and RStudio installed on your computer. In the following chapter, however, we will nevertheless go though some basics of R. If you are highly skilled in programming in R, please feel free to skip this section. If you are new to R, then reading through the following chapter might be of help. Note that this brief introduction to R tutorial might not be enough if you have never used R or other programming language before. We will point you to some additional resources at the end of this chapter, which you may want to read through in your spare time. 
+Before we delve into the world of spatial analysis, it is critical that we gain some familiarity with R, which is our main tool to manipulate and analyze spatial data. This tutorial assumes some basic knowledge of R - for example, you should already have R and RStudio installed on your computer. In the following chapter, however, we will nevertheless go though some basics of R. If you are highly skilled in programming in R, please feel free to skip this section. If you are new to R, then reading through the following chapter might be of help. Note that this brief introduction to R tutorial might not suffice if you have never used R or other programming language before. We will point you to some additional resources at the end of this chapter, which you may want to read through in your spare time. 
 
 We will quickly review the following concepts in R:
 
@@ -28,7 +28,7 @@ It might seem strange that R does not automatically recognize "8" as an integer.
 typeof(a)
 ```
 
-After we explicitly set "8" to be an integer, the object `a` is of the "integer" type.
+After explicitly setting "8" to be an integer, we see now that the object `a` is of the "integer" type.
 
 Sometimes, we might wish to work with several numbers simultaneously. To do so, we can create a vector. In R, this is achieved by calling the "combine" function. In the following example, `b` is a vector containing numbers 1, 23, 1200, and 10000.
 
@@ -36,7 +36,7 @@ Sometimes, we might wish to work with several numbers simultaneously. To do so, 
 (b <- c(1, 23, 1200, 10000))
 ```
 
-The second data type we are going to look at is the "character values" or "strings". Notice that all the character values are in quotation marks, which is what distinguishs them from variable names. For example, `apple` is a variable name, but its value is the characters "apple".
+The second data type we are going to look at is the "character values" or "strings". Notice that all the character values are put in quotation marks, which is what distinguishes them from variable names. For example, `apple` is a variable name, but its value is the string "apple".
 
 ```{r string1}
 (apple <- "apple")
@@ -51,7 +51,7 @@ We then check the class of `apple`, and it does not surprise us that it is of th
 
 Just like the vector of numbers, we can also create a vectors of strings. As an example, we create a vector called fruit, which contains four kinds of fruit - apples, peaches, oranges, and bananas. 
 
-Next, we look at the logical value in R. There are two local values in R - `TRUE` or `FALSE`. In the following example, `d` is assigned the value of `TRUE`, and `e` is assigned the value of `FALSE`.
+Next, we look at the logical value in R. There are two logical values in R - `TRUE` and `FALSE`. In the following example, `d` is assigned the value of `TRUE`, and `e` is assigned the value of `FALSE`.
 
 ```{r logical1}
 (d <- TRUE)
@@ -102,7 +102,7 @@ a > 300 | b == 20
 a + b == 30 & a * b == 201
 ```
 
-It is worth noting that we can also get a vector of logial values if we apply logical operators to a vector. Please see the example below.
+It is worth noting that we will get a vector of logical values if we apply logical operators to a vector. Please see the example below.
 
 ```{r log op 2}
 # create vectors a and b
@@ -150,14 +150,14 @@ median(c(0, 1, 2, 4, 5))
 median(1:101)
 ```
 
-There are many other examples of built-in functions, and it is impossible and unnecessay to list all of them here. To see a list of commonly used built-in functions in R, please refer to this [page](https://www.statmethods.net/management/functions.html). Note that this list is not exhaustive, either. For other built-in functions, you may want to check the documentation of R to see which function best suits your needs.
+There are many other examples of built-in functions, and it is impossible and unnecessary to list all of them here. To see a list of commonly used built-in functions in R, please refer to this [page](https://www.statmethods.net/management/functions.html). Note that this list is not exhaustive, either. For other built-in functions, you may want to check the documentation of R to see which function best suits your needs.
 
-Of course, it happens sometimes that no built-in function perfectly accomplishes the task you have at time. In those situations, it might be helpful to define your own function. As an example, we define below a simple function called `convert_num()`, which returns the number squared if the input is an even number and returns the number cubed if the input is an odd number. If, however, the input is not a numeric value, then the function returns "Warning: input is not a number!"
+Of course, it happens sometimes that no built-in function perfectly accomplishes the task you have at hand. In those situations, it might be helpful to define your own functions. As an example, we define below a simple function called `convert_num()`, which returns the number squared if the input is an even number and returns the number cubed if the input is an odd number. If, however, the input is not a numeric value, then the function returns "Warning: input is not a number!"
 
 ```{r user-written fun1}
 convert_num <- function(num){
   if (is.numeric(num)){
-    if (num %/% 2 == 0){
+    if (num %% 2 == 0){
       result <- num^2
     }
     else{
@@ -171,7 +171,7 @@ convert_num <- function(num){
 }
 ```
 
-We apply our function to a few inputs. Unsurprisingly, if we input 4, 64 is returned; if we input 5, 125 is returned; and if we input the string "hello", then we get "Warning: input is not a number!"
+We apply our function to a few inputs. Unsurprisingly, if we input 4, 16 is returned; if we input 5, 125 is returned; and if we input the string "hello", then we get "Warning: input is not a number!"
 
 ```{r user-written fun2}
 convert_num(4)
@@ -179,7 +179,7 @@ convert_num(5)
 convert_num("hello")
 ```
 
-What we show above is a nice little example of how you can define your own function in R. You can define more complicated functions if the problem you want to solve demands a more complex solution. Of course, writing your own functions in R can be quite challenging, especially if you have never had any prior programming experience. Fortunately, in this toolkit, we will not write any functions of our own, so please be assured that you will not have any trouble reading through this toolkit even with minimal experience with R. 
+What we showed above is a nice little example of how you can define your own function in R. You can define more complicated functions if the problem you want to solve demands a more complex solution. Of course, writing your own functions in R can be quite challenging, especially if you have never had any prior programming experience. Fortunately, in this toolkit, we will not write any functions of our own, so please be assured that you will not have any trouble reading through this toolkit even with minimal experience with R. 
 
 ## Packages {-}
 
@@ -207,7 +207,7 @@ We will introduce the packages mentioned above in the following chapters in grea
 
 ## Further Resources {-}
 
-This concludes our brief introductory chapter on R. To emphasize, this is far from a comprehensive tutorial of R - it takes years of practice to be proficient in R, and we hope this chapter serves as a starting point for you. As the saying goes, if you want to become a chef, you must first be an apprentice and cut ingredients for years. Analogously, if you want to become R expert, you must first practice the basic coding skills for years. To help you become an R expert, we would also like to point you to the following resources, which might be especially valuable to beginners:
+This concludes our brief introductory chapter on R. To emphasize, this is far from a comprehensive tutorial of R - it takes years of practice to be proficient in R, and we hope this chapter serves as a starting point for you. As the saying goes, if you want to become a chef, you must first be an apprentice and cut ingredients for years. Analogously, if you want to become an R expert, you must first practice the basic coding skills for years. To help you become an R expert, we would also like to point you to the following resources, which might be especially valuable to beginners:
 
 * [R for Social Scientists](https://datacarpentry.org/r-socialsci/) 
 * [Spatial Data Science](https://rspatial.org/intr/index.html)
